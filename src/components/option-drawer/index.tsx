@@ -8,11 +8,18 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { cn } from "@/lib/utils";
+import type { ComponentProps } from "react";
 
-export default function OptionDrawer() {
+export default function OptionDrawer(props: ComponentProps<typeof DrawerTrigger>) {
+  const { className, ...rest } = props;
+
   return (
     <Drawer direction="top">
-      <DrawerTrigger className="bg-foreground text-background p-2 rounded-b-xl fixed top-0 right-4 cursor-pointer">
+      <DrawerTrigger className={cn(
+        `bg-foreground text-background p-2 rounded-b-xl fixed top-0 right-4 cursor-pointer`,
+        className
+      )} {...rest}>
         <ChevronDownIcon />
       </DrawerTrigger>
       <DrawerContent>
