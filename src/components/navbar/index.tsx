@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   BookImageIcon,
   PaletteIcon,
@@ -10,13 +11,13 @@ export default function Navbar() {
   return (
     <nav className="flex bg-foreground text-background p-4 rounded-xl">
       <ul className="flex gap-4">
-        <li><BookImageIcon /></li>
+        <li><Link href="/about"><BookImageIcon /></Link></li>
         <Separator orientation="vertical" />
-        <li><PaletteIcon /></li>
+        <li><Link href="/abilities"><PaletteIcon /></Link></li>
         <Separator orientation="vertical" />
-        <li><GalleryHorizontalEndIcon /></li>
+        <li><Link href="/projects"><GalleryHorizontalEndIcon /></Link></li>
         <Separator orientation="vertical" />
-        <li><PhoneIcon /></li>
+        <li><Link href="/contact"><PhoneIcon /></Link></li>
       </ul>
     </nav>
   );
