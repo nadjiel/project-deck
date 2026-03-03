@@ -1,4 +1,3 @@
-import { Fragment } from "react/jsx-runtime";
 import Link from "next/link";
 import {
   BookImageIcon,
