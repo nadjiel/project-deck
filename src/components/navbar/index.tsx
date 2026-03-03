@@ -17,7 +17,7 @@ const links = [
 
 export default function Navbar() {
   return (
-    <nav className="flex bg-foreground text-background p-4 rounded-xl">
+    <nav className="flex bg-foreground text-background p-4 rounded-xl fixed bottom-8 left-1/2 -translate-x-1/2">
       <ul className="flex gap-4">
         { links.flatMap((l, i) => [
           i > 0 && <Separator key={`sep-${i}`} orientation="vertical" />,
