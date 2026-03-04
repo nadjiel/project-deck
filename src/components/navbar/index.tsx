@@ -16,11 +16,13 @@ const links = [
 
 export default function Navbar() {
   return (
-    <nav className="flex bg-foreground text-background p-4 rounded-xl fixed bottom-8 left-1/2 -translate-x-1/2">
-      <ul className="flex gap-4">
+    <nav className="flex bg-foreground text-background p-2 rounded-xl fixed bottom-8 left-1/2 -translate-x-1/2">
+      <ul className="flex gap-2">
         { links.flatMap((l, i) => [
           i > 0 && <Separator key={`sep-${i}`} orientation="vertical" />,
-          <li key={l.href}><Link href={l.href}>{l.icon}</Link></li>,
+          <li key={l.href}>
+            <Link href={l.href} className="block p-2 rounded-lg hover:bg-background/25">{l.icon}</Link>
+          </li>,
         ]) }
       </ul>
     </nav>
