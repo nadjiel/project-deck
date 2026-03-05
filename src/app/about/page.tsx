@@ -5,7 +5,7 @@ export default function About() {
   return (
     <div className="flex flex-col flex-1 gap-4 items-center">
       <CameraRoll />
-      <span className="flex flex-col gap-2 text-center">
+      <span className="flex flex-col gap-2 text-center cursor-default select-none">
         <Heading variant="h1">Hello! I'm Daniel!</Heading>
         <Heading level={1} variant="h2">Fullstack Developer</Heading>
         <Paragraph className="max-w-sm mt-2">
