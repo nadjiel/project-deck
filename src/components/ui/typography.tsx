@@ -12,13 +12,6 @@ type HeadingLevel = typeof HEADING_LEVELS[number];
 
 type HeadingType = typeof HEADING_TYPES[number];
 
-interface HeadingProps extends
-  React.ComponentProps<HeadingType>,
-  VariantProps<typeof headingVariants>
-{
-  level?: HeadingLevel;
-};
-
 const headingVariants = cva(
   "",
   {
@@ -36,7 +29,14 @@ const headingVariants = cva(
       variant: "h1",
     },
   }
-)
+);
+
+interface HeadingProps extends
+  React.ComponentProps<HeadingType>,
+  VariantProps<typeof headingVariants>
+{
+  level?: HeadingLevel;
+};
 
 function Heading(props: HeadingProps) {
   const {
@@ -59,4 +59,23 @@ function Heading(props: HeadingProps) {
   )
 }
 
-export { Heading };
+type ParagraphProps = React.ComponentProps<"p">;
+
+function Paragraph(props: ParagraphProps) {
+  const {
+    children,
+    className,
+    ...rest
+  } = props;
+
+  return (
+    <p
+      className={cn("", className)}
+      {...rest}
+    >
+      {children}
+    </p>
+  )
+}
+
+export { Heading, Paragraph };
