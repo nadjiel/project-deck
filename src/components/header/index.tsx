@@ -4,7 +4,7 @@ import OptionPanel from "@/components/option-panel";
 
 export default function Header() {
   return (
-    <header>
+    <header className="flex justify-between items-center px-2">
       <Logo />
       <OptionDrawer className="sm:hidden" />
       <OptionPanel className="not-sm:hidden" />
