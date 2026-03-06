@@ -8,7 +8,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 const links = [
-  { href: "/about", icon: <BookImageIcon /> },
+  { href: "/", icon: <BookImageIcon /> },
   { href: "/abilities", icon: <PaletteIcon /> },
   { href: "/projects", icon: <GalleryHorizontalEndIcon /> },
   { href: "/contact", icon: <PhoneIcon /> },
