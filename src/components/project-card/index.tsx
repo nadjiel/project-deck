@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import * as icons from "react-icons/si";
+import { CodeIcon } from "lucide-react";
 import { Heading } from "@/components/ui/typography";
 import logo from "@/assets/logo.svg";
 import type { Project } from "@/api";
@@ -11,19 +12,12 @@ interface Props {
   data: Project;
 }
 
-/*
-/projects?
-  _search=fixer
-  &abilities=react,typescript
-  &_sort=-rating,created_at
-*/
-
 export default function ProjectCard(props: Props) {
   const { data } = props;
 
   const [icon, setIcon] = useState(data.icon || logo.src);
 
-  const AbilityIcon = icons[data.abilityIcon as keyof typeof icons];
+  const AbilityIcon = icons[data.abilityIcon as keyof typeof icons] ?? CodeIcon;
 
   return (
     <article className="relative flex flex-col justify-center items-center border-16 rounded-lg bg-background max-w-sm aspect-3/4">
