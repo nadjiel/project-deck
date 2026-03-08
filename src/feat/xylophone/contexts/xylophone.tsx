@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from "react";
 import chroma from "chroma-js";
 import { getVariable } from "@/lib/css";
-import xylophone from "@/feat/xylophone/lib/xylophone";
+import Synth from "@/feat/xylophone/lib/xylophone";
 
 const DEFAULT_GRADIENT = "#011932";
 
@@ -17,6 +17,7 @@ interface XylophoneValue {
   gradient: string[];
   baseNote: string;
   bars: number;
+  synth: Synth | null;
 }
 
 interface Props extends PropsWithChildren {
@@ -29,6 +30,7 @@ const defaultValue: XylophoneValue = {
   gradient: [],
   baseNote: "C4",
   bars: 1,
+  synth: null,
 };
 
 const Context = createContext<XylophoneValue>(defaultValue);
@@ -42,8 +44,11 @@ export default function Xylophone(props: Props) {
   } = props;
 
   const [gradient, setGradient] = useState(propGradient ?? [DEFAULT_GRADIENT]);
+  const [synth, setSynth] = useState<Synth | null>(null);
 
   useEffect(() => {
+    setSynth(new Synth());
+
     if (propGradient) return;
 
     setGradient([
@@ -57,6 +62,7 @@ export default function Xylophone(props: Props) {
       gradient,
       baseNote,
       bars,
+      synth
     }}>
       {children}
     </Context.Provider>
@@ -64,7 +70,7 @@ export default function Xylophone(props: Props) {
 }
 
 export function useXylophone(bar: number): XylophoneBar {
-  const { gradient, bars } = useContext(Context);
+  const { gradient, bars, synth } = useContext(Context);
 
   if (bar < 0 || bar >= bars) throw new Error(`Bar must be between 0 and ${bars - 1}! Got ${bar}.`)
 
@@ -73,6 +79,6 @@ export function useXylophone(bar: number): XylophoneBar {
   return {
     color: chroma.scale(gradient).colors(bars)[bar],
     note: defaultNote,
-    play: (note = defaultNote) => xylophone.play(note)
+    play: (note = defaultNote) => synth?.play(note)
   };
 }
