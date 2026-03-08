@@ -1,3 +1,5 @@
+"use client";
+
 import chroma from "chroma-js";
 import { Button } from "@/components/ui/button";
 import { useXylophone } from "@/feat/xylophone/contexts/xylophone";
@@ -18,7 +20,7 @@ export default function XylophoneButton(props: Props) {
   }
 
   return (
-    <Button variant="tactile" size="icon-lg" style={style} onClick={play}>
+    <Button variant="tactile" size="icon-lg" style={style} onClick={() => play()}>
       {children}
     </Button>
   );
