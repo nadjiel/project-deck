@@ -13,9 +13,13 @@ const xylophone = new Tone.Synth({
   }
 }).toDestination();
 
-export function play(note = "C4", duration = "4n") {
+function play(note = "C4", duration = "4n") {
   // Start audio context on user interaction (required by browsers)
   Tone.start();
 
   xylophone.triggerAttackRelease(note, duration);
 }
+
+export default {
+  play,
+};

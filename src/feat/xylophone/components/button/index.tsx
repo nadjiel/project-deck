@@ -1,6 +1,6 @@
 import chroma from "chroma-js";
 import { Button } from "@/components/ui/button";
-import { useXylophone } from "@/contexts/xylophone";
+import { useXylophone } from "@/feat/xylophone/contexts/xylophone";
 import type { CSSProperties, PropsWithChildren } from "react";
 
 interface Props extends PropsWithChildren {

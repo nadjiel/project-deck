@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, type PropsWithChildren } from "react";
 import chroma from "chroma-js";
 import { getVariable } from "@/lib/css";
-import { play } from "@/lib/xylophone";
+import xylophone from "@/feat/xylophone/lib/xylophone";
 
 interface XylophoneBar {
   color: string;
@@ -69,6 +69,6 @@ export function useXylophone(bar: number): XylophoneBar {
   return {
     color: chroma.scale(gradient).colors(bars)[bar],
     note: defaultNote,
-    play: (note = defaultNote) => play(note)
+    play: (note = defaultNote) => xylophone.play(note)
   };
 }
