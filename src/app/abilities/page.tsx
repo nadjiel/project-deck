@@ -1,23 +1,16 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { cookies } from "next/headers";
 import { Heading } from "@/components/ui/typography";
 import { Xylophone } from "@/feat/xylophone";
-import api, { type Ability } from "@/api";
 import AbilityButton from "@/components/ability-button";
+import { createClient } from "@/db/supabase/server";
 
-export default function Abilities() {
-  const [abilities, setAbilities] = useState<Ability[]>([]);
+export default async function Abilities() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
-  useEffect(() => {
-    const fetch = async () => {
-      const data = await api.fetch();
+  const { data: abilities } = await supabase.from("abilities").select();
 
-      setAbilities(data.abilities);
-    };
-
-    fetch();
-  }, []);
+  if (abilities === null) throw new Error("Impossible to load abilities");
 
   return (
     <div className="flex flex-col flex-1 justify-between items-center">
@@ -32,7 +25,7 @@ export default function Abilities() {
       </div>
       <Xylophone bars={abilities.length}>
         <div className="flex flex-wrap gap-x-8 gap-y-4 justify-center max-w-sm">
-          { abilities.map(a => <AbilityButton key={a.id} data={a} />) }
+          { abilities.map(a => <AbilityButton key={a.name} data={a} />) }
         </div>
       </Xylophone>
     </div>

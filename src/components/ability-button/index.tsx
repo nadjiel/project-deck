@@ -1,17 +1,20 @@
 import * as icons from "react-icons/si";
 import { XylophoneButton } from "@/feat/xylophone";
-import type { Ability } from "@/api";
+import type { Database } from "@/db/supabase/types";
+
+type Ability = Database["public"]["Tables"]["abilities"]["Row"];
 
 interface Props {
+  position?: number;
   data: Ability;
 }
 
 export default function AbilityButton(props: Props) {
-  const { data } = props;
+  const { position = 1, data } = props;
 
   const Icon = icons[data.icon as keyof typeof icons];
 
   return (
-    <XylophoneButton bar={data.id - 1}><Icon size={24} /></XylophoneButton>
+    <XylophoneButton bar={position}><Icon size={24} /></XylophoneButton>
   )
 }
