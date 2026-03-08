@@ -5,8 +5,17 @@ export interface Ability {
   icon: string;
 }
 
+export interface Project {
+  id: number;
+  name: string;
+  description: string;
+  abilityIcon: string;
+  icon: string;
+}
+
 export interface Data {
   abilities: Ability[];
+  projects: Project[];
 }
 
 async function fetchData(): Promise<Data> {
