@@ -14,7 +14,7 @@ export default function XylophoneButton(props: Props) {
 
   const style: CSSProperties = {
     backgroundColor: color,
-    borderColor: chroma(color).darken().hex(),
+    borderColor: chroma(color).darken(0.5).hex(),
   }
 
   return (
