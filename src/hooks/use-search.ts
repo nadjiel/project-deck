@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useDebounce } from "use-debounce";
 
 interface UseSearchOptions {
   /** Debounce delay in ms before updating the URL. Defaults to 0 (immediate). */
@@ -13,6 +14,8 @@ interface UseSearchOptions {
 interface UseSearchReturn {
   /** The current search value from the `_search` query param. */
   search: string;
+  /** The current search value controlled internally, without the debounce delay. */
+  internalSearch: string;
   /** Update the search value. Pass an empty string or undefined to clear. */
   setSearch: (value: string) => void;
   /** Clear the search param entirely. */
@@ -22,7 +25,7 @@ interface UseSearchReturn {
 const SEARCH_PARAM = "_search";
 
 export function useSearch(options: UseSearchOptions = {}): UseSearchReturn {
-  const { replace = true } = options;
+  const { replace = true, debounce = 0 } = options;
 
   const router = useRouter();
   const pathname = usePathname();
@@ -32,6 +35,13 @@ export function useSearch(options: UseSearchOptions = {}): UseSearchReturn {
     () => searchParams.get(SEARCH_PARAM) ?? "",
     [searchParams]
   );
+  
+  const [internalSearch, setInternalSearch] = useState(search);
+  const [debounced] = useDebounce(internalSearch, debounce);
+
+  useEffect(() => {
+    navigate(buildUrl(debounced));
+  }, [debounced]);
 
   const buildUrl = useCallback(
     (value: string | undefined) => {
@@ -61,15 +71,14 @@ export function useSearch(options: UseSearchOptions = {}): UseSearchReturn {
   );
 
   const setSearch = useCallback(
-    (value: string) => {
-      navigate(buildUrl(value || undefined));
-    },
+    (value: string) => setInternalSearch(value),
     [navigate, buildUrl]
   );
 
-  const clearSearch = useCallback(() => {
-    navigate(buildUrl(undefined));
-  }, [navigate, buildUrl]);
+  const clearSearch = useCallback(
+    () => setInternalSearch(""),
+    [navigate, buildUrl]
+  );
 
-  return { search, setSearch, clearSearch };
+  return { search, internalSearch, setSearch, clearSearch };
 }
