@@ -1,4 +1,166 @@
 {
+  "projects": [
+    {
+      "id": 1,
+      "name": "Im Share",
+      "description": "Im Share is a social media where users can share images with each other. This site was heavily inspired by Instagram and Pinterest, focusing on a clean UI with minimal features.",
+      "abilityIcon": "SiReact",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/im-share",
+      "deployment": "https://im-share.onrender.com/",
+      "type": "web-development"
+    },
+    {
+      "id": 2,
+      "name": "IFernship",
+      "description": "A React Native application that centralizes internship search and divulgation through a sole interface for academic stakeholders.",
+      "abilityIcon": "SiReact",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/ifernship",
+      "deployment": "",
+      "type": "mobile-development"
+    },
+    {
+      "id": 3,
+      "name": "Nunes Sports",
+      "description": "Nunes Sports é um site de CRUD de produtos feito para uma empresa fictícia de mesmo nome.",
+      "abilityIcon": "SiReact",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/nunes-sports",
+      "deployment": "",
+      "type": "web-development"
+    },
+    {
+      "id": 4,
+      "name": "Eye Dropper",
+      "description": "Eye Dropper is a shader for Godot (using gdshader language) that allows performing color palette swapping in an intuitive way.",
+      "abilityIcon": "SiGodotengine",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/eye-dropper",
+      "deployment": "",
+      "type": "game-development"
+    },
+    {
+      "id": 5,
+      "name": "Locker",
+      "description": "Locker is a plugin for Godot that provides a quick and scalable way to save and load data using different strategies, with JSON and encryption out of the box.",
+      "abilityIcon": "SiGodotengine",
+      "icon": "",
+      "repository": "https://github.com/locker-godot/locker",
+      "deployment": "",
+      "type": "game-development"
+    },
+    {
+      "id": 6,
+      "name": "Terra's Terrarium",
+      "description": "This project is a platform game inspired by Bubble Bobble made for the Global Game Jam 2025.",
+      "abilityIcon": "SiGodotengine",
+      "icon": "",
+      "repository": "",
+      "deployment": "",
+      "type": "game-development"
+    },
+    {
+      "id": 7,
+      "name": "The Ice Moon",
+      "description": "A game about the an icy moon and a hot sun.",
+      "abilityIcon": "SiGamemaker",
+      "icon": "",
+      "repository": "",
+      "deployment": "",
+      "type": "game-development"
+    },
+    {
+      "id": 8,
+      "name": "Pong +",
+      "description": "A local 2 player competitive remake of the original Atari's Pong game.",
+      "abilityIcon": "SiJavascript",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/pong-plus",
+      "deployment": "https://nadjiel.github.io/pong-plus/",
+      "type": "game-development"
+    },
+    {
+      "id": 9,
+      "name": "Chessey",
+      "description": "Jogo de xadrez em linha de comando desenvolvido em C.",
+      "abilityIcon": "SiC",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/chessey",
+      "deployment": "https://github.com/nadjiel/chessey/releases/tag/v2.0.0",
+      "type": "game-development"
+    },
+    {
+      "id": 10,
+      "name": "Agora",
+      "description": "Agora is a little todo list app made in React Native for practicing its main basic features.",
+      "abilityIcon": "SiReact",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/agora",
+      "deployment": "",
+      "type": "mobile-development"
+    },
+    {
+      "id": 11,
+      "name": "Pokedéx",
+      "description": "This project is a reimagination of a pokedex that provides info about pokemon with the pokeapi.",
+      "abilityIcon": "SiHtml5",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/pokedex",
+      "deployment": "https://nadjiel.github.io/pokedex/",
+      "type": "web-development"
+    },
+    {
+      "id": 12,
+      "name": "Imagine Engine",
+      "description": "An engine for making 2D games with Java.",
+      "abilityIcon": "",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/imagine-engine",
+      "deployment": "",
+      "type": "game-development"
+    },
+    {
+      "id": 13,
+      "name": "Poké-Loopis",
+      "description": "Jogo de browser no estilo \"Adivinhe o Pokémon\" feito como parte de processo seletivo para ingressão na empresa Loopis Júnior.",
+      "abilityIcon": "SiJavascript",
+      "icon": "",
+      "repository": "https://github.com/nadjiel/pokeloopis",
+      "deployment": "https://pokeloopis.onrender.com/",
+      "type": "web-development"
+    },
+    {
+      "id": 14,
+      "name": "Dash Delivery",
+      "description": "A game about an 80s food delivery.",
+      "abilityIcon": "SiGamemaker",
+      "icon": "",
+      "repository": "",
+      "deployment": "",
+      "type": "game-development"
+    },
+    {
+      "id": 15,
+      "name": "ReciclAE Website",
+      "description": "Implementação do frontend web do aplicativo de reciclagem ReciclaAE.",
+      "abilityIcon": "SiReact",
+      "icon": "",
+      "repository": "https://github.com/reciclae/reciclae-frontend",
+      "deployment": "",
+      "type": "frontend-development"
+    },
+    {
+      "id": 16,
+      "name": "ReciclAE API",
+      "description": "",
+      "abilityIcon": "SiExpress",
+      "icon": "",
+      "repository": "https://github.com/reciclae/reciclae-backend",
+      "deployment": "",
+      "type": "backend-development"
+    }
+  ],
   "abilities": [
     {
       "id": 1,
