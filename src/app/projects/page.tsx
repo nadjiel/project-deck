@@ -13,10 +13,18 @@ export default async function Projects() {
   if (projects === null) throw new Error("Impossible to load projects!");
 
   return (
-    <div>
+    <div className="flex flex-col flex-1">
       <Heading variant="h1">Know my Work!</Heading>
       <SearchBox />
-      { projects.map(p => <ProjectCard key={p.id} data={p} />) }
+      <div className="grid place-content-center flex-1">
+        { projects.map(p => (
+          <ProjectCard
+            key={p.id}
+            data={p}
+            className="col-start-1 col-end-1 row-start-1 row-end-1"
+          />
+        )) }
+      </div>
     </div>
   );
 }
