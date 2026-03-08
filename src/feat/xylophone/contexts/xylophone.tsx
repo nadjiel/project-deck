@@ -5,6 +5,8 @@ import chroma from "chroma-js";
 import { getVariable } from "@/lib/css";
 import xylophone from "@/feat/xylophone/lib/xylophone";
 
+const DEFAULT_GRADIENT = "#011932";
+
 interface XylophoneBar {
   color: string;
   note: string;
@@ -39,13 +41,13 @@ export default function Xylophone(props: Props) {
     children
   } = props;
 
-  const [gradient, setGradient] = useState(propGradient ?? []);
+  const [gradient, setGradient] = useState(propGradient ?? [DEFAULT_GRADIENT]);
 
   useEffect(() => {
     if (propGradient) return;
 
     setGradient([
-      chroma(getVariable("background")).brighten().hex(),
+      chroma(getVariable("c-background")).brighten().hex(),
       chroma(getVariable("primary")).hex(),
     ]);
   }, []);
@@ -63,6 +65,8 @@ export default function Xylophone(props: Props) {
 
 export function useXylophone(bar: number): XylophoneBar {
   const { gradient, bars } = useContext(Context);
+
+  if (bar < 0 || bar >= bars) throw new Error(`Bar must be between 0 and ${bars - 1}! Got ${bar}.`)
 
   const defaultNote = "C4";
 
