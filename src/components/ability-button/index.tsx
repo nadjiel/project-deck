@@ -12,6 +12,6 @@ export default function AbilityButton(props: Props) {
   const Icon = icons[data.icon as keyof typeof icons];
 
   return (
-    <XylophoneButton bar={data.id - 1}><Icon /></XylophoneButton>
+    <XylophoneButton bar={data.id - 1}><Icon size={24} /></XylophoneButton>
   )
 }

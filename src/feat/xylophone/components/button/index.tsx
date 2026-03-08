@@ -20,7 +20,12 @@ export default function XylophoneButton(props: Props) {
   }
 
   return (
-    <Button variant="tactile" size="icon-lg" style={style} onClick={() => play()}>
+    <Button
+      variant="tactile"
+      size="icon-xl"
+      style={style}
+      onClick={() => play()}
+    >
       {children}
     </Button>
   );
