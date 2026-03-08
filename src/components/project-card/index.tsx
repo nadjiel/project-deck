@@ -11,6 +11,13 @@ interface Props {
   data: Project;
 }
 
+/*
+/projects?
+  _search=fixer
+  &abilities=react,typescript
+  &_sort=-rating,created_at
+*/
+
 export default function ProjectCard(props: Props) {
   const { data } = props;
 
@@ -19,9 +26,9 @@ export default function ProjectCard(props: Props) {
   const AbilityIcon = icons[data.abilityIcon as keyof typeof icons];
 
   return (
-    <article className="relative flex flex-col justify-center items-center border-16 rounded-lg aspect-3/4 bg-background">
+    <article className="relative flex flex-col justify-center items-center border-16 rounded-lg bg-background max-w-sm aspect-3/4">
       <header className="absolute -top-4 -left-4 flex justify-between items-center w-full">
-        <div className="bg-border p-8 rounded-xl text-background">
+        <div className="bg-border p-6 rounded-xl text-background">
           <AbilityIcon size={32} />
         </div>
         <Heading>{data.name}</Heading>
@@ -32,9 +39,10 @@ export default function ProjectCard(props: Props) {
         width={256}
         height={256}
         onError={() => setIcon(logo.src)}
+        className="max-w-1/2"
       />
       <footer className="absolute -bottom-4 -right-4 flex justify-between items-center w-full rotate-180">
-        <div className="bg-border p-8 rounded-xl text-background">
+        <div className="bg-border p-6 rounded-xl text-background">
           <AbilityIcon size={32} />
         </div>
         <Heading>{data.name}</Heading>
