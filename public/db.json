@@ -1,0 +1,39 @@
+{
+  "abilities": [
+    {
+      "id": 1,
+      "name": "React",
+      "icon": "SiReact"
+    },
+    {
+      "id": 2,
+      "name": "React Native",
+      "icon": "SiReact"
+    },
+    {
+      "id": 3,
+      "name": "NodeJS",
+      "icon": "SiNodedotjs"
+    },
+    {
+      "id": 4,
+      "name": "Git",
+      "icon": "SiGit"
+    },
+    {
+      "id": 5,
+      "name": "Postgres",
+      "icon": "SiPostgresql"
+    },
+    {
+      "id": 6,
+      "name": "MongoDB",
+      "icon": "SiMongodb"
+    },
+    {
+      "id": 7,
+      "name": "Redis",
+      "icon": "SiRedis"
+    }
+  ]
+}
