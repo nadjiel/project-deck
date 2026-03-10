@@ -4,7 +4,7 @@ import { useState, type ComponentProps } from "react";
 import Image from "next/image";
 import * as icons from "react-icons/si";
 import { CodeIcon } from "lucide-react";
-import { motion, useMotionValue } from "motion/react";
+import { motion, useMotionValue, useTransform } from "motion/react";
 import { Heading } from "@/components/ui/typography";
 import logo from "@/assets/logo.svg";
 import { cn } from "@/lib/utils";
@@ -25,10 +25,22 @@ export default function ProjectCard(props: Props) {
     onSwipeRight,
     onSwipeLeft,
     data,
+    style,
     className,
   } = props;
   
   const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateY = useTransform(
+    x,
+    [-swipeThreshold * 2, 0, swipeThreshold * 2],
+    [-45, 1, 45]
+  );
+  const rotateX = useTransform(
+    y,
+    [-swipeThreshold * 2, 0, swipeThreshold * 2],
+    [22.5, 1, -22.5]
+  );
 
   const [icon, setIcon] = useState(data.icon || logo.src);
 
@@ -54,6 +66,10 @@ export default function ProjectCard(props: Props) {
       onDragEnd={onDragEnd}
       style={{
         x,
+        y,
+        rotateY: rotateY,
+        rotateX: rotateX,
+        ...style,
       }}
       className={cn(
         "relative flex flex-col justify-center items-center border-16 rounded-lg bg-background min-w-sm aspect-3/4",
