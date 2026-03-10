@@ -16,7 +16,7 @@ export default async function Projects() {
     <div className="flex flex-col flex-1">
       <Heading variant="h1">Know my Work!</Heading>
       <SearchBox />
-      <div className="grid place-content-center flex-1">
+      <div className="grid place-content-center flex-1 overflow-hidden">
         { projects.map(p => (
           <ProjectCard
             key={p.id}
