@@ -29,37 +29,7 @@ export type Database = {
         }
         Relationships: []
       }
-      project_abilities: {
-        Row: {
-          ability: string
-          project_id: number
-        }
-        Insert: {
-          ability: string
-          project_id: number
-        }
-        Update: {
-          ability?: string
-          project_id?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "project_abilities_ability_fkey"
-            columns: ["ability"]
-            isOneToOne: false
-            referencedRelation: "abilities"
-            referencedColumns: ["name"]
-          },
-          {
-            foreignKeyName: "project_abilities_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: true
-            referencedRelation: "projects"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      project_categories: {
+      categories: {
         Row: {
           name: string
         }
@@ -71,32 +41,68 @@ export type Database = {
         }
         Relationships: []
       }
-      project_categorizations: {
+      project_abilities: {
         Row: {
-          category: string
+          ability_name: string
+          id: number
+          level: number
+          project_id: number
+        }
+        Insert: {
+          ability_name: string
+          id?: number
+          level?: number
+          project_id: number
+        }
+        Update: {
+          ability_name?: string
+          id?: number
+          level?: number
+          project_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_abilities_ability_name_fkey"
+            columns: ["ability_name"]
+            isOneToOne: false
+            referencedRelation: "abilities"
+            referencedColumns: ["name"]
+          },
+          {
+            foreignKeyName: "project_abilities_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_categories: {
+        Row: {
+          category_name: string
           id: number
           project_id: number
         }
         Insert: {
-          category: string
+          category_name: string
           id?: number
-          project_id?: number
+          project_id: number
         }
         Update: {
-          category?: string
+          category_name?: string
           id?: number
           project_id?: number
         }
         Relationships: [
           {
-            foreignKeyName: "project_categorizations_category_fkey"
-            columns: ["category"]
+            foreignKeyName: "project_categories_category_name_fkey"
+            columns: ["category_name"]
             isOneToOne: false
-            referencedRelation: "project_categories"
+            referencedRelation: "categories"
             referencedColumns: ["name"]
           },
           {
-            foreignKeyName: "project_categorizations_project_id_fkey"
+            foreignKeyName: "project_categories_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "projects"
@@ -106,7 +112,6 @@ export type Database = {
       }
       projects: {
         Row: {
-          ability_icon: string | null
           deployment: string | null
           description: string | null
           finished_at: string | null
@@ -117,7 +122,6 @@ export type Database = {
           started_at: string | null
         }
         Insert: {
-          ability_icon?: string | null
           deployment?: string | null
           description?: string | null
           finished_at?: string | null
@@ -128,7 +132,6 @@ export type Database = {
           started_at?: string | null
         }
         Update: {
-          ability_icon?: string | null
           deployment?: string | null
           description?: string | null
           finished_at?: string | null
