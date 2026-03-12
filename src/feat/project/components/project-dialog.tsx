@@ -1,4 +1,5 @@
 import { Heading, Paragraph } from "@/components/ui/typography";
+import { getIcon } from "@/lib/icon";
 import type { Tables } from "@/db/supabase/types";
 
 type Ability = Tables<"abilities">;
@@ -44,10 +45,17 @@ export default function ProjectDialog(props: Props) {
         <div>
           <Paragraph>{data.description}</Paragraph>
         </div>
-        <aside className="">
+        <aside>
           <img src={data.icon ?? ""} alt="Something" />
-          <ul>
-            { data.abilities.map(a => a.ability.icon) }
+          <ul className="flex">
+            {
+              data.abilities
+                .map(a => {
+                  const Icon = getIcon(a.ability.icon ?? undefined);
+
+                  return <li key={a.ability.name}><Icon /></li>
+                })
+            }
           </ul>
         </aside>
       </div>
