@@ -1,4 +1,4 @@
-import { Heading } from "@/components/ui/typography";
+import { Heading, Paragraph } from "@/components/ui/typography";
 import type { Tables } from "@/db/supabase/types";
 
 type Ability = Tables<"abilities">;
@@ -33,16 +33,33 @@ export default function ProjectDialog(props: Props) {
 
   return (
     <article>
-      <Heading>{data.name}</Heading>
-      <p>{data.description}</p>
-      <img src={data.icon ?? ""} alt="Something" />
-      <ul>
-        { data.abilities.map(a => a.ability.icon) }
-      </ul>
-      <a href={data.repository ?? ""}>{data.repository}</a>
-      <a href={data.deployment ?? ""}>{data.deployment}</a>
-      <span>{data.started_at}</span>
-      <span>{data.finished_at}</span>
+      <header>
+        <Heading>{data.name}</Heading>
+        <div>
+          <span>{data.started_at}</span>
+          <span>{data.finished_at}</span>
+        </div>
+      </header>
+      <div className="grid grid-cols-2">
+        <div>
+          <Paragraph>{data.description}</Paragraph>
+        </div>
+        <aside className="">
+          <img src={data.icon ?? ""} alt="Something" />
+          <ul>
+            { data.abilities.map(a => a.ability.icon) }
+          </ul>
+        </aside>
+      </div>
+      <footer>
+        <div>
+          <a href={data.repository ?? ""}>{data.repository}</a>
+          <a href={data.deployment ?? ""}>{data.deployment}</a>
+        </div>
+        <div>
+          {/* related projects */}
+        </div>
+      </footer>
     </article>
   )
 }
