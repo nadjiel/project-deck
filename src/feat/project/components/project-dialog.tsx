@@ -1,5 +1,7 @@
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getIcon } from "@/lib/icon";
+import { formatUrl } from "@/lib/url";
+import icon from "@/assets/logo.svg";
 import type { Tables } from "@/db/supabase/types";
 
 type Ability = Tables<"abilities">;
@@ -41,33 +43,39 @@ export default function ProjectDialog(props: Props) {
           <span>{data.finished_at}</span>
         </div>
       </header>
-      <div className="grid grid-cols-2">
+      <div className="flex">
         <div>
           <Paragraph>{data.description}</Paragraph>
+          <table>
+            <tbody>
+              <tr>
+                <th scope="row">Repository:</th>
+                <td><a href={data.repository ?? ""} target="_blank" rel="noopener noreferrer">{formatUrl(data.repository ?? "")}</a></td>
+              </tr>
+              <tr>
+                <th scope="row">Deployment:</th>
+                <td><a href={data.deployment ?? ""} target="_blank" rel="noopener noreferrer">{formatUrl(data.deployment ?? "")}</a></td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            {/* related projects */}
+          </div>
         </div>
         <aside>
-          <img src={data.icon ?? ""} alt="Something" />
-          <ul className="flex">
+          <img src={data.icon ?? icon.src} alt="Something" />
+          <ul className="flex gap-2">
             {
               data.abilities
                 .map(a => {
                   const Icon = getIcon(a.ability.icon ?? undefined);
 
-                  return <li key={a.ability.name}><Icon /></li>
+                  return <li key={a.ability.name}><Icon size={24} /></li>
                 })
             }
           </ul>
         </aside>
       </div>
-      <footer>
-        <div>
-          <a href={data.repository ?? ""}>{data.repository}</a>
-          <a href={data.deployment ?? ""}>{data.deployment}</a>
-        </div>
-        <div>
-          {/* related projects */}
-        </div>
-      </footer>
     </article>
   )
 }
