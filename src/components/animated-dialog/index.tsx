@@ -1,14 +1,16 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { Dialog, DialogPortal, DialogOverlay, DialogContent } from "@/components/ui/dialog";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
+import { Dialog as DialogPrimitive } from "radix-ui";
+import { DialogPortal, DialogOverlay } from "@/components/ui/dialog";
+import { PropsWithChildren } from "react";
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: {
-    y: "100%",
-    rotateY: -368,
+    top: "100%",
+    rotateY: -360,
     opacity: 0,
   },
   visible: {
-    y: 0,
+    top: "50%",
     rotateY: 0,
     opacity: 1,
     transition: {
@@ -18,8 +20,8 @@ const cardVariants = {
     },
   },
   exit: {
-    y: "100%",
-    rotateY: -368,
+    top: "100%",
+    rotateY: -360,
     opacity: 0,
     transition: {
       duration: 0.4,
@@ -28,34 +30,42 @@ const cardVariants = {
   },
 };
 
-export function AnimatedDialog({children, open}) {
+type Props = PropsWithChildren & {
+  open?: boolean;
+};
+
+export function AnimatedDialog(props: Props) {
+  const { children, open } = props;
+  
   return (
-    <DialogPortal forceMount>
+    <DialogPortal forceMount data-slot="dialog-portal">
       <AnimatePresence>
-        {open && (
-          <>
-            <DialogOverlay asChild forceMount>
+        {
+          open && <>
+            <DialogOverlay asChild>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               />
             </DialogOverlay>
-
-            <DialogContent>
+            <DialogPrimitive.Content
+              data-slot="dialog-content"
+              asChild
+              {...props}
+            >
               <motion.div
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                style={{ perspective: 1000, transformOrigin: "center center" }}
-                className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-lg"
+                className="fixed top-1/2 left-1/2 -translate-1/2 z-50"
               >
                 {children}
               </motion.div>
-            </DialogContent>
+            </DialogPrimitive.Content>
           </>
-        )}
+        }
       </AnimatePresence>
     </DialogPortal>
   );
