@@ -7,10 +7,47 @@ import { Dialog as DialogPrimitive } from "radix-ui"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
+interface DialogContextValue {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+const DialogContext = React.createContext<DialogContextValue | null>(null);
+
+function useDialog() {
+  const dialog = React.useContext(DialogContext);
+
+  if (dialog === null) throw new Error("Hook useDialog must be used within a Dialog!");
+
+  return dialog;
+}
+
 function Dialog({
+  open: propOpen,
+  onOpenChange: propSetOpen,
   ...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
-  return <DialogPrimitive.Root data-slot="dialog" {...props} />
+  const [open, setOpen] = React.useState(propOpen ?? false);
+
+  React.useEffect(() => {
+    propSetOpen?.(open);
+  }, [open]);
+
+  const dialog: DialogContextValue = {
+    open,
+    setOpen,
+  };
+
+  return (
+    <DialogContext.Provider value={dialog}>
+      <DialogPrimitive.Root
+        open={open}
+        onOpenChange={setOpen}
+        data-slot="dialog"
+        {...props}
+      />
+    </DialogContext.Provider>
+  )
 }
 
 function DialogTrigger({
@@ -155,4 +192,5 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  useDialog,
 }
