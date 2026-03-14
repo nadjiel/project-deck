@@ -1,3 +1,5 @@
+"use client";
+
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { DialogPortal, DialogOverlay, useDialog } from "@/components/ui/dialog";
