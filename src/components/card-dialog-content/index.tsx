@@ -1,7 +1,7 @@
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Dialog as DialogPrimitive } from "radix-ui";
-import { DialogPortal, DialogOverlay } from "@/components/ui/dialog";
-import { PropsWithChildren } from "react";
+import { DialogPortal, DialogOverlay, useDialog } from "@/components/ui/dialog";
+import type { PropsWithChildren } from "react";
 
 const cardVariants: Variants = {
   hidden: {
@@ -30,12 +30,10 @@ const cardVariants: Variants = {
   },
 };
 
-type Props = PropsWithChildren & {
-  open?: boolean;
-};
+export function CardDialogContent(props: PropsWithChildren) {
+  const { children } = props;
 
-export function AnimatedDialog(props: Props) {
-  const { children, open } = props;
+  const { open } = useDialog();
   
   return (
     <DialogPortal forceMount data-slot="dialog-portal">
