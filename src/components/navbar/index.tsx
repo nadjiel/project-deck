@@ -4,14 +4,26 @@ import {
   PaletteIcon,
   GalleryHorizontalEndIcon,
   PhoneIcon,
+  FlaskConicalIcon,
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import type { ReactNode } from "react";
 
-const links = [
+interface LinkData {
+  href: string;
+  icon: ReactNode;
+}
+
+const developmentLinks: LinkData[] = [
+  { href: "/test", icon: <FlaskConicalIcon /> }
+];
+
+const links: LinkData[] = [
   { href: "/", icon: <BookImageIcon /> },
   { href: "/abilities", icon: <PaletteIcon /> },
   { href: "/projects", icon: <GalleryHorizontalEndIcon /> },
   { href: "/contact", icon: <PhoneIcon /> },
+  ...(process.env.NODE_ENV === "development" ? developmentLinks : []),
 ];
 
 export default function Navbar() {
