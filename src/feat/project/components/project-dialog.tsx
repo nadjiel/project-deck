@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import dayjs from "dayjs";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getIcon } from "@/lib/icon";
@@ -66,14 +67,30 @@ export default function ProjectDialog(props: Props) {
             <tbody>
               {
                 data.repository && <tr>
-                  <th scope="row">Repository:</th>
-                  <td><a href={data.repository ?? ""} target="_blank" rel="noopener noreferrer">{formatUrl(data.repository ?? "")}</a></td>
+                  <th scope="row" className="text-start">Repository:</th>
+                  <td>
+                    <a
+                      href={data.repository ?? ""}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {formatUrl(data.repository ?? "")}
+                    </a>
+                  </td>
                 </tr>
               }
               {
                 data.deployment && <tr>
                   <th scope="row">Deployment:</th>
-                  <td><a href={data.deployment ?? ""} target="_blank" rel="noopener noreferrer">{formatUrl(data.deployment ?? "")}</a></td>
+                  <td>
+                    <a
+                      href={data.deployment ?? ""}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {formatUrl(data.deployment ?? "")}
+                    </a>
+                  </td>
                 </tr>
               }
             </tbody>
@@ -83,8 +100,13 @@ export default function ProjectDialog(props: Props) {
           </div>
         </div>
         <aside>
-          <img src={data.icon ?? icon.src} alt="Something" />
-          <ul className="flex gap-2">
+          <Image
+            src={data.icon ?? icon.src}
+            alt="Something"
+            width={256}
+            height={256}
+          />
+          <ul className="flex gap-2 justify-center">
             {
               data.abilities
                 .map(a => {
