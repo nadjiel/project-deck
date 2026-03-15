@@ -12,7 +12,7 @@ import { CardDialogContent } from "@/components/card-dialog-content";
 import { ProjectCard, ProjectDialog, type Project } from "@/feat/project";
 
 interface Props {
-  projects: Project[];
+  projects: Project<"abilities">[];
   project?: Project<"abilities" | "related_projects">;
 }
 

@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import type { Project } from "@/feat/project";
 
 interface Props extends ComponentProps<typeof motion.article> {
-  data: Project;
+  data: Project<"abilities">;
   swipeThreshold?: number;
   onSwipeRight?: () => void;
   onSwipeLeft?: () => void;
@@ -29,6 +29,10 @@ export default function ProjectCard(props: Props) {
     className,
     ...rest
   } = props;
+
+  console.log(data)
+
+  const abilities = data.abilities.toSorted((a, b) => b.level - a.level);
   
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -45,7 +49,7 @@ export default function ProjectCard(props: Props) {
 
   const [icon, setIcon] = useState(data.icon || logo.src);
 
-  const AbilityIcon = icons[data.ability_icon as keyof typeof icons] ?? CodeIcon;
+  const AbilityIcon = icons[abilities[0]?.ability.icon as keyof typeof icons] ?? CodeIcon;
   
   const onDragEnd = () => {
     if (x.get() > swipeThreshold) {

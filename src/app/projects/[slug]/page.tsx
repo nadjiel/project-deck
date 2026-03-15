@@ -19,7 +19,18 @@ export default async function Project(props: PageProps<"/projects/[slug]">) {
     { data: projects },
     { data: project },
   ] = await Promise.all([
-    supabase.from("projects").select(),
+    supabase
+      .from("projects")
+      .select(`
+        *,
+        abilities:project_abilities (
+          level,
+          ability:abilities (
+            name,
+            icon
+          )
+        )
+      `),
     supabase
     .from("projects")
     .select(`

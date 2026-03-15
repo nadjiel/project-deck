@@ -8,7 +8,18 @@ export default async function Projects() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: projects } = await supabase.from("projects").select();
+  const { data: projects } = await supabase
+    .from("projects")
+    .select(`
+      *,
+      abilities:project_abilities (
+        level,
+        ability:abilities (
+          name,
+          icon
+        )
+      )
+    `);
 
   if (projects === null) throw new Error("Impossible to load projects!");
 
