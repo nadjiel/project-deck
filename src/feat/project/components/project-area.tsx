@@ -2,8 +2,14 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ProjectCard } from "@/feat/project";
-import type { Project } from "@/feat/project";
+import {
+  Dialog,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { CardDialogContent } from "@/components/card-dialog-content";
+import { ProjectCard, ProjectDialog, type Project } from "@/feat/project";
 
 interface Props {
   projects: Project[];
@@ -11,7 +17,10 @@ interface Props {
 }
 
 export default function ProjectArea(props: Props) {
-  const { projects: propProjects } = props;
+  const {
+    projects: propProjects,
+    project,
+  } = props;
 
   const [projects, setProjects] = useState(propProjects);
   const [index, setIndex] = useState(0);
@@ -38,6 +47,24 @@ export default function ProjectArea(props: Props) {
           className="col-start-1 col-end-1 row-start-1 row-end-1"
         />
       )) }
+      {
+        project && (
+          <Dialog
+            open={true}
+            onOpenChange={open => !open && router.push("/projects")}
+          >
+            <CardDialogContent>
+              <DialogHeader>
+                <DialogTitle className="sr-only">{project.name}</DialogTitle>
+                <DialogDescription className="sr-only">
+                  {project.description}
+                </DialogDescription>
+              </DialogHeader>
+              <ProjectDialog data={project} />
+            </CardDialogContent>
+          </Dialog>
+        )
+      }
     </div>
   );
 }

@@ -44,13 +44,11 @@ export default async function Project(props: PageProps<"/projects/[slug]">) {
   if (projects === null) throw new Error("Impossible to load projects");
   if (project === null) throw new Error("Impossible to load project");
 
-  console.log(slug)
-
   return (
     <div className="flex flex-col flex-1">
       <Heading variant="h1">Know my Work!</Heading>
       <SearchBox />
-      <ProjectArea projects={projects} />
+      <ProjectArea projects={projects} project={project} />
     </div>
     // <>
     //   <ProjectPage />
