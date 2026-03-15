@@ -29,9 +29,11 @@ export default async function Projects() {
   if (projects === null) throw new Error("Impossible to load projects!");
 
   return (
-    <div className="flex flex-col flex-1">
-      <Heading variant="h1">Know my Work!</Heading>
-      <SearchBox />
+    <div className="flex flex-col flex-1 items-center">
+      <div className="flex flex-col items-center gap-2 w-full">
+        <Heading variant="h1">Know my Work!</Heading>
+        <SearchBox placeholder="Search a project..." className="max-w-sm" />
+      </div>
       <ProjectArea projects={projects} />
     </div>
   );

@@ -30,7 +30,7 @@ export default function ProjectArea(props: Props) {
   }
 
   return (
-    <div className="grid place-content-center flex-1 overflow-hidden">
+    <div className="grid place-content-center flex-1">
       { projects.map((p, i) => (
         <ProjectCard
           key={p.id}
@@ -38,10 +38,6 @@ export default function ProjectArea(props: Props) {
           onSwipeRight={() => setIndex(i => wrapIndex(i + 1))}
           onSwipeLeft={() => setIndex(i => wrapIndex(i - 1))}
           onSwipeUp={() => {
-            setProject(projects.find(_p => _p.slug === p.slug));
-            window.history.pushState(null, "", `/projects/${p.slug}`);
-          }}
-          onClick={() => {
             setProject(projects.find(_p => _p.slug === p.slug));
             window.history.pushState(null, "", `/projects/${p.slug}`);
           }}
