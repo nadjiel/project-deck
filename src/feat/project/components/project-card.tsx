@@ -12,11 +12,12 @@ import type { Database } from "@/db/supabase/types";
 
 type Project = Database["public"]["Tables"]["projects"]["Row"];
 
-interface Props extends ComponentProps<"article"> {
+interface Props extends ComponentProps<typeof motion.article> {
   data: Project;
   swipeThreshold?: number;
   onSwipeRight?: () => void;
   onSwipeLeft?: () => void;
+  onSwipeUp?: () => void;
 }
 
 export default function ProjectCard(props: Props) {
@@ -24,9 +25,11 @@ export default function ProjectCard(props: Props) {
     swipeThreshold = 100,
     onSwipeRight,
     onSwipeLeft,
+    onSwipeUp,
     data,
     style,
     className,
+    ...rest
   } = props;
   
   const x = useMotionValue(0);
@@ -51,6 +54,8 @@ export default function ProjectCard(props: Props) {
       onSwipeRight?.();
     } else if (x.get() < -swipeThreshold) {
       onSwipeLeft?.();
+    } else if (y.get() < -swipeThreshold) {
+      onSwipeUp?.();
     }
   };
 
@@ -76,6 +81,7 @@ export default function ProjectCard(props: Props) {
         "hover:cursor-grab active:cursor-grabbing",
         className
       )}
+      {...rest}
     >
       <header className="absolute -top-4 -left-4 flex justify-between items-center w-full">
         <div className="bg-border p-6 rounded-xl text-background">
@@ -89,6 +95,7 @@ export default function ProjectCard(props: Props) {
         width={256}
         height={256}
         onError={() => setIcon(logo.src)}
+        draggable={false}
         className="max-w-1/2"
       />
       <footer className="absolute -bottom-4 -right-4 flex justify-between items-center w-full rotate-180">

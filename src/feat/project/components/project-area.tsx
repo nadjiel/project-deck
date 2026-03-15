@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ProjectCard } from "@/feat/project";
 import type { Database } from "@/db/supabase/types";
@@ -16,6 +17,8 @@ export default function ProjectArea(props: Props) {
   const [projects, setProjects] = useState(propProjects);
   const [index, setIndex] = useState(0);
 
+  const router = useRouter();
+
   const wrapIndex = (index: number) => {
     return ((index % projects.length) + projects.length) % projects.length;
   }
@@ -28,6 +31,8 @@ export default function ProjectArea(props: Props) {
           data={p}
           onSwipeRight={() => setIndex(i => wrapIndex(i + 1))}
           onSwipeLeft={() => setIndex(i => wrapIndex(i - 1))}
+          onSwipeUp={() => router.push(`/projects/${p.slug}`)}
+          onClick={() => router.push(`/projects/${p.slug}`)}
           style={{
             zIndex: i === index ? projects.length : projects.length - i
           }}
