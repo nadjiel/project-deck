@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Dialog as DialogPrimitive } from "radix-ui";
 import { DialogPortal, DialogOverlay, useDialog } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
 import type { PropsWithChildren } from "react";
 
 const cardVariants: Variants = {
@@ -32,8 +33,10 @@ const cardVariants: Variants = {
   },
 };
 
-export function CardDialogContent(props: PropsWithChildren) {
-  const { children } = props;
+export function CardDialogContent(
+  props: React.ComponentProps<typeof DialogPrimitive.Content>
+) {
+  const { children, className } = props;
 
   const { open } = useDialog();
   
@@ -52,6 +55,7 @@ export function CardDialogContent(props: PropsWithChildren) {
             <DialogPrimitive.Content
               data-slot="dialog-content"
               asChild
+              className={cn("fixed top-1/2 left-1/2 -translate-1/2 z-50", className)}
               {...props}
             >
               <motion.div
@@ -59,7 +63,6 @@ export function CardDialogContent(props: PropsWithChildren) {
                 initial="hidden"
                 animate="visible"
                 exit="exit"
-                className="fixed top-1/2 left-1/2 -translate-1/2 z-50"
               >
                 {children}
               </motion.div>

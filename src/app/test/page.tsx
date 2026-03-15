@@ -9,6 +9,7 @@ import {
 import { CardDialogContent } from "@/components/card-dialog-content";
 import { createClient } from "@/db/supabase/server";
 import { ProjectDialog } from "@/feat/project";
+import ProjectCard from "@/components/project-card";
 
 export default async function Test() {
   const cookieStore = await cookies();
@@ -26,24 +27,28 @@ export default async function Test() {
         )
       )
     `)
-    .eq("name", "Im Share")
+    .eq("name", "ReciclAE Website")
     .single();
 
   if (project === null) throw new Error("Impossible to load project");
 
   return (
-    <Dialog >
-      <DialogTrigger>Open</DialogTrigger>
-      <CardDialogContent>
-        <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
-          <DialogDescription>
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
-          </DialogDescription>
-        </DialogHeader>
-        <ProjectDialog data={project} />
-      </CardDialogContent>
-    </Dialog>
+    <>
+      <ProjectDialog data={project} />
+      <Dialog >
+        <DialogTrigger>Open</DialogTrigger>
+        <CardDialogContent>
+          <DialogHeader>
+            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogDescription>
+              This action cannot be undone. This will permanently delete your account
+              and remove your data from our servers.
+            </DialogDescription>
+          </DialogHeader>
+          <ProjectDialog data={project} />
+        </CardDialogContent>
+      </Dialog>
+      {/* <ProjectCard data={project} /> */}
+    </>
   );
 }

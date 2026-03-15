@@ -35,12 +35,12 @@ export default function ProjectDialog(props: Props) {
   const { data } = props;
 
   return (
-    <article>
+    <article className="border-16 rounded-lg bg-background p-4 max-w-4xl">
       <header>
         <Heading>{data.name}</Heading>
         <div>
-          <span>{data.started_at}</span>
-          <span>{data.finished_at}</span>
+          { data.started_at && <span>{new Date(data.started_at).toLocaleDateString()}</span> }
+          { data.finished_at && <span>{new Date(data.finished_at).toLocaleDateString()}</span> }
         </div>
       </header>
       <div className="flex">
@@ -48,14 +48,18 @@ export default function ProjectDialog(props: Props) {
           <Paragraph>{data.description}</Paragraph>
           <table>
             <tbody>
-              <tr>
-                <th scope="row">Repository:</th>
-                <td><a href={data.repository ?? ""} target="_blank" rel="noopener noreferrer">{formatUrl(data.repository ?? "")}</a></td>
-              </tr>
-              <tr>
-                <th scope="row">Deployment:</th>
-                <td><a href={data.deployment ?? ""} target="_blank" rel="noopener noreferrer">{formatUrl(data.deployment ?? "")}</a></td>
-              </tr>
+              {
+                data.repository && <tr>
+                  <th scope="row">Repository:</th>
+                  <td><a href={data.repository ?? ""} target="_blank" rel="noopener noreferrer">{formatUrl(data.repository ?? "")}</a></td>
+                </tr>
+              }
+              {
+                data.deployment && <tr>
+                  <th scope="row">Deployment:</th>
+                  <td><a href={data.deployment ?? ""} target="_blank" rel="noopener noreferrer">{formatUrl(data.deployment ?? "")}</a></td>
+                </tr>
+              }
             </tbody>
           </table>
           <div>
