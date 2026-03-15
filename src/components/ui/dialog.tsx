@@ -30,6 +30,10 @@ function Dialog({
   const [open, setOpen] = React.useState(propOpen ?? false);
 
   React.useEffect(() => {
+    if (propOpen !== undefined) setOpen(propOpen);
+  }, [propOpen]);
+
+  React.useEffect(() => {
     propSetOpen?.(open);
   }, [open]);
 
