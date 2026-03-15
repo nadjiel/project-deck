@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { Heading } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import SearchBox from "@/components/search-box";
-import { ProjectArea, ProjectLayoutButton } from "@/feat/project";
+import { ProjectLayout, ProjectLayoutButton } from "@/feat/project";
 import { createClient } from "@/db/supabase/server";
 
 export default async function Projects() {
@@ -38,7 +38,7 @@ export default async function Projects() {
           <ProjectLayoutButton />
         </div>
       </div>
-      <ProjectArea projects={projects} />
+      <ProjectLayout projects={projects} className="flex-1" />
     </div>
   );
 }
