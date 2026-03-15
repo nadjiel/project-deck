@@ -3,12 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ProjectCard } from "@/feat/project";
-import type { Database } from "@/db/supabase/types";
-
-type Project = Database["public"]["Tables"]["projects"]["Row"];
+import type { Project } from "@/feat/project";
 
 interface Props {
   projects: Project[];
+  project?: Project<"abilities" | "related_projects">;
 }
 
 export default function ProjectArea(props: Props) {

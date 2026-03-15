@@ -1,8 +1,10 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/db/supabase/server";
+import { Heading } from "@/components/ui/typography";
+import SearchBox from "@/components/search-box";
+import { ProjectArea } from "@/feat/project";
 import { Dialog, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { CardDialogContent } from "@/components/card-dialog-content";
-import ProjectPage from "@/app/projects/page";
 import { ProjectDialog } from "@/feat/project";
 
 export default async function Project(props: PageProps<"/projects/[slug]">) {
@@ -13,7 +15,12 @@ export default async function Project(props: PageProps<"/projects/[slug]">) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: project } = await supabase
+  const [
+    { data: projects },
+    { data: project },
+  ] = await Promise.all([
+    supabase.from("projects").select(),
+    supabase
     .from("projects")
     .select(`
       *,
@@ -31,28 +38,35 @@ export default async function Project(props: PageProps<"/projects/[slug]">) {
       )
     `)
     .eq("slug", slug)
-    .single();
+    .single(),
+  ]);
 
+  if (projects === null) throw new Error("Impossible to load projects");
   if (project === null) throw new Error("Impossible to load project");
 
   console.log(slug)
 
   return (
-    <>
-      <ProjectPage />
-      <Dialog >
-        <DialogTrigger>Open</DialogTrigger>
-        <CardDialogContent>
-          <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
-            </DialogDescription>
-          </DialogHeader>
-          <ProjectDialog data={project} />
-        </CardDialogContent>
-      </Dialog>
-    </>
+    <div className="flex flex-col flex-1">
+      <Heading variant="h1">Know my Work!</Heading>
+      <SearchBox />
+      <ProjectArea projects={projects} />
+    </div>
+    // <>
+    //   <ProjectPage />
+    //   <Dialog >
+    //     <DialogTrigger>Open</DialogTrigger>
+    //     <CardDialogContent>
+    //       <DialogHeader>
+    //         <DialogTitle>Are you absolutely sure?</DialogTitle>
+    //         <DialogDescription>
+    //           This action cannot be undone. This will permanently delete your account
+    //           and remove your data from our servers.
+    //         </DialogDescription>
+    //       </DialogHeader>
+    //       <ProjectDialog data={project} />
+    //     </CardDialogContent>
+    //   </Dialog>
+    // </>
   );
 }

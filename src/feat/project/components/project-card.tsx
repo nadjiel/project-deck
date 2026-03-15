@@ -8,9 +8,7 @@ import { motion, useMotionValue, useTransform } from "motion/react";
 import { Heading } from "@/components/ui/typography";
 import logo from "@/assets/logo.svg";
 import { cn } from "@/lib/utils";
-import type { Database } from "@/db/supabase/types";
-
-type Project = Database["public"]["Tables"]["projects"]["Row"];
+import type { Project } from "@/feat/project";
 
 interface Props extends ComponentProps<typeof motion.article> {
   data: Project;
