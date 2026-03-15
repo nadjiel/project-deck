@@ -29,27 +29,32 @@ export default async function Project(props: PageProps<"/projects/[slug]">) {
             name,
             icon
           )
+        ),
+        related_projects:project_relations!relater_project_id (
+          project:projects!related_project_id (
+            *
+          )
         )
       `),
     supabase
-    .from("projects")
-    .select(`
-      *,
-      abilities:project_abilities (
-        level,
-        ability:abilities (
-          name,
-          icon
+      .from("projects")
+      .select(`
+        *,
+        abilities:project_abilities (
+          level,
+          ability:abilities (
+            name,
+            icon
+          )
+        ),
+        related_projects:project_relations!relater_project_id (
+          project:projects!related_project_id (
+            *
+          )
         )
-      ),
-      related_projects:project_relations!relater_project_id (
-        project:projects!related_project_id (
-          *
-        )
-      )
-    `)
-    .eq("slug", slug)
-    .single(),
+      `)
+      .eq("slug", slug)
+      .single(),
   ]);
 
   if (projects === null) throw new Error("Impossible to load projects");

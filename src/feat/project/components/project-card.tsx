@@ -30,8 +30,6 @@ export default function ProjectCard(props: Props) {
     ...rest
   } = props;
 
-  console.log(data)
-
   const abilities = data.abilities.toSorted((a, b) => b.level - a.level);
   
   const x = useMotionValue(0);
