@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getIcon } from "@/lib/icon";
 import { formatUrl } from "@/lib/url";
@@ -34,13 +35,20 @@ interface Props {
 export default function ProjectDialog(props: Props) {
   const { data } = props;
 
+  const dateRange = Array.from(new Set([
+    dayjs(data.started_at).format("MM/YYYY"),
+    dayjs(data.finished_at).format("MM/YYYY"),
+  ]));
+
   return (
     <article className="border-16 rounded-lg bg-background p-4 max-w-4xl">
-      <header>
+      <header className="flex justify-between items-center">
         <Heading>{data.name}</Heading>
-        <div>
-          { data.started_at && <span>{new Date(data.started_at).toLocaleDateString()}</span> }
-          { data.finished_at && <span>{new Date(data.finished_at).toLocaleDateString()}</span> }
+        <div className="flex gap-2">
+          { dateRange.flatMap((d, i) => [
+            i > 0 && <span key={`sep-${i}`}>•</span>,
+            <span key={d}>{d}</span>,
+          ]) }
         </div>
       </header>
       <div className="flex">

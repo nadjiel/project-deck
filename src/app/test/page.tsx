@@ -8,8 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { CardDialogContent } from "@/components/card-dialog-content";
 import { createClient } from "@/db/supabase/server";
-import { ProjectDialog } from "@/feat/project";
-import ProjectCard from "@/components/project-card";
+import { ProjectDialog, ProjectCard } from "@/feat/project";
 
 export default async function Test() {
   const cookieStore = await cookies();

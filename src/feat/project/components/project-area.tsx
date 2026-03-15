@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ProjectCard from "@/components/project-card";
+import { ProjectCard } from "@/feat/project";
 import type { Database } from "@/db/supabase/types";
 
 type Project = Database["public"]["Tables"]["projects"]["Row"];
