@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import { Heading } from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
 import SearchBox from "@/components/search-box";
-import { ProjectArea } from "@/feat/project";
+import { ProjectArea, ProjectLayoutButton } from "@/feat/project";
 import { createClient } from "@/db/supabase/server";
 
 export default async function Projects() {
@@ -32,7 +33,10 @@ export default async function Projects() {
     <div className="flex flex-col flex-1 items-center">
       <div className="flex flex-col items-center gap-2 w-full">
         <Heading variant="h1">Know my Work!</Heading>
-        <SearchBox placeholder="Search a project..." className="max-w-sm" />
+        <div className="flex gap-2">
+          <SearchBox placeholder="Search a project..." className="max-w-sm" />
+          <ProjectLayoutButton />
+        </div>
       </div>
       <ProjectArea projects={projects} />
     </div>
