@@ -1,3 +1,4 @@
+import Link from "next/link";
 import dayjs from "dayjs";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getIcon } from "@/lib/icon";
@@ -7,16 +8,23 @@ import type { Tables } from "@/db/supabase/types";
 
 type Ability = Tables<"abilities">;
 
+type Project = Tables<"projects">;
+
 type ProjectAbility = Pick<Tables<"project_abilities">, "level"> & {
   ability: Ability;
 };
 
-type Project = Tables<"projects"> & {
+type ProjectRelation = {
+  project: Project;
+};
+
+type ProjectType = Tables<"projects"> & {
   abilities: ProjectAbility[];
+  related_projects: ProjectRelation[];
 };
 
 interface Props {
-  data: Project;
+  data: ProjectType;
 }
 
 // supabase
@@ -51,8 +59,8 @@ export default function ProjectDialog(props: Props) {
           ]) }
         </div>
       </header>
-      <div className="flex">
-        <div>
+      <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start gap-4">
+        <div className="flex flex-col gap-2">
           <Paragraph>{data.description}</Paragraph>
           <table>
             <tbody>
@@ -71,7 +79,7 @@ export default function ProjectDialog(props: Props) {
             </tbody>
           </table>
           <div>
-            {/* related projects */}
+            { data.related_projects.map(({ project: p }) => <Link key={p.id} href={`/projects/${p.slug}`}>{p.name}</Link>)}
           </div>
         </div>
         <aside>

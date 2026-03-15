@@ -24,6 +24,11 @@ export default async function Test() {
           name,
           icon
         )
+      ),
+      related_projects:project_relations!relater_project_id (
+        project:projects!related_project_id (
+          *
+        )
       )
     `)
     .eq("name", "ReciclAE Website")
