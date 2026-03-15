@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { CardDialogContent } from "@/components/card-dialog-content";
-import { ProjectCard, ProjectDialog, type Project } from "@/feat/project";
+import { ProjectPlayingCard, ProjectDialog, type Project } from "@/feat/project";
 
 interface Props {
   projects: Project<"abilities" | "related_projects">[];
@@ -32,7 +32,7 @@ export default function ProjectArea(props: Props) {
   return (
     <div className="grid place-content-center flex-1">
       { projects.map((p, i) => (
-        <ProjectCard
+        <ProjectPlayingCard
           key={p.id}
           data={p}
           onSwipeRight={() => setIndex(i => wrapIndex(i + 1))}

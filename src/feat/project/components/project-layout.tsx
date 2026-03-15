@@ -11,17 +11,17 @@ interface Props extends ComponentProps<"div"> {
 }
 
 export default function ProjectLayout(props: Props) {
-  const { projects, project, className, ...rest } = props;
+  const { projects, project, ...rest } = props;
 
   const { layout } = useLayout(["grid", "deck"]);
 
   return (
-    <div className={cn("flex", className)} {...rest}>
+    <>
       {
         !layout || layout === "deck"
-          ? <ProjectArea projects={projects} project={project} />
-          : <ProjectGrid projects={projects} project={project} />
+          ? <ProjectArea projects={projects} project={project} {...rest} />
+          : <ProjectGrid projects={projects} project={project} {...rest} />
       }
-    </div>
+    </>
   );
 }
