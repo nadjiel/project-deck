@@ -1,7 +1,7 @@
 "use client";
 
 import chroma from "chroma-js";
-import { motion, useMotionValue, useMotionValueEvent } from "motion/react";
+import { motion, useMotionValue, useMotionValueEvent, useAnimate } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState, type ComponentProps } from "react";
 
@@ -11,6 +11,7 @@ interface CardData {
 
 interface CardProps extends ComponentProps<typeof motion.div> {
   data: CardData;
+  position: number;
 }
 
 const colors = chroma
@@ -20,37 +21,42 @@ const colors = chroma
 
 const cards = colors.map(c => ({ color: c }));
 
-export function Card({ data, style, className, ...props }: CardProps) {
-  const ref = useRef<HTMLDivElement>(null);
+let cardRender = 0;
 
-  const x = useMotionValue(0);
+export function Card({ data, position, style, className, ...props }: CardProps) {
+  const [scope, animate] = useAnimate<HTMLDivElement>();
+
+  if (data.color === "#800080") console.log(++cardRender)
 
   useEffect(() => {
-    const onPointerUp = e => {
-      // tween dragElastic to 0 and flip card
+    const onPointerUp = () => {
+      console.log("Pointer up")
+      // animate(scope.current, { x: 0, y: 0, scale: 1.5, opacity: 0 });
     }
 
-    ref.current?.addEventListener("pointerup", onPointerUp);
+    scope.current.addEventListener("pointerup", onPointerUp);
 
     return () => {
-      ref.current?.removeEventListener("pointerup", onPointerUp);
+      scope.current.removeEventListener("pointerup", onPointerUp);
     }
   }, [])
-
+  
   return (
     <motion.div
-      ref={ref}
+      ref={scope}
       drag
-      dragElastic={0}
-      dragConstraints={{
-        right: 0,
-      }}
+      dragSnapToOrigin
       style={{
         backgroundColor: data.color,
-        x,
+        y: 16 - Math.max(position * 4, 16),
         ...style,
       }}
-      className={cn("size-64 cursor-grab active:cursor-grabbing", className)}
+      onDragEnd={(event, info) => {
+        if (info.offset.x > 128) animate(scope.current, { x: "100vw", rotateY: 360 }, { duration: 1 });
+        else if (info.offset.x < -128) animate(scope.current, { x: "-100vw", rotateY: -360 }, { duration: 1 })
+        else if (info.offset.y < -128) animate(scope.current, { y: "-100vh", rotateY: 360 }, { duration: 1 })
+      }}
+      className={cn("size-64 rounded-lg cursor-grab active:cursor-grabbing", className)}
       {...props}
     >
 
@@ -61,11 +67,12 @@ export function Card({ data, style, className, ...props }: CardProps) {
 export default function Test() {
   return (
     <div
-      className="grid place-items-center flex-1"
+      className="grid place-items-center flex-1 overflow-hidden"
     >
-      { cards.map(c => (
+      { cards.map((c, i) => (
         <Card
           key={c.color}
+          position={i}
           data={c}
           className="col-start-1 row-start-1"
         />
