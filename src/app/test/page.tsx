@@ -1,58 +1,75 @@
-import { cookies } from "next/headers";
-import {
-  Dialog,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { CardDialogContent } from "@/components/card-dialog-content";
-import { createClient } from "@/db/supabase/server";
-import { ProjectDialog, ProjectCard } from "@/feat/project";
+"use client";
 
-export default async function Test() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+import chroma from "chroma-js";
+import { motion, useMotionValue, useMotionValueEvent } from "motion/react";
+import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState, type ComponentProps } from "react";
 
-  const { data: project } = await supabase
-    .from("projects")
-    .select(`
-      *,
-      abilities:project_abilities (
-        level,
-        ability:abilities (
-          name,
-          icon
-        )
-      ),
-      related_projects:project_relations!relater_project_id (
-        project:projects!related_project_id (
-          *
-        )
-      )
-    `)
-    .eq("name", "ReciclAE Website")
-    .single();
+interface CardData {
+  color: string;
+}
 
-  if (project === null) throw new Error("Impossible to load project");
+interface CardProps extends ComponentProps<typeof motion.div> {
+  data: CardData;
+}
+
+const colors = chroma
+  .scale(["red", "yellow", "green", "cyan", "blue", "purple"])
+  .mode("lab")
+  .colors(10);
+
+const cards = colors.map(c => ({ color: c }));
+
+export function Card({ data, style, className, ...props }: CardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const x = useMotionValue(0);
+
+  useEffect(() => {
+    const onPointerUp = e => {
+      // tween dragElastic to 0 and flip card
+    }
+
+    ref.current?.addEventListener("pointerup", onPointerUp);
+
+    return () => {
+      ref.current?.removeEventListener("pointerup", onPointerUp);
+    }
+  }, [])
 
   return (
-    <>
-      <ProjectDialog data={project} />
-      <Dialog >
-        <DialogTrigger>Open</DialogTrigger>
-        <CardDialogContent>
-          <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
-            </DialogDescription>
-          </DialogHeader>
-          <ProjectDialog data={project} />
-        </CardDialogContent>
-      </Dialog>
-      {/* <ProjectCard data={project} /> */}
-    </>
+    <motion.div
+      ref={ref}
+      drag
+      dragElastic={0}
+      dragConstraints={{
+        right: 0,
+      }}
+      style={{
+        backgroundColor: data.color,
+        x,
+        ...style,
+      }}
+      className={cn("size-64 cursor-grab active:cursor-grabbing", className)}
+      {...props}
+    >
+
+    </motion.div>
+  );
+}
+
+export default function Test() {
+  return (
+    <div
+      className="grid place-items-center flex-1"
+    >
+      { cards.map(c => (
+        <Card
+          key={c.color}
+          data={c}
+          className="col-start-1 row-start-1"
+        />
+      )) }
+    </div>
   );
 }
