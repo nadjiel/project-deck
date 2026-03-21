@@ -1,9 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { supabaseUrl, supabaseKey } from "@/config/env";
 import { type NextRequest, NextResponse } from "next/server";
 import type { Database } from "./types";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 
 export const createClient = (request: NextRequest) => {
   // Create an unmodified response
