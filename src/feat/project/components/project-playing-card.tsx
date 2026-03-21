@@ -4,7 +4,7 @@ import { useState, type ComponentProps } from "react";
 import Image from "next/image";
 import * as icons from "react-icons/si";
 import { CodeIcon } from "lucide-react";
-import { motion, useMotionValue, useTransform, animate } from "motion/react";
+import { motion } from "motion/react";
 import { Heading } from "@/components/ui/typography";
 import logo from "@/assets/logo.svg";
 import { cn } from "@/lib/utils";
@@ -12,75 +12,20 @@ import type { Project } from "@/feat/project";
 
 interface Props extends ComponentProps<typeof motion.article> {
   data: Project<"abilities">;
-  swipeThreshold?: number;
-  onSwipeRight?: () => void;
-  onSwipeLeft?: () => void;
-  onSwipeUp?: () => void;
 }
 
 export default function ProjectPlayingCard(props: Props) {
   const {
-    swipeThreshold = 100,
-    onSwipeRight,
-    onSwipeLeft,
-    onSwipeUp,
     data,
-    style,
     className,
     ...rest
   } = props;
 
   const abilities = data.abilities.toSorted((a, b) => b.level - a.level);
-  
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const rotateZ = useMotionValue(0);
-  const rotateY = useTransform(
-    x,
-    [-swipeThreshold * 2, 0, swipeThreshold * 2],
-    [-45, 1, 45]
-  );
-  const rotateX = useTransform(
-    y,
-    [-swipeThreshold * 2, 0, swipeThreshold * 2],
-    [22.5, 1, -22.5]
-  );
 
   const [icon, setIcon] = useState(data.icon || logo.src);
 
   const AbilityIcon = icons[abilities[0]?.ability.icon as keyof typeof icons] ?? CodeIcon;
-  
-  const onDragEnd = () => {
-    if (x.get() > swipeThreshold) {
-      onSwipeRight?.();
-    } else if (x.get() < -swipeThreshold) {
-      onSwipeLeft?.();
-    } else if (y.get() < -swipeThreshold) {
-      onSwipeUp?.();
-    }
-
-    animate(x, x.get() * 2, {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-      onComplete: () => animate(x, 0, { type: "spring", stiffness: 300, damping: 25 }),
-    });
-    animate(y, y.get() * 2, {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-      onComplete: () => {
-        // start spinning as it comes back
-        animate(rotateZ, 360, {
-          type: "tween",
-          duration: 0.5,
-          ease: "easeInOut",
-          onComplete: () => rotateZ.set(0), // reset without animating
-        });
-        animate(y, 0, { type: "spring", stiffness: 300, damping: 25 });
-      },
-    });
-  };
 
   return (
     <motion.article
@@ -92,18 +37,8 @@ export default function ProjectPlayingCard(props: Props) {
         bottom: 0,
       }}
       dragElastic={0.75}
-      onDragEnd={onDragEnd}
-      style={{
-        x,
-        y,
-        rotateY: rotateY,
-        rotateX: rotateX,
-        rotateZ: rotateZ,
-        ...style,
-      }}
       className={cn(
         "relative flex flex-col justify-center items-center border-16 rounded-lg bg-background aspect-3/4",
-        "hover:cursor-grab active:cursor-grabbing",
         className
       )}
       {...rest}
