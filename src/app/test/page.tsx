@@ -1,17 +1,16 @@
 "use client";
 
 import chroma from "chroma-js";
-import { motion, useMotionValue, useMotionValueEvent, useAnimate } from "motion/react";
+import { motion, useMotionValue, useDragControls, animate } from "motion/react";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState, type ComponentProps } from "react";
+import { useRef, useState, type ComponentPropsWithRef } from "react";
 
 interface CardData {
   color: string;
 }
 
-interface CardProps extends ComponentProps<typeof motion.div> {
+interface CardProps extends ComponentPropsWithRef<typeof motion.div> {
   data: CardData;
-  position: number;
 }
 
 const colors = chroma
@@ -23,40 +22,14 @@ const cards = colors.map(c => ({ color: c }));
 
 let cardRender = 0;
 
-export function Card({ data, position, style, className, ...props }: CardProps) {
-  const [scope, animate] = useAnimate<HTMLDivElement>();
-
-  if (data.color === "#800080") console.log(++cardRender)
-
-  useEffect(() => {
-    const onPointerUp = () => {
-      console.log("Pointer up")
-      // animate(scope.current, { x: 0, y: 0, scale: 1.5, opacity: 0 });
-    }
-
-    scope.current.addEventListener("pointerup", onPointerUp);
-
-    return () => {
-      scope.current.removeEventListener("pointerup", onPointerUp);
-    }
-  }, [])
-  
+export function Card({ data, style, className, ...props }: CardProps) {
   return (
     <motion.div
-      ref={scope}
-      drag
-      dragSnapToOrigin
       style={{
         backgroundColor: data.color,
-        y: 16 - Math.max(position * 4, 16),
         ...style,
       }}
-      onDragEnd={(event, info) => {
-        if (info.offset.x > 128) animate(scope.current, { x: "100vw", rotateY: 360 }, { duration: 1 });
-        else if (info.offset.x < -128) animate(scope.current, { x: "-100vw", rotateY: -360 }, { duration: 1 })
-        else if (info.offset.y < -128) animate(scope.current, { y: "-100vh", rotateY: 360 }, { duration: 1 })
-      }}
-      className={cn("size-64 rounded-lg cursor-grab active:cursor-grabbing", className)}
+      className={cn("size-64 rounded-lg", className)}
       {...props}
     >
 
@@ -65,18 +38,57 @@ export function Card({ data, position, style, className, ...props }: CardProps) 
 }
 
 export default function Test() {
+  const x = useMotionValue(0);
+
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const dragRef = useRef<HTMLDivElement>(null);
+
+  const dragControls = useDragControls();
+
+  const centerCard = (index: number) => {
+    const container = dragRef.current;
+    const card = cardRefs.current[index];
+    if (!container || !card) return;
+
+    const containerWidth = container.offsetWidth;
+    const cardOffsetLeft = card.offsetLeft;
+    const cardWidth = card.offsetWidth;
+
+    // Calculate x needed to center the card
+    const centeredX = -(cardOffsetLeft - containerWidth / 2 + cardWidth / 2);
+    
+    const clamped = Math.max(Math.min(centeredX, 0), centeredX - container.scrollWidth);
+    
+    console.log({ scrollWidth: container.scrollWidth, centeredX, containerWidth })
+
+    animate(x, clamped, { type: "spring", stiffness: 300, damping: 30 });
+  }
+
   return (
     <div
-      className="grid place-items-center flex-1 overflow-hidden"
+      ref={dragRef}
+      onPointerDown={(event) => dragControls.start(event)}
+      className="flex flex-col justify-center flex-1 overflow-x-hidden"
     >
-      { cards.map((c, i) => (
-        <Card
-          key={c.color}
-          position={i}
-          data={c}
-          className="col-start-1 row-start-1"
-        />
-      )) }
+      <motion.div
+        drag="x"
+        dragConstraints={dragRef}
+        dragControls={dragControls}
+        style={{
+          x: x,
+        }}
+        className="flex gap-8 p-8 w-max"
+      >
+        { cards.map((c, i) => (
+          <Card
+            key={c.color}
+            ref={(el) => { cardRefs.current[i] = el }}
+            data={c}
+            onClick={() => centerCard(i)}
+            className=""
+          />
+        )) }
+      </motion.div>
     </div>
   );
 }
