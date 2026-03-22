@@ -11,7 +11,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="bg-red-950 flex-1">
+    <div className="flex-1">
       <ContactForm placeholders={placeholders} />
     </div>
   );

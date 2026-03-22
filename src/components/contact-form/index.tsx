@@ -54,36 +54,40 @@ export default function ContactForm(props: Props) {
       onSubmit={handleSubmit(onValid ?? (() => {}), onInvalid)}
       action={`https://formsubmit.co/${email}`}
       method="POST"
+      className="flex flex-col gap-4 max-w-lg mx-auto"
     >
-      <Field>
-        <FieldLabel htmlFor="name">Name</FieldLabel>
-        <Input
-          id="name"
-          placeholder={placeholders?.name || "Your name..."}
-          {...register("name")}
-        />
-        <FieldError>{errors.name?.message}</FieldError>
-      </Field>
-      <Field>
-        <FieldLabel htmlFor="email">Email</FieldLabel>
-        <Input
-          id="email"
-          placeholder={placeholders?.email || "Your email address..."}
-          {...register("email")}
-        />
-        <FieldError>{errors.email?.message}</FieldError>
-      </Field>
-      <Field>
-        <FieldLabel htmlFor="message">Message</FieldLabel>
-        <Textarea
-          id="message"
-          placeholder={"What can I do for you?"}
-          {...register("message")}
-        />
-        <FieldError>{errors.message?.message}</FieldError>
-      </Field>
+      <div className="flex flex-col gap-4">
+        <Field>
+          <FieldLabel htmlFor="name">Name</FieldLabel>
+          <Input
+            id="name"
+            placeholder={placeholders?.name || "Your name..."}
+            {...register("name")}
+          />
+          <FieldError>{errors.name?.message}</FieldError>
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <Input
+            id="email"
+            placeholder={placeholders?.email || "Your email address..."}
+            {...register("email")}
+          />
+          <FieldError>{errors.email?.message}</FieldError>
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="message">Message</FieldLabel>
+          <Textarea
+            id="message"
+            placeholder={"What can I do for you?"}
+            {...register("message")}
+            className="h-32"
+          />
+          <FieldError>{errors.message?.message}</FieldError>
+        </Field>
+      </div>
 
-      <Button type="submit">Send</Button>
+      <Button type="submit" className="">Send</Button>
     </form>
   );
 }
