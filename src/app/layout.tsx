@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/header";
 import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
@@ -19,6 +20,7 @@ export default function RootLayout({
         <Header />
         <main className="flex flex-col flex-1 px-4 pt-8 pb-32">{children}</main>
         <Navbar />
+        <Toaster position="top-center" />
       </body>
     </html>
   );

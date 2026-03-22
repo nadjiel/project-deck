@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { email } from "@/config/env";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
@@ -25,6 +27,11 @@ interface ContactData {
   message: string;
 }
 
+interface EmailResponse {
+  success: string;
+  message: string;
+}
+
 interface Props {
   defaultValues?: Partial<ContactData>;
   placeholders?: Omit<ContactData, "message">;
@@ -32,13 +39,26 @@ interface Props {
   onInvalid?: () => void;
 }
 
+async function sendEmail(data: ContactData): Promise<EmailResponse> {
+  return fetch(`https://formsubmit.co/ajax/${email}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then(res => res.json());
+}
+
 export default function ContactForm(props: Props) {
   const {
     defaultValues,
     placeholders,
-    onValid,
+    onValid: onValidProp,
     onInvalid,
   } = props;
+
+  const [error, setError] = useState("");
 
   const {
     register,
@@ -49,11 +69,21 @@ export default function ContactForm(props: Props) {
     defaultValues,
   });
 
+  const onValid = async (data: SchemaOutput) => {
+    const res = await sendEmail(data);
+
+    if (res.success === "false") {
+      setError("There was an unexpected error!");
+    }
+    else {
+      toast("Your email was sent successfully!");
+      setError("");
+    };
+  }
+
   return (
     <form
-      onSubmit={handleSubmit(onValid ?? (() => {}), onInvalid)}
-      action={`https://formsubmit.co/${email}`}
-      method="POST"
+      onSubmit={handleSubmit(onValidProp ?? onValid, onInvalid)}
       className="flex flex-col gap-4 max-w-lg mx-auto"
     >
       <div className="flex flex-col gap-4">
@@ -87,7 +117,9 @@ export default function ContactForm(props: Props) {
         </Field>
       </div>
 
-      <Button type="submit" className="">Send</Button>
+      <span className="text-sm text-center text-destructive">{error}</span>
+
+      <Button type="submit" className="cursor-pointer">Send</Button>
     </form>
   );
 }
