@@ -13,6 +13,7 @@
   "dependencies": {
     "@base-ui/react": "^1.2.0",
     "@faker-js/faker": "^10.3.0",
+    "@hookform/resolvers": "^5.2.2",
     "@supabase/ssr": "^0.9.0",
     "chroma-js": "^3.2.0",
     "class-variance-authority": "^0.7.1",
@@ -29,7 +30,8 @@
     "tailwind-merge": "^3.5.0",
     "tone": "^15.1.22",
     "use-debounce": "^10.1.0",
-    "vaul": "^1.1.2"
+    "vaul": "^1.1.2",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.2",
