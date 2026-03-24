@@ -14,5 +14,14 @@
   "projects": {
     "title": "¡Conoce mi trabajo!",
     "search": "Buscar un proyecto..."
+  },
+  "contact_form": {
+    "name_label": "Nombre",
+    "name_placeholder": "Tu nombre...",
+    "email_label": "Correo electrónico",
+    "email_placeholder": "Tu correo electrónico...",
+    "message_label": "Mensaje",
+    "message_placeholder": "¿Qué puedo hacer por ti?",
+    "send": "Enviar"
   }
 }
