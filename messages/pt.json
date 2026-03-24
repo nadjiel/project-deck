@@ -3,5 +3,12 @@
     "greeting": "Oi! Sou Daniel!",
     "subtitle": "Desenvolvedor Fullstack",
     "description": "Sou um desenvolvedor web fullstack dedicado a trazer valor para usuários através de designs divertidos e empáticos. Também sou um criador de ferramentas de desenvolvimento e um entusiasta de código aberto."
+  },
+  "abilities": {
+    "title": "O que eu posso fazer por você?",
+    "service1": "Criar sites web distintos e memoráveis",
+    "service2": "Conceber protótipos e wireframes bem pensados",
+    "service3": "Desenvolver aplicações fullstack escaláveis",
+    "service4": "Oferecer serviços de tradução"
   }
 }
