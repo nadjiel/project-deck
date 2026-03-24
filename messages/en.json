@@ -10,5 +10,9 @@
     "service2": "Conceive thoughtful prototypes and wireframes",
     "service3": "Develop scalable fullstack applications",
     "service4": "Provide translation services"
+  },
+  "projects": {
+    "title": "Know my Work!",
+    "search": "Search a project..."
   }
 }

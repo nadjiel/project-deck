@@ -10,5 +10,9 @@
     "service2": "Conceber protótipos e wireframes bem pensados",
     "service3": "Desenvolver aplicações fullstack escaláveis",
     "service4": "Oferecer serviços de tradução"
+  },
+  "projects": {
+    "title": "Conheça meu trabalho!",
+    "search": "Buscar um projeto..."
   }
 }
