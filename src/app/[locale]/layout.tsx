@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/header";
 import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: "Nayel",
