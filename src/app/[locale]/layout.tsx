@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html lang="en">
+    <html>
       <body className="flex flex-col min-h-screen">
         <NextIntlClientProvider>
           <Header />
