@@ -23,5 +23,8 @@
     "message_label": "メッセージ",
     "message_placeholder": "どのようにお手伝いできますか？",
     "send": "送信"
+  },
+  "locale_button": {
+    "content": "言語"
   }
 }

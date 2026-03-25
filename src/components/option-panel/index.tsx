@@ -10,7 +10,7 @@ export default function OptionPanel(props: ComponentProps<"ul">) {
   return (
     <ul className={cn("flex gap-2 [&_button]:rounded-full", className)} {...rest}>
       <li><Button variant="ghost" size="icon"><PaletteIcon /></Button></li>
-      <li><LocaleButton /></li>
+      <li><LocaleButton size="icon" /></li>
       <li><Button variant="ghost" size="icon"><VolumeXIcon /></Button></li>
       <li><Button variant="ghost" size="icon"><PauseIcon /></Button></li>
     </ul>

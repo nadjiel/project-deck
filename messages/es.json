@@ -23,5 +23,8 @@
     "message_label": "Mensaje",
     "message_placeholder": "¿Qué puedo hacer por ti?",
     "send": "Enviar"
+  },
+  "locale_button": {
+    "content": "Idioma"
   }
 }
