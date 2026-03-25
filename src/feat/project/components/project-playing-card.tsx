@@ -29,14 +29,6 @@ export default function ProjectPlayingCard(props: Props) {
 
   return (
     <motion.article
-      drag={true}
-      dragConstraints={{
-        left: 0,
-        right: 0,
-        top: 0,
-        bottom: 0,
-      }}
-      dragElastic={0.75}
       className={cn(
         "relative flex flex-col justify-center items-center border-16 rounded-lg bg-background aspect-3/4",
         className
