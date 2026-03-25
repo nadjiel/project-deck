@@ -65,7 +65,7 @@ export default function LocaleButton(props: Props) {
           <span>{t("content")}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="not-sm:w-[calc(100vw-2rem)]">
         { locales.map(l => (
           <DropdownMenuItem
             key={l.locale}
