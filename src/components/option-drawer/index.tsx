@@ -9,6 +9,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
+import LocaleButton from "@/components/locale-button";
 import type { ComponentProps } from "react";
 
 export default function OptionDrawer(props: ComponentProps<typeof DrawerTrigger>) {
@@ -30,7 +31,7 @@ export default function OptionDrawer(props: ComponentProps<typeof DrawerTrigger>
         <DrawerFooter>
           <ul>
             <li>Theme</li>
-            <li>Language</li>
+            <li><LocaleButton /></li>
             <li>Mute</li>
             <li>Reduce Motion</li>
           </ul>

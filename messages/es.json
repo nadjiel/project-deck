@@ -1,0 +1,30 @@
+{
+  "Index": {
+    "greeting": "¡Hola! ¡Soy Daniel!",
+    "subtitle": "Desarollador Full Stack",
+    "description": "Soy un desarrollador web full stack dedicado a aportar valor a los usuarios a través de diseños atractivos y empáticos. También soy creador de herramientas de desarrollo y un entusiasta del código abierto."
+  },
+  "abilities": {
+    "title": "¿Qué puedo hacer por ti?",
+    "service1": "Crear sitios web distintivos y memorables",
+    "service2": "Concebir prototipos y wireframes bien pensados",
+    "service3": "Desarrollar aplicaciones fullstack escalables",
+    "service4": "Ofrecer servicios de traducción"
+  },
+  "projects": {
+    "title": "¡Conoce mi trabajo!",
+    "search": "Buscar un proyecto..."
+  },
+  "contact_form": {
+    "name_label": "Nombre",
+    "name_placeholder": "Tu nombre...",
+    "email_label": "Correo electrónico",
+    "email_placeholder": "Tu correo electrónico...",
+    "message_label": "Mensaje",
+    "message_placeholder": "¿Qué puedo hacer por ti?",
+    "send": "Enviar"
+  },
+  "locale_button": {
+    "content": "Idioma"
+  }
+}

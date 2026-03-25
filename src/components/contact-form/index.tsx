@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { email } from "@/config/env";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
@@ -60,6 +61,8 @@ export default function ContactForm(props: Props) {
 
   const [error, setError] = useState("");
 
+  const t = useTranslations("contact_form");
+
   const {
     register,
     handleSubmit,
@@ -88,28 +91,28 @@ export default function ContactForm(props: Props) {
     >
       <div className="flex flex-col gap-4">
         <Field>
-          <FieldLabel htmlFor="name">Name</FieldLabel>
+          <FieldLabel htmlFor="name">{t("name_label")}</FieldLabel>
           <Input
             id="name"
-            placeholder={placeholders?.name || "Your name..."}
+            placeholder={placeholders?.name || t("name_placeholder")}
             {...register("name")}
           />
           <FieldError>{errors.name?.message}</FieldError>
         </Field>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <FieldLabel htmlFor="email">{t("email_label")}</FieldLabel>
           <Input
             id="email"
-            placeholder={placeholders?.email || "Your email address..."}
+            placeholder={placeholders?.email || t("email_placeholder")}
             {...register("email")}
           />
           <FieldError>{errors.email?.message}</FieldError>
         </Field>
         <Field>
-          <FieldLabel htmlFor="message">Message</FieldLabel>
+          <FieldLabel htmlFor="message">{t("message_label")}</FieldLabel>
           <Textarea
             id="message"
-            placeholder={"What can I do for you?"}
+            placeholder={t("message_placeholder")}
             {...register("message")}
             className="h-32"
           />
@@ -119,7 +122,7 @@ export default function ContactForm(props: Props) {
 
       <span className="text-sm text-center text-destructive">{error}</span>
 
-      <Button type="submit" className="cursor-pointer">Send</Button>
+      <Button type="submit" className="cursor-pointer">{t("send")}</Button>
     </form>
   );
 }
