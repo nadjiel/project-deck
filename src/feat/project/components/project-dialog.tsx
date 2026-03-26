@@ -44,10 +44,14 @@ interface Props {
 export default function ProjectDialog(props: Props) {
   const { data } = props;
 
-  const dateRange = Array.from(new Set([
-    dayjs(data.started_at).format("MM/YYYY"),
-    dayjs(data.finished_at).format("MM/YYYY"),
-  ]));
+  const startDate = data.started_at !== null
+    && dayjs(data.started_at).format("MM/YYYY");
+  const endDate = data.finished_at !== null
+    && dayjs(data.finished_at).format("MM/YYYY");
+
+  const dateRange = Array.from(new Set(
+    [startDate, endDate].filter(d => d !== null)
+  ));
 
   return (
     <article className="border-16 rounded-lg bg-background p-4 max-w-4xl">
