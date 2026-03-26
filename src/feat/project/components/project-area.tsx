@@ -32,15 +32,15 @@ export default function ProjectArea(props: Props) {
       ref={dragRef}
       className={cn(
         "relative flex flex-col flex-1 overflow-hidden w-dvw",
-        "before:absolute before:left-0 before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 pointer-events-none",
-        "after:absolute after:right-0 after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 pointer-events-none",
+        "before:absolute before:left-0 before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 before:pointer-events-none",
+        "after:absolute after:right-0 after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 after:pointer-events-none",
       )}
     >
       <motion.div
         drag="x"
         dragConstraints={dragRef}
         whileDrag={{ pointerEvents: "none" }}
-        className="flex flex-1 items-center gap-4 w-max px-8"
+        className="flex flex-1 items-center gap-4 w-max px-8 touch-none"
       >
         { projects.map((p, i) => (
           <ProjectPlayingCard
