@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { CardDialogContent } from "@/components/card-dialog-content";
-import { ProjectPlayingCard, ProjectDialog, type Project } from "@/feat/project";
+import { ProjectCard, ProjectDialog, type Project } from "@/feat/project";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -43,7 +43,7 @@ export default function ProjectArea(props: Props) {
         className="flex flex-1 items-center gap-4 w-max px-8 touch-none"
       >
         { projects.map((p, i) => (
-          <ProjectPlayingCard
+          <ProjectCard
             key={p.id}
             data={p}
             onClick={() => {

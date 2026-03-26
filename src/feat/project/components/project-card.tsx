@@ -6,6 +6,7 @@ import * as icons from "react-icons/si";
 import { CodeIcon } from "lucide-react";
 import { Heading } from "@/components/ui/typography";
 import logo from "@/assets/logo.svg";
+import { cn } from "@/lib/utils";
 import type { Project } from "@/feat/project";
 
 interface Props extends ComponentProps<"article"> {
@@ -15,12 +16,13 @@ interface Props extends ComponentProps<"article"> {
 export default function ProjectCard(props: Props) {
   const {
     data,
-    style,
     className,
     ...rest
   } = props;
 
   const abilities = data.abilities.toSorted((a, b) => b.level - a.level);
+
+  if (data.name === "Im Share") console.log(abilities)
 
   const [icon, setIcon] = useState(data.icon || logo.src);
 
@@ -28,24 +30,33 @@ export default function ProjectCard(props: Props) {
 
   return (
     <article
-      className="flex flex-col items-center border-8 rounded-xl aspect-square p-2"
+      className={cn(
+        "relative flex flex-col justify-center items-center border-16 rounded-lg bg-background aspect-3/4",
+        className
+      )}
       {...rest}
     >
-      <header className="flex gap-2 justify-between w-full">
-        <Heading variant="h6">{data.name}</Heading>
-        <AbilityIcon size={32} />
+      <header className="absolute -top-4 -left-4 flex gap-2 w-[calc(100%+2rem)] pr-8">
+        <div className="bg-border h-min p-4 rounded-xl text-background">
+          <AbilityIcon size={32} />
+        </div>
+        <Heading variant="h2" className="w-full mt-4 truncate">{data.name}</Heading>
       </header>
-      <div className="flex flex-col flex-1 justify-center items-center">
-        <Image
-          src={icon}
-          alt={data.description ?? `Illustration of the ${data.name} project.`}
-          width={256}
-          height={256}
-          onError={() => setIcon(logo.src)}
-          draggable={false}
-          className="max-w-1/2"
-        />
-      </div>
+      <Image
+        src={icon}
+        alt={data.description ?? `Illustration of the ${data.name} project.`}
+        width={256}
+        height={256}
+        onError={() => setIcon(logo.src)}
+        draggable={false}
+        className="max-w-1/2"
+      />
+      <footer className="absolute -bottom-4 -right-4 flex gap-2 w-[calc(100%+2rem)] pr-8 rotate-180">
+        <div className="bg-border h-min p-4 rounded-xl text-background">
+          <AbilityIcon size={32} />
+        </div>
+        <Heading variant="h2" className="w-full mt-4 truncate">{data.name}</Heading>
+      </footer>
     </article>
   )
 }
