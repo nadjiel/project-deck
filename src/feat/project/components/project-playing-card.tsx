@@ -4,13 +4,12 @@ import { useState, type ComponentProps } from "react";
 import Image from "next/image";
 import * as icons from "react-icons/si";
 import { CodeIcon } from "lucide-react";
-import { motion } from "motion/react";
 import { Heading } from "@/components/ui/typography";
 import logo from "@/assets/logo.svg";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/feat/project";
 
-interface Props extends ComponentProps<typeof motion.article> {
+interface Props extends ComponentProps<"article"> {
   data: Project<"abilities">;
 }
 
@@ -28,7 +27,7 @@ export default function ProjectPlayingCard(props: Props) {
   const AbilityIcon = icons[abilities[0]?.ability.icon as keyof typeof icons] ?? CodeIcon;
 
   return (
-    <motion.article
+    <article
       className={cn(
         "relative flex flex-col justify-center items-center border-16 rounded-lg bg-background aspect-3/4",
         className
@@ -56,6 +55,6 @@ export default function ProjectPlayingCard(props: Props) {
         </div>
         <Heading>{data.name}</Heading>
       </footer>
-    </motion.article>
+    </article>
   )
 }
