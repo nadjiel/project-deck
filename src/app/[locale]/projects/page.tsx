@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Heading } from "@/components/ui/typography";
 import SearchBox from "@/components/search-box";
-import { ProjectLayout, ProjectLayoutButton } from "@/feat/project";
+import { ProjectLayout } from "@/feat/project";
 import { createClient } from "@/db/supabase/server";
 
 export default async function Projects() {
@@ -33,12 +33,9 @@ export default async function Projects() {
 
   return (
     <div className="flex flex-col flex-1 items-center">
-      <div className="flex flex-col items-center gap-2 w-full">
+      <div className="flex flex-col items-center gap-4 w-full mb-4">
         <Heading variant="h1">{t("title")}</Heading>
-        <div className="flex gap-2">
-          <SearchBox placeholder={t("search")} className="max-w-sm" />
-          <ProjectLayoutButton />
-        </div>
+        <SearchBox placeholder={t("search")} className="max-w-sm" />
       </div>
       <ProjectLayout projects={projects} className="flex-1" />
     </div>
