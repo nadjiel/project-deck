@@ -4,13 +4,14 @@ import { useState, type ComponentProps } from "react";
 import Image from "next/image";
 import * as icons from "react-icons/si";
 import { CodeIcon } from "lucide-react";
+import { createClient } from "@/db/supabase/client";
 import { Heading } from "@/components/ui/typography";
-import logo from "@/assets/logo.svg";
 import { cn } from "@/lib/utils";
+import logo from "@/assets/logo.svg";
 import type { Project } from "@/feat/project";
 
 interface Props extends ComponentProps<"article"> {
-  data: Project<"abilities">;
+  data: Project<"abilities" | "logo">;
 }
 
 export default function ProjectCard(props: Props) {
@@ -20,11 +21,25 @@ export default function ProjectCard(props: Props) {
     ...rest
   } = props;
 
+  const supabase = createClient();
+
+  const { data: logoUrl } = data.logo
+    ? supabase
+      .storage
+      .from("projects")
+      .getPublicUrl(data.logo.path)
+    : {};
+
+    if (data.name === "Im Share") {
+      console.log(logoUrl)
+    }
+    if (data.name === "IFernship") {
+      console.log(logoUrl)
+    }
+
   const abilities = data.abilities.toSorted((a, b) => b.level - a.level);
 
-  if (data.name === "Im Share") console.log(abilities)
-
-  const [icon, setIcon] = useState(data.icon || logo.src);
+  const [icon, setIcon] = useState(logoUrl?.publicUrl || logo.src);
 
   const AbilityIcon = icons[abilities[0]?.ability.icon as keyof typeof icons] ?? CodeIcon;
 

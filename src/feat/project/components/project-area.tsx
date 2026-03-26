@@ -11,8 +11,9 @@ import {
 import { CardDialogContent } from "@/components/card-dialog-content";
 import { ProjectCard, ProjectDialog, type Project } from "@/feat/project";
 import { cn } from "@/lib/utils";
+import type { ComponentProps } from "react";
 
-interface Props {
+interface Props extends ComponentProps<"div"> {
   projects: Project<"abilities" | "related_projects">[];
   project?: Project<"abilities" | "related_projects">;
 }
@@ -21,6 +22,8 @@ export default function ProjectArea(props: Props) {
   const {
     projects,
     project: propProject,
+    className,
+    ...rest
   } = props;
 
   const [project, setProject] = useState(propProject);
@@ -34,7 +37,9 @@ export default function ProjectArea(props: Props) {
         "relative flex flex-col flex-1 overflow-hidden w-dvw",
         "before:absolute before:left-0 before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 before:pointer-events-none",
         "after:absolute after:right-0 after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 after:pointer-events-none",
+        className,
       )}
+      {...rest}
     >
       <motion.div
         drag="x"

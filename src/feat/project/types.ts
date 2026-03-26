@@ -6,6 +6,8 @@ type ProjectTable = Tables<"projects">;
 
 type ProjectAbilityTable = Tables<"project_abilities">;
 
+type FileTable = Tables<"files">;
+
 type ProjectAbility = Pick<ProjectAbilityTable, "level"> & {
   ability: AbilityTable;
 };
@@ -14,7 +16,8 @@ type ProjectRelation = {
   project: ProjectTable;
 };
 
-export type Project<Features extends "abilities" | "related_projects" = never> =
+export type Project<Features extends "abilities" | "related_projects" | "logo" = never> =
   ProjectTable
   & ("abilities" extends Features ? { abilities: ProjectAbility[] } : {})
-  & ("related_projects" extends Features ? { related_projects: ProjectRelation[] } : {});
+  & ("related_projects" extends Features ? { related_projects: ProjectRelation[] } : {})
+  & ("logo" extends Features ? { logo: FileTable | null } : {});

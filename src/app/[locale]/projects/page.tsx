@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Heading } from "@/components/ui/typography";
 import SearchBox from "@/components/search-box";
-import { ProjectLayout } from "@/feat/project";
+import { ProjectArea } from "@/feat/project";
 import { createClient } from "@/db/supabase/server";
 
 export default async function Projects() {
@@ -26,6 +26,9 @@ export default async function Projects() {
         project:projects!related_project_id (
           *
         )
+      ),
+      logo:files (
+        *
       )
     `);
 
@@ -37,7 +40,7 @@ export default async function Projects() {
         <Heading variant="h1">{t("title")}</Heading>
         <SearchBox placeholder={t("search")} className="max-w-sm" />
       </div>
-      <ProjectLayout projects={projects} className="flex-1" />
+      <ProjectArea projects={projects} className="flex-1" />
     </div>
   );
 }
