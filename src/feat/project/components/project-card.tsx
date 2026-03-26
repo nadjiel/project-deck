@@ -11,7 +11,7 @@ import logo from "@/assets/logo.svg";
 import type { Project } from "@/feat/project";
 
 interface Props extends ComponentProps<"article"> {
-  data: Project<"abilities" | "logo">;
+  data: Project<"abilities" | "related_projects" | "logo">;
 }
 
 export default function ProjectCard(props: Props) {
@@ -26,16 +26,9 @@ export default function ProjectCard(props: Props) {
   const { data: logoUrl } = data.logo
     ? supabase
       .storage
-      .from("projects")
+      .from("public-uploads")
       .getPublicUrl(data.logo.path)
     : {};
-
-    if (data.name === "Im Share") {
-      console.log(logoUrl)
-    }
-    if (data.name === "IFernship") {
-      console.log(logoUrl)
-    }
 
   const abilities = data.abilities.toSorted((a, b) => b.level - a.level);
 
