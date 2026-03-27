@@ -1,62 +1,46 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { createClient } from "@/db/supabase/client";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getIcon } from "@/lib/icon";
 import { formatUrl } from "@/lib/url";
-import icon from "@/assets/logo.svg";
-import type { Tables } from "@/db/supabase/types";
-
-type Ability = Tables<"abilities">;
-
-type Project = Tables<"projects">;
-
-type ProjectAbility = Pick<Tables<"project_abilities">, "level"> & {
-  ability: Ability;
-};
-
-type ProjectRelation = {
-  project: Project;
-};
-
-type ProjectType = Tables<"projects"> & {
-  abilities: ProjectAbility[];
-  related_projects: ProjectRelation[];
-};
+import logo from "@/assets/logo.svg";
+import type { Project } from "@/feat/project/types";
 
 interface Props {
-  data: ProjectType;
+  data: Project<"related_projects" | "abilities" | "logo">;
 }
-
-// supabase
-//   .from('projects')
-//   .select(`
-//     *,
-//     abilities:project_abilities (
-//       level,
-//       ability:abilities (
-//         name,
-//         icon
-//       )
-//     )
-//   `)
 
 export default function ProjectDialog(props: Props) {
   const { data } = props;
+  
+  const supabase = createClient();
+
+  const { data: logoUrl } = data.logo
+    ? supabase
+      .storage
+      .from("public-uploads")
+      .getPublicUrl(data.logo.path)
+    : {};
 
   const startDate = data.started_at !== null
-    && dayjs(data.started_at).format("MM/YYYY");
+    ? dayjs(data.started_at).format("MM/YYYY")
+    : null;
   const endDate = data.finished_at !== null
-    && dayjs(data.finished_at).format("MM/YYYY");
+    ? dayjs(data.finished_at).format("MM/YYYY")
+    : null;
 
   const dateRange = Array.from(new Set(
     [startDate, endDate].filter(d => d !== null)
   ));
 
   return (
-    <article className="border-16 rounded-lg bg-background p-4 max-w-4xl">
+    <article className="border-16 rounded-lg bg-background p-4">
       <header className="flex justify-between items-center">
-        <Heading>{data.name}</Heading>
+        <Heading variant="h2">{data.name}</Heading>
         <div className="flex gap-2">
           { dateRange.flatMap((d, i) => [
             i > 0 && <span key={`sep-${i}`}>•</span>,
@@ -105,7 +89,7 @@ export default function ProjectDialog(props: Props) {
         </div>
         <aside>
           <Image
-            src={data.icon ?? icon.src}
+            src={logoUrl?.publicUrl || logo.src}
             alt="Something"
             width={256}
             height={256}
