@@ -52,12 +52,12 @@ export default function ProjectDialog(props: Props) {
         </div>
       </header>
       <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start gap-4">
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 flex-1">
           <Paragraph>{data.description}</Paragraph>
           <table>
-            <tbody>
+            <tbody className="grid grid-cols-[repeat(2,max-content)] grid-rows-2 gap-x-2">
               {
-                data.repository && <tr>
+                data.repository && <tr className="grid grid-cols-subgrid col-span-2">
                   <th scope="row" className="text-start">Repository:</th>
                   <td>
                     <a
@@ -71,7 +71,7 @@ export default function ProjectDialog(props: Props) {
                 </tr>
               }
               {
-                data.deployment && <tr>
+                data.deployment && <tr className="grid grid-cols-subgrid col-span-2">
                   <th scope="row" className="text-start">Deployment:</th>
                   <td>
                     <a
