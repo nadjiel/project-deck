@@ -14,8 +14,8 @@ import { cn } from "@/lib/utils";
 import type { ComponentProps } from "react";
 
 interface Props extends ComponentProps<"div"> {
-  projects: Project<"abilities" | "related_projects" | "logo">[];
-  project?: Project<"abilities" | "related_projects" | "logo">;
+  projects: Project<"abilities" | "related_projects" | "logo" | "category">[];
+  project?: Project<"abilities" | "related_projects" | "logo" | "category">;
 }
 
 export default function ProjectArea(props: Props) {

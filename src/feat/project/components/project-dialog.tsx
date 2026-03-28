@@ -11,7 +11,7 @@ import logo from "@/assets/logo.svg";
 import type { Project } from "@/feat/project/types";
 
 interface Props {
-  data: Project<"related_projects" | "abilities" | "logo">;
+  data: Project<"related_projects" | "abilities" | "logo" | "category">;
 }
 
 export default function ProjectDialog(props: Props) {
@@ -40,8 +40,11 @@ export default function ProjectDialog(props: Props) {
   return (
     <article className="border-16 rounded-lg bg-background p-4">
       <header className="flex justify-between items-center">
-        <Heading variant="h2">{data.name}</Heading>
-        <div className="flex gap-2">
+        <div>
+          <Heading variant="h2">{data.name}</Heading>
+          <Paragraph>{data.category?.name}</Paragraph>
+        </div>
+        <div className="flex gap-1">
           { dateRange.flatMap((d, i) => [
             i > 0 && <span key={`sep-${i}`}>•</span>,
             <span key={d}>{d}</span>,

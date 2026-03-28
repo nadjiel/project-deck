@@ -24,6 +24,9 @@ export default async function Test() {
       ),
       logo:files (
         *
+      ),
+      category:categories (
+        *
       )
     `)
     .eq("name", "IFernship")
