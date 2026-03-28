@@ -38,7 +38,7 @@ export default function ProjectDialog(props: Props) {
   ));
 
   return (
-    <article className="border-16 rounded-lg bg-background p-4">
+    <article className="flex flex-col gap-4 border-16 rounded-lg bg-background p-4 max-w-2xl">
       <header className="flex justify-between items-center">
         <div>
           <Heading variant="h2">{data.name}</Heading>
@@ -52,7 +52,7 @@ export default function ProjectDialog(props: Props) {
         </div>
       </header>
       <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start gap-4">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
           <Paragraph>{data.description}</Paragraph>
           <table>
             <tbody>
@@ -72,7 +72,7 @@ export default function ProjectDialog(props: Props) {
               }
               {
                 data.deployment && <tr>
-                  <th scope="row">Deployment:</th>
+                  <th scope="row" className="text-start">Deployment:</th>
                   <td>
                     <a
                       href={data.deployment ?? ""}
@@ -86,16 +86,22 @@ export default function ProjectDialog(props: Props) {
               }
             </tbody>
           </table>
-          <div>
-            { data.related_projects.map(({ project: p }) => <Link key={p.id} href={`/projects/${p.slug}`}>{p.name}</Link>)}
-          </div>
+          {
+            data.related_projects.length > 0 && (
+              <div>
+                { data.related_projects.map(({ project: p }) => (
+                  <Link key={p.id} href={`/projects/${p.slug}`}>{p.name}</Link>
+                ))}
+              </div>
+            )
+          }
         </div>
-        <aside>
+        <aside className="flex flex-col gap-4 my-4 px-4 w-full">
           <Image
             src={logoUrl?.publicUrl || logo.src}
-            alt="Something"
-            width={256}
-            height={256}
+            alt={`Logo of the ${data.name} project.`}
+            width={720}
+            height={720}
           />
           <ul className="flex gap-2 justify-center">
             {
