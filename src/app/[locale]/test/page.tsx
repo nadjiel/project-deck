@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/db/supabase/server";
-import { ProjectDialog } from "@/feat/project";
+import { ProjectView } from "@/feat/project";
 
 export default async function Test() {
   const cookieStore = await cookies();
@@ -29,12 +29,12 @@ export default async function Test() {
         *
       )
     `)
-    .eq("name", "IFernship")
+    .eq("slug", "im-share")
     .single();
 
   console.log(project)
 
   return (
-    <ProjectDialog data={project!} />
+    <ProjectView data={project!} />
   )
 }

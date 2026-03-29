@@ -29,6 +29,9 @@ export default async function Projects() {
       ),
       logo:files (
         *
+      ),
+      category:categories (
+        *
       )
     `);
 
