@@ -13,7 +13,7 @@ export default function ProjectLink(props: Props) {
 
   return (
     <HoverCard>
-      <HoverCardTrigger>
+      <HoverCardTrigger asChild>
         <Link
           key={data.id}
           href={`/projects/${data.slug}`}

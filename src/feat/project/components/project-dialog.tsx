@@ -92,9 +92,7 @@ export default function ProjectDialog(props: Props) {
             data.related_projects.length > 0 && (
               <ul className="flex gap-2">
                 { data.related_projects.map(({ project: p }) => (
-                  <li>
-                    <ProjectLink key={p.id} data={p} />
-                  </li>
+                  <li key={p.id}><ProjectLink data={p} /></li>
                 ))}
               </ul>
             )
