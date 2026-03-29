@@ -3,12 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { ArrowUpRightIcon } from "lucide-react";
 import { createClient } from "@/db/supabase/client";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { getIcon } from "@/lib/icon";
 import { formatUrl } from "@/lib/url";
+import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.svg";
-import type { Project } from "@/feat/project/types";
+import { ProjectLink, type Project } from "@/feat/project";
 
 interface Props {
   data: Project<"related_projects" | "abilities" | "logo" | "category">;
@@ -88,11 +90,13 @@ export default function ProjectDialog(props: Props) {
           </table>
           {
             data.related_projects.length > 0 && (
-              <div>
+              <ul className="flex gap-2">
                 { data.related_projects.map(({ project: p }) => (
-                  <Link key={p.id} href={`/projects/${p.slug}`}>{p.name}</Link>
+                  <li>
+                    <ProjectLink key={p.id} data={p} />
+                  </li>
                 ))}
-              </div>
+              </ul>
             )
           }
         </div>

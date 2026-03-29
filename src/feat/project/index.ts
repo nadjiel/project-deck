@@ -5,4 +5,5 @@ export { default as ProjectDialog } from "./components/project-dialog";
 export { default as ProjectCard } from "./components/project-card";
 export { default as ProjectCardSquare } from "./components/project-card-square";
 export { default as ProjectLayoutButton } from "./components/project-layout-button";
+export { default as ProjectLink } from "./components/project-link";
 export type { Project } from "./types";
