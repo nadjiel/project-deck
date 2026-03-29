@@ -10,7 +10,7 @@ import { getIcon } from "@/lib/icon";
 import { formatUrl } from "@/lib/url";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.svg";
-import { ProjectLink, type Project } from "@/feat/project";
+import { ProjectLink, ProjectAbility, type Project } from "@/feat/project";
 
 interface Props {
   data: Project<"related_projects" | "abilities" | "logo" | "category">;
@@ -88,15 +88,13 @@ export default function ProjectDialog(props: Props) {
               }
             </tbody>
           </table>
-          {
-            data.related_projects.length > 0 && (
-              <ul className="flex gap-2">
-                { data.related_projects.map(({ project: p }) => (
-                  <li key={p.id}><ProjectLink data={p} /></li>
-                ))}
-              </ul>
-            )
-          }
+          { data.related_projects.length > 0 && (
+            <ul className="flex gap-2">
+              { data.related_projects.map(({ project: p }) => (
+                <li key={p.id}><ProjectLink data={p} /></li>
+              ))}
+            </ul>
+          ) }
         </div>
         <aside className="flex flex-col gap-4 my-4 px-4 w-full">
           <Image
@@ -106,14 +104,9 @@ export default function ProjectDialog(props: Props) {
             height={720}
           />
           <ul className="flex gap-2 justify-center">
-            {
-              data.abilities
-                .map(a => {
-                  const Icon = getIcon(a.ability.icon ?? undefined);
-
-                  return <li key={a.ability.name}><Icon size={24} /></li>
-                })
-            }
+            { data.abilities.map(a => (
+              <li key={a.ability.name}><ProjectAbility data={a.ability} /></li>
+            )) }
           </ul>
         </aside>
       </div>
