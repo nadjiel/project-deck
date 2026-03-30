@@ -40,7 +40,7 @@ export default async function Projects() {
   return (
     <div className="flex flex-col flex-1 items-center">
       <div className="flex flex-col items-center gap-4 w-full mb-4">
-        <Heading variant="h1">{t("title")}</Heading>
+        <Heading variant="h1" className="text-center">{t("title")}</Heading>
         <SearchBox placeholder={t("search")} className="max-w-sm" />
       </div>
       <ProjectArea projects={projects} className="flex-1" />

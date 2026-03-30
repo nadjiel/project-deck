@@ -3,7 +3,7 @@
 import Image from "next/image";
 import dayjs from "dayjs";
 import { createClient } from "@/db/supabase/client";
-import { Heading, Paragraph } from "@/components/ui/typography";
+import { Paragraph } from "@/components/ui/typography";
 import { formatUrl } from "@/lib/url";
 import logo from "@/assets/logo.svg";
 import { ProjectLink, ProjectAbility, type Project } from "@/feat/project";
@@ -37,68 +37,64 @@ export default function ProjectView(props: Props) {
 
   return (
     <article className="flex flex-col gap-4">
-      <div className="flex flex-col-reverse items-center sm:flex-row sm:items-start gap-4">
-        <div className="flex flex-col gap-4 flex-2">
-          <Paragraph className="flex-1 basis-64">{data.description}</Paragraph>
-          <table>
-            <tbody className="grid grid-cols-[repeat(2,max-content)] grid-rows-2 gap-x-2">
-              {
-                data.repository && <tr className="grid grid-cols-subgrid col-span-2">
-                  <th scope="row" className="text-start">Repository:</th>
-                  <td>
-                    <a
-                      href={data.repository ?? ""}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {formatUrl(data.repository ?? "")}
-                    </a>
-                  </td>
-                </tr>
-              }
-              {
-                data.deployment && <tr className="grid grid-cols-subgrid col-span-2">
-                  <th scope="row" className="text-start">Deployment:</th>
-                  <td>
-                    <a
-                      href={data.deployment ?? ""}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {formatUrl(data.deployment ?? "")}
-                    </a>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-          { data.related_projects.length > 0 && (
-            <ul className="flex gap-2">
-              { data.related_projects.map(({ project: p }) => (
-                <li key={p.id}><ProjectLink data={p} /></li>
-              ))}
-            </ul>
-          ) }
-        </div>
-        <aside className="flex flex-col gap-4 flex-1 px-4">
-          <div className="flex gap-1">
-            { dateRange.flatMap((d, i) => [
-              i > 0 && <span key={`sep-${i}`}>•</span>,
-              <span key={d}>{d}</span>,
-            ]) }
-          </div>
+      <aside className="flex flex-col">
+        <p>
+          { dateRange.flatMap((d, i) => [
+            i > 0 && <span key={`sep-${i}`}>•</span>,
+            <span key={d}>{d}</span>,
+          ]) }
+        </p>
+        <div>
           <Image
             src={logoUrl?.publicUrl || logo.src}
             alt={`Logo of the ${data.name} project.`}
             width={720}
             height={720}
           />
-          <ul className="flex justify-center gap-2 flex-wrap">
+          <ul className="flex flex-row justify-center gap-2">
             { data.abilities.map(a => (
               <li key={a.ability.name}><ProjectAbility data={a.ability} /></li>
             )) }
           </ul>
-        </aside>
+        </div>
+      </aside>
+      <div className="flex flex-col gap-4">
+        <Paragraph>{data.description}</Paragraph>
+        <table>
+          <tbody className="grid grid-cols-[min-content_1fr] gap-x-2">
+            { data.repository && <tr className="grid grid-cols-subgrid col-span-2">
+              <th scope="row" className="text-start">Repository:</th>
+              <td className="truncate">
+                <a
+                  href={data.repository ?? ""}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {formatUrl(data.repository ?? "")}
+                </a>
+              </td>
+            </tr> }
+            { data.deployment && <tr className="grid grid-cols-subgrid col-span-2">
+              <th scope="row" className="text-start">Deployment:</th>
+              <td className="truncate">
+                <a
+                  href={data.deployment ?? ""}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {formatUrl(data.deployment ?? "")}
+                </a>
+              </td>
+            </tr> }
+          </tbody>
+        </table>
+        { data.related_projects.length > 0 && (
+          <ul>
+            { data.related_projects.map(({ project: p }) => (
+              <li key={p.id}><ProjectLink data={p} /></li>
+            ))}
+          </ul>
+        ) }
       </div>
     </article>
   )
