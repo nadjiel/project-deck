@@ -70,7 +70,7 @@ export default function ProjectView(props: Props) {
           </ul>
         </div>
       </aside>
-      <div className="flex flex-col gap-4 px-8">
+      <div className="flex flex-col gap-4 sm:px-8">
         <Paragraph className="max-w-sm self-center">{data.description}</Paragraph>
         <div className="flex gap-4 overflow-x-auto py-2 mx-auto">
           { fileUrls.map(f => (
