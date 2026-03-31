@@ -7,41 +7,46 @@ export default async function ProjectDialog(
 ) {
   const { params } = props;
 
-  const { slug } = await params;
+  const { locale, slug } = await params;
 
   const cookieStore = await cookies();
-    const supabase = createClient(cookieStore);
-  
-    const { data: project } = await supabase
-      .from("projects")
-      .select(`
-        *,
-        abilities:project_abilities (
-          level,
-          ability:abilities (
-            name,
-            icon
-          )
-        ),
-        related_projects:project_relations!relater_project_id (
-          project:projects!related_project_id (
-            *
-          )
-        ),
-        files:project_files (
-          file:files (
-            *
-          )
-        ),
-        logo:files (
-          *
-        ),
-        category:categories (
+  const supabase = createClient(cookieStore);
+
+  const { data: project } = await supabase
+    .from("projects")
+    .select(`
+      *,
+      abilities:project_abilities (
+        level,
+        ability:abilities (
+          name,
+          icon
+        )
+      ),
+      related_projects:project_relations!relater_project_id (
+        project:projects!related_project_id (
           *
         )
-      `)
-      .eq("slug", slug)
-      .single();
+      ),
+      files:project_files (
+        file:files (
+          *
+        )
+      ),
+      translations:project_translations (
+        *
+      ),
+      logo:files (
+        *
+      ),
+      category:categories (
+        *
+      )
+    `)
+    .eq("slug", slug)
+    .single();
+
+  console.log(project)
 
   if (project === null) throw new Error("Impossible to load projects!");
 

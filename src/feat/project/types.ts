@@ -6,6 +6,8 @@ type ProjectTable = Tables<"projects">;
 
 type ProjectAbilityTable = Tables<"project_abilities">;
 
+type ProjectTranslationTable = Tables<"project_translations">;
+
 type FileTable = Tables<"files">;
 
 type CategoryTable = Tables<"categories">;

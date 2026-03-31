@@ -6,7 +6,7 @@ import { ProjectView } from "@/feat/project";
 export default async function Project(props: PageProps<"/[locale]/projects/[slug]">) {
   const { params } = props;
 
-  const { slug } = await params;
+  const { locale, slug } = await params;
 
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -40,11 +40,29 @@ export default async function Project(props: PageProps<"/[locale]/projects/[slug
       )
     `)
     .eq("slug", slug)
+    .limit(1)
+    .single();
+    
+  if (project === null) throw new Error("Impossible to load project");
+  
+  const { data: projectTranslation } = await supabase
+    .from("project_translations")
+    .select(`*`)
+    .eq("language_code", locale)
+    .eq("project_id", project.id)
+    .limit(1)
+    .single();
+  
+  const { data: categoryTranslation } = await supabase
+    .from("category_translations")
+    .select(`*`)
+    .eq("language_code", locale)
+    .eq("category_slug", project.category?.slug ?? "")
+    .limit(1)
     .single();
 
-  console.log(project)
+  console.log({project, projectTranslation, categoryTranslation})
 
-  if (project === null) throw new Error("Impossible to load project");
 
   return (
     <div className="flex flex-col flex-1 gap-8">
