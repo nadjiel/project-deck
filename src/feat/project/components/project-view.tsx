@@ -72,7 +72,7 @@ export default function ProjectView(props: Props) {
       </aside>
       <div className="flex flex-col gap-4 sm:px-8">
         <Paragraph className="max-w-sm self-center">{data.description}</Paragraph>
-        <div className="flex gap-4 overflow-x-auto py-2 mx-auto">
+        <div className="flex gap-4 overflow-x-auto max-h-96 py-2 mx-auto">
           { fileUrls.map(f => (
             <Image
               key={f.publicUrl}
@@ -80,7 +80,7 @@ export default function ProjectView(props: Props) {
               alt={`Picture showing the ${data.name} project.`}
               width={720}
               height={720}
-              className="w-full max-w-xl object-cover"
+              className="w-full max-w-xl object-contain object-center"
             />
           )) }
         </div>
