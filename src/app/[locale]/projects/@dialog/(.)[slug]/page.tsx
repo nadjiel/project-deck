@@ -28,6 +28,11 @@ export default async function ProjectDialog(
             *
           )
         ),
+        files:project_files (
+          file:files (
+            *
+          )
+        ),
         logo:files (
           *
         ),

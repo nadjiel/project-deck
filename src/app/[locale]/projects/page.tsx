@@ -27,6 +27,11 @@ export default async function Projects() {
           *
         )
       ),
+      files:project_files (
+        file:files (
+          *
+        )
+      ),
       logo:files (
         *
       ),
