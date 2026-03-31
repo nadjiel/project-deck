@@ -10,7 +10,7 @@ type FileTable = Tables<"files">;
 
 type CategoryTable = Tables<"categories">;
 
-type ProjectAbility = Pick<ProjectAbilityTable, "level"> & {
+type AbilityRelation = Pick<ProjectAbilityTable, "level"> & {
   ability: AbilityTable;
 };
 
@@ -18,11 +18,16 @@ type ProjectRelation = {
   project: ProjectTable;
 };
 
+type FileRelation = {
+  file: FileTable;
+};
+
 export type Project<
-  Features extends "abilities" | "related_projects" | "logo" | "category" = never
+  Features extends "abilities" | "related_projects" | "files" | "logo" | "category" = never
 > =
   ProjectTable
-  & ("abilities" extends Features ? { abilities: ProjectAbility[] } : {})
+  & ("abilities" extends Features ? { abilities: AbilityRelation[] } : {})
   & ("related_projects" extends Features ? { related_projects: ProjectRelation[] } : {})
+  & ("files" extends Features ? { files: FileRelation[] } : {})
   & ("logo" extends Features ? { logo: FileTable | null } : {})
   & ("category" extends Features ? { category: CategoryTable | null } : {});

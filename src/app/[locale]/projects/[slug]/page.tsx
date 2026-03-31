@@ -27,6 +27,11 @@ export default async function Project(props: PageProps<"/[locale]/projects/[slug
           *
         )
       ),
+      files:project_files (
+        file:files (
+          *
+        )
+      ),
       logo:files (
         *
       ),
@@ -37,11 +42,13 @@ export default async function Project(props: PageProps<"/[locale]/projects/[slug
     .eq("slug", slug)
     .single();
 
+  console.log(project)
+
   if (project === null) throw new Error("Impossible to load project");
 
   return (
-    <div className="flex flex-col flex-1">
-      <Heading variant="h1">{project.name}</Heading>
+    <div className="flex flex-col flex-1 gap-8">
+      <Heading variant="h1" className="text-center">{project.name}</Heading>
       <ProjectView data={project} />
     </div>
   );
