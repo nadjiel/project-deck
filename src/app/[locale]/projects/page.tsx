@@ -33,7 +33,8 @@ export default async function Projects() {
       category:categories (
         *
       )
-    `);
+    `)
+    .eq("active", true);
 
   if (projects === null) throw new Error("Impossible to load projects!");
 
