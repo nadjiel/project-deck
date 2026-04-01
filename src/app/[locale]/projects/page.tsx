@@ -4,6 +4,7 @@ import { Heading } from "@/components/ui/typography";
 import SearchBox from "@/components/search-box";
 import { ProjectArea } from "@/feat/project";
 import { createClient } from "@/db/supabase/server";
+import { selector, type Project } from "@/api/projects";
 
 export default async function Projects() {
   const cookieStore = await cookies();
@@ -11,34 +12,10 @@ export default async function Projects() {
 
   const t = await getTranslations("projects");
 
-  const { data: projects } = await supabase
-    .from("projects")
-    .select(`
-      *,
-      abilities:project_abilities (
-        level,
-        ability:abilities (
-          name,
-          icon
-        )
-      ),
-      related_projects:project_relations!relater_project_id (
-        project:projects!related_project_id (
-          *
-        )
-      ),
-      files:project_files (
-        file:files (
-          *
-        )
-      ),
-      logo:files (
-        *
-      ),
-      category:categories (
-        *
-      )
-    `)
+  const { data: projects } = await selector(
+      supabase,
+      ["abilities", "related_projects", "files", "logo", "category"]
+    )
     .eq("active", true);
 
   if (projects === null) throw new Error("Impossible to load projects!");

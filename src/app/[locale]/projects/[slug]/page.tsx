@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { createClient } from "@/db/supabase/server";
 import { Heading } from "@/components/ui/typography";
 import { ProjectView } from "@/feat/project";
+import { selector } from "@/api/projects";
 
 export default async function Project(props: PageProps<"/[locale]/projects/[slug]">) {
   const { params } = props;
@@ -11,34 +12,10 @@ export default async function Project(props: PageProps<"/[locale]/projects/[slug
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: project } = await supabase
-    .from("projects")
-    .select(`
-      *,
-      abilities:project_abilities (
-        level,
-        ability:abilities (
-          name,
-          icon
-        )
-      ),
-      related_projects:project_relations!relater_project_id (
-        project:projects!related_project_id (
-          *
-        )
-      ),
-      files:project_files (
-        file:files (
-          *
-        )
-      ),
-      logo:files (
-        *
-      ),
-      category:categories (
-        *
-      )
-    `)
+  const { data: project } = await selector(
+      supabase,
+      ["abilities", "related_projects", "files", "logo", "category"]
+    )
     .eq("slug", slug)
     .limit(1)
     .single();

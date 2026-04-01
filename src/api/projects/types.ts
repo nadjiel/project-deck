@@ -24,8 +24,10 @@ type FileRelation = {
   file: FileTable;
 };
 
+export type ProjectFeature = "abilities" | "related_projects" | "files" | "logo" | "category";
+
 export type Project<
-  Features extends "abilities" | "related_projects" | "files" | "logo" | "category" = never
+  Features extends ProjectFeature = never
 > =
   ProjectTable
   & ("abilities" extends Features ? { abilities: AbilityRelation[] } : {})

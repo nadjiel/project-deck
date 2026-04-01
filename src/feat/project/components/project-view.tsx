@@ -5,7 +5,8 @@ import dayjs from "dayjs";
 import { createClient } from "@/db/supabase/client";
 import { Paragraph } from "@/components/ui/typography";
 import { formatUrl } from "@/lib/url";
-import { ProjectLink, ProjectAbility, type Project } from "@/feat/project";
+import { ProjectLink, ProjectAbility } from "@/feat/project";
+import type { Project } from "@/api/projects";
 
 interface Props {
   data: Project<"related_projects" | "abilities" | "files" | "logo" | "category">;
