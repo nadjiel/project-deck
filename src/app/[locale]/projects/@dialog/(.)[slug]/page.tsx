@@ -1,10 +1,11 @@
 import { cookies } from "next/headers";
 import { createClient } from "@/db/supabase/server";
-import { Heading } from "@/components/ui/typography";
-import { ProjectView } from "@/feat/project";
+import { ProjectDialog as Dialog } from "@/feat/project";
 import { selector, translator } from "@/api/projects";
 
-export default async function Project(props: PageProps<"/[locale]/projects/[slug]">) {
+export default async function ProjectDialog(
+  props: PageProps<"/[locale]/projects/[slug]">
+) {
   const { params } = props;
 
   const { locale, slug } = await params;
@@ -20,13 +21,10 @@ export default async function Project(props: PageProps<"/[locale]/projects/[slug
     .limit(1)
     .single()
     .then(({ data }) => data === null ? null : translator(supabase, data, locale));
-    
-  if (project === null) throw new Error("Impossible to load project");
+
+  if (project === null) throw new Error("Impossible to load projects!");
 
   return (
-    <div className="flex flex-col flex-1 gap-8">
-      <Heading variant="h1" className="text-center">{project.name}</Heading>
-      <ProjectView data={project} />
-    </div>
-  );
+    <Dialog data={project} />
+  )
 }

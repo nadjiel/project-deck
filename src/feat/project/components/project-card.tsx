@@ -2,40 +2,59 @@
 
 import { useState, type ComponentProps } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import * as icons from "react-icons/si";
 import { CodeIcon } from "lucide-react";
+import { createClient } from "@/db/supabase/client";
 import { Heading } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.svg";
-import type { Project } from "@/feat/project";
+import type { Project } from "@/api/projects";
 
-interface Props extends ComponentProps<"article"> {
-  data: Project<"abilities">;
+type LinkProps = ComponentProps<typeof Link>;
+
+interface Props extends Omit<LinkProps, "href"> {
+  data: Project<"abilities" | "related_projects" | "logo">;
+  href?: LinkProps["href"];
 }
 
 export default function ProjectCard(props: Props) {
   const {
     data,
-    style,
+    href,
     className,
     ...rest
   } = props;
 
+  const supabase = createClient();
+
+  const { data: logoUrl } = data.logo
+    ? supabase
+      .storage
+      .from("public-uploads")
+      .getPublicUrl(data.logo.path)
+    : {};
+
   const abilities = data.abilities.toSorted((a, b) => b.level - a.level);
 
-  const [icon, setIcon] = useState(data.icon || logo.src);
+  const [icon, setIcon] = useState(logoUrl?.publicUrl || logo.src);
 
   const AbilityIcon = icons[abilities[0]?.ability.icon as keyof typeof icons] ?? CodeIcon;
 
   return (
-    <article
-      className="flex flex-col items-center border-8 rounded-xl aspect-square p-2"
-      {...rest}
-    >
-      <header className="flex gap-2 justify-between w-full">
-        <Heading variant="h6">{data.name}</Heading>
-        <AbilityIcon size={32} />
-      </header>
-      <div className="flex flex-col flex-1 justify-center items-center">
+    <Link href={href ?? `/projects/${data.slug}`} {...rest}>
+      <article
+        className={cn(
+          "relative flex flex-col justify-center items-center border-16 rounded-lg bg-background aspect-3/4",
+          className,
+        )}
+      >
+        <header className="absolute -top-4 -left-4 flex gap-2 w-[calc(100%+2rem)] pr-8">
+          <div className="bg-border h-min p-4 rounded-xl text-background">
+            <AbilityIcon size={32} />
+          </div>
+          <Heading variant="h2" className="w-full mt-4 truncate">{data.name}</Heading>
+        </header>
         <Image
           src={icon}
           alt={data.description ?? `Illustration of the ${data.name} project.`}
@@ -45,7 +64,13 @@ export default function ProjectCard(props: Props) {
           draggable={false}
           className="max-w-1/2"
         />
-      </div>
-    </article>
+        <footer className="absolute -bottom-4 -right-4 flex gap-2 w-[calc(100%+2rem)] pr-8 rotate-180">
+          <div className="bg-border h-min p-4 rounded-xl text-background">
+            <AbilityIcon size={32} />
+          </div>
+          <Heading variant="h2" className="w-full mt-4 truncate">{data.name}</Heading>
+        </footer>
+      </article>
+    </Link>
   )
 }

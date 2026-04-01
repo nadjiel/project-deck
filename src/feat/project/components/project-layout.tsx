@@ -1,15 +1,18 @@
 "use client";
 
 import { useLayout } from "@/hooks/use-layout";
-import { ProjectArea, ProjectGrid, type Project } from "@/feat/project";
+import { ProjectArea, ProjectGrid } from "@/feat/project";
 import type { ComponentProps } from "react";
-import { cn } from "@/lib/utils";
+import type { Project } from "@/api/projects";
 
 interface Props extends ComponentProps<"div"> {
-  projects: Project<"abilities" | "related_projects">[];
-  project?: Project<"abilities" | "related_projects">;
+  projects: Project<"abilities" | "related_projects" | "category" | "files" | "logo">[];
+  project?: Project<"abilities" | "related_projects" | "category" | "files" | "logo">;
 }
 
+/**
+ * @deprecated Since layout is not in use anymore.
+ */
 export default function ProjectLayout(props: Props) {
   const { projects, project, ...rest } = props;
 
@@ -19,7 +22,7 @@ export default function ProjectLayout(props: Props) {
     <>
       {
         !layout || layout === "deck"
-          ? <ProjectArea projects={projects} project={project} {...rest} />
+          ? <ProjectArea projects={projects} {...rest} />
           : <ProjectGrid projects={projects} project={project} {...rest} />
       }
     </>
