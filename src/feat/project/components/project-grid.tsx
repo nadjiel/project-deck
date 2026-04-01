@@ -1,7 +1,8 @@
-import { ProjectCard, type Project } from "@/feat/project";
+import { ProjectCard } from "@/feat/project";
+import type { Project } from "@/api/projects";
 
 interface Props {
-  projects: Project<"abilities" | "related_projects">[];
+  projects: Project<"abilities" | "related_projects" | "category" | "files" | "logo">[];
   project?: Project<"abilities" | "related_projects">;
 }
 

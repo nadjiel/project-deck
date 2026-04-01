@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowUpRightIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
-import type { Project } from "@/feat/project/types";
+import type { Project } from "@/api/projects";
 
 interface Props {
   data: Project;

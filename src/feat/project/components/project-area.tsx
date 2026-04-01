@@ -3,9 +3,10 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
-import { ProjectCard, type Project } from "@/feat/project";
+import { ProjectCard } from "@/feat/project";
 import { cn } from "@/lib/utils";
 import type { ComponentProps } from "react";
+import type { Project } from "@/api/projects";
 
 interface Props extends ComponentProps<"div"> {
   projects: Project<"abilities" | "related_projects" | "logo" | "category">[];

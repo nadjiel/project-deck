@@ -9,7 +9,7 @@ import { createClient } from "@/db/supabase/client";
 import { Heading } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import logo from "@/assets/logo.svg";
-import type { Project } from "@/feat/project";
+import type { Project } from "@/api/projects";
 
 type LinkProps = ComponentProps<typeof Link>;
 

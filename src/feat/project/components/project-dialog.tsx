@@ -9,10 +9,11 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
-import { ProjectView, type Project } from "@/feat/project";
+import { ProjectView } from "@/feat/project";
+import type { Project } from "@/api/projects";
 
 interface Props {
-  data: Project<"abilities" | "related_projects" | "logo" | "category">;
+  data: Project<"abilities" | "related_projects" | "logo" | "category" | "files">;
 }
 
 export default function ProjectDialog(props: Props) {
