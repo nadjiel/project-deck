@@ -49,3 +49,41 @@ export function selector<const Features extends ProjectFeature[]>(
     .from("projects")
     .select<string, Project<Features[number]>>(projector("*", features));
 }
+
+export async function translator<F extends ProjectFeature, P extends Project<F>>(
+  supabase: ReturnType<typeof createClient>,
+  project: P,
+  language: string,
+) {
+  const [
+    { data: projectTranslation },
+    { data: categoryTranslation },
+  ] = await Promise.all([
+    supabase
+      .from("project_translations")
+      .select(`*`)
+      .eq("language_code", language)
+      .eq("project_id", project.id)
+      .limit(1)
+      .single(),
+    "category" in project
+      ? supabase
+          .from("category_translations")
+          .select(`*`)
+          .eq("language_code", language)
+          .eq("category_slug", project.category?.slug ?? "")
+          .limit(1)
+          .single()
+      : { data: null },
+  ]);
+
+  let result = { ...project } as any;
+
+  result.description = projectTranslation?.description ?? project.description;
+
+  if ("category" in project) {
+    result.category.name = categoryTranslation?.name ?? project.category?.name;
+  }
+  
+  return result as P;
+}

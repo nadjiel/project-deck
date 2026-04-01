@@ -4,21 +4,34 @@ import { Heading } from "@/components/ui/typography";
 import SearchBox from "@/components/search-box";
 import { ProjectArea } from "@/feat/project";
 import { createClient } from "@/db/supabase/server";
-import { selector, type Project } from "@/api/projects";
+import { selector, translator } from "@/api/projects";
 
-export default async function Projects() {
+export default async function Projects(
+  props: PageProps<"/[locale]/projects/[slug]">
+) {
+  const { params } = props;
+
+  const { locale } = await params;
+
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
   const t = await getTranslations("projects");
 
-  const { data: projects } = await selector(
+  const projects = await selector(
       supabase,
       ["abilities", "related_projects", "files", "logo", "category"]
     )
-    .eq("active", true);
+    .eq("active", true)
+    .then(
+      ({ data }) => data !== null
+        ? Promise.all(data?.map(p => translator(supabase, p, locale)))
+        : null
+    );
 
   if (projects === null) throw new Error("Impossible to load projects!");
+
+  console.log(projects)
 
   return (
     <div className="flex flex-col flex-1 items-center">
