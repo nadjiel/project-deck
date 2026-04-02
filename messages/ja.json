@@ -26,5 +26,8 @@
   },
   "locale_button": {
     "content": "言語"
+  },
+  "option_drawer": {
+    "title": "設定"
   }
 }
