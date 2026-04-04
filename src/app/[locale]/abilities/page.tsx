@@ -17,7 +17,7 @@ export default async function Abilities() {
 
   return (
     <div className="flex flex-col flex-1 justify-between items-center">
-      <div className="flex flex-col gap-4 items-center">
+      <div className="flex flex-col gap-4 items-center cursor-default select-none">
         <Heading variant="h1">{t("title")}</Heading>
         <ul className="list-disc">
           <li>{t("service1")}</li>
