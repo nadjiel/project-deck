@@ -3,14 +3,14 @@
 import chroma from "chroma-js";
 import { Button } from "@/components/ui/button";
 import { useXylophone } from "@/feat/xylophone/contexts/xylophone";
-import type { CSSProperties, PropsWithChildren } from "react";
+import type { ComponentProps, CSSProperties } from "react";
 
-interface Props extends PropsWithChildren {
+interface Props extends ComponentProps<typeof Button> {
   bar?: number;
 }
 
 export default function XylophoneButton(props: Props) {
-  const { bar = 0, children } = props;
+  const { bar = 0, onClick, ...rest } = props;
 
   const { color, play } = useXylophone(bar);
 
@@ -24,9 +24,8 @@ export default function XylophoneButton(props: Props) {
       variant="tactile"
       size="icon-xl"
       style={style}
-      onClick={() => play()}
-    >
-      {children}
-    </Button>
+      onClick={e => { play(); onClick?.(e); }}
+      {...rest}
+    />
   );
 }

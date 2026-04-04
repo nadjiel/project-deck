@@ -22,6 +22,7 @@ export default async function Abilities() {
         )
       )
     `)
+    .eq("project_abilities.project.active", true)
     .eq("project_abilities.project.main_category_slug", env.category);
 
   if (abilities === null) throw new Error("Impossible to load abilities");
