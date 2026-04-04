@@ -2,8 +2,9 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Heading } from "@/components/ui/typography";
 import { Xylophone } from "@/feat/xylophone";
-import AbilityButton from "@/components/ability-button";
 import { createClient } from "@/db/supabase/server";
+import env from "@/config/env";
+import AbilityButton from "@/components/ability-button";
 
 export default async function Abilities() {
   const cookieStore = await cookies();
@@ -11,7 +12,17 @@ export default async function Abilities() {
 
   const t = await getTranslations("abilities");
 
-  const { data: abilities } = await supabase.from("abilities").select();
+  const { data: abilities } = await supabase
+    .from("abilities")
+    .select(`
+      *,
+      project_abilities!inner(
+        project:projects!inner(
+          main_category_slug
+        )
+      )
+    `)
+    .eq("project_abilities.project.main_category_slug", env.category);
 
   if (abilities === null) throw new Error("Impossible to load abilities");
 
