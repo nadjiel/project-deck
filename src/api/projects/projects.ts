@@ -6,8 +6,7 @@ const joins: Record<ProjectFeature, string> = {
     abilities:project_abilities (
       level,
       ability:abilities (
-        name,
-        icon
+        *
       )
     )
   `,
