@@ -20,7 +20,7 @@ export default function AbilityButton(props: Props) {
 
   return (
     <XylophoneButton bar={position} asChild>
-      <Link href={`/projects?abilities_in=${data.slug}`}>
+      <Link href={`/projects?abilities:has=${data.slug}`}>
         <Icon size={24} />
       </Link>
     </XylophoneButton>

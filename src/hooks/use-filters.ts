@@ -75,7 +75,7 @@ interface UseFiltersOptions {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const OPERATOR_DELIMITER = ".";
+const OPERATOR_DELIMITER = ":";
 const MULTI_VALUE_SEPARATOR = ",";
 const ALL_OPERATORS: FilterOperator[] = ["in", "nin", "has", "eq", "neq", "gt", "gte", "lt", "lte"];
 
