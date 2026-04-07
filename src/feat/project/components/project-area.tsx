@@ -2,9 +2,9 @@
 
 import { useRef } from "react";
 import { motion } from "motion/react";
-import { useRouter } from "next/navigation";
 import { ProjectCard } from "@/feat/project";
 import { cn } from "@/lib/utils";
+import { useFilters } from "@/hooks/use-filters";
 import type { ComponentProps } from "react";
 import type { Project } from "@/api/projects";
 
@@ -18,10 +18,16 @@ export default function ProjectArea(props: Props) {
     className,
     ...rest
   } = props;
+
+  const { filters } = useFilters(["abilities"]);
   
   const dragRef = useRef<HTMLDivElement>(null);
 
-  const router = useRouter();
+  const filtered = projects.filter(
+    p => p.abilities.some(
+      a => filters.abilities?.has?.some(f => f === a.ability.slug) ?? true
+    )
+  );
 
   return (
     <div
@@ -40,10 +46,11 @@ export default function ProjectArea(props: Props) {
         // whileDrag={{ pointerEvents: "none" }}
         className="flex flex-1 items-center gap-4 w-max px-8 touch-none"
       >
-        { projects.map(p => (
+        { filtered.map(p => (
           <ProjectCard
             key={p.id}
             data={p}
+            draggable={false}
           />
         )) }
       </motion.div>
