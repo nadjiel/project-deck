@@ -1,16 +1,35 @@
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Heading } from "@/components/ui/typography";
+import AbilityButton from "@/components/ability-button";
 import { Xylophone } from "@/feat/xylophone";
 import { createClient } from "@/db/supabase/server";
 import env from "@/config/env";
-import AbilityButton from "@/components/ability-button";
+import { translator } from "@/api/services";
 
-export default async function Abilities() {
+export default async function Abilities(
+  props: PageProps<"/[locale]/projects/[slug]">
+) {
+  const { params } = props;
+
+  const { locale } = await params;
+
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
   const t = await getTranslations("abilities");
+
+  let { data: services } = await supabase
+    .from("services")
+    .select(`
+      *,
+      categories:service_categories!inner()
+    `)
+    .eq("categories.category_slug", env.category);
+    
+  if (services === null) throw new Error("Impossible to load services");
+  
+  services = await Promise.all(services.map(s => translator(supabase, s, locale)));
 
   const { data: abilities } = await supabase
     .from("abilities")
@@ -32,10 +51,7 @@ export default async function Abilities() {
       <div className="flex flex-col gap-4 items-center cursor-default select-none">
         <Heading variant="h1">{t("title")}</Heading>
         <ul className="list-disc">
-          <li>{t("service1")}</li>
-          <li>{t("service2")}</li>
-          <li>{t("service3")}</li>
-          <li>{t("service4")}</li>
+          { services.map(s => <li key={s.slug}>{s.description}</li>) }
         </ul>
       </div>
       <Xylophone bars={abilities.length}>
