@@ -49,8 +49,8 @@ export default async function Abilities(
   return (
     <div className="flex flex-col flex-1 justify-between items-center">
       <div className="flex flex-col gap-4 items-center cursor-default select-none">
-        <Heading variant="h1">{t("title")}</Heading>
-        <ul className="list-disc">
+        <Heading variant="h1" className="text-center">{t("title")}</Heading>
+        <ul className="list-disc pl-5">
           { services.map(s => <li key={s.slug}>{s.description}</li>) }
         </ul>
       </div>
