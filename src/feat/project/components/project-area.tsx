@@ -5,6 +5,7 @@ import { motion } from "motion/react";
 import { ProjectCard } from "@/feat/project";
 import { cn } from "@/lib/utils";
 import { useFilters } from "@/hooks/use-filters";
+import { useSearch } from "@/hooks/use-search";
 import type { ComponentProps } from "react";
 import type { Project } from "@/api/projects";
 
@@ -20,13 +21,12 @@ export default function ProjectArea(props: Props) {
   } = props;
 
   const { filters } = useFilters(["abilities"]);
-  
-  // const dragRef = useRef<HTMLDivElement>(null);
+  const { search } = useSearch();
 
   const filtered = projects.filter(
     p => p.abilities.some(
       a => filters.abilities?.has?.some(f => f === a.ability.slug) ?? true
-    )
+    ) && p.name.toLowerCase().includes(search.trim().toLowerCase())
   );
 
   return (
