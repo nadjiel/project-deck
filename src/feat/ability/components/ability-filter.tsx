@@ -6,9 +6,10 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { FilterIcon } from "lucide-react";
+import { FilterIcon, TrashIcon } from "lucide-react";
 import { useFilters } from "@/hooks/use-filters";
 import type { Tables } from "@/db/supabase/types";
 
@@ -51,6 +52,10 @@ export default function AbilityFilter(props: Props) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <DropdownMenuItem variant="destructive" onClick={() => setInternalFilters([])}>
+          <TrashIcon />
+          Clear filters
+        </DropdownMenuItem>
         { abilities.map(a => (
           <DropdownMenuCheckboxItem
             key={a.slug}
