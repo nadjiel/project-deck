@@ -20,16 +20,17 @@ export default async function Projects(
 
   const t = await getTranslations("projects");
 
-  const projects = await selector(
-      supabase,
-      ["abilities", "related_projects", "files", "logo", "category"]
-    )
+  let { data: projects } = await selector(
+    supabase,
+    ["abilities", "category", "files", "logo", "related_projects"],
+    "project_categories!inner()",
+  )
     .eq("active", true)
-    .then(
-      ({ data }) => data !== null
-        ? Promise.all(data?.map(p => translator(supabase, p, locale)))
-        : null
-    );
+    .eq("project_categories.category_slug", "backend-development");
+  
+  if (projects === null) throw new Error("Impossible to load projects!");
+  
+  projects = await Promise.all(projects.map(p => translator(supabase, p, locale)))
 
   const { data: abilities } = await supabase
     .from("abilities")
@@ -41,7 +42,6 @@ export default async function Projects(
     `)
     .eq("projects.project.main_category_slug", env.category);
 
-  if (projects === null) throw new Error("Impossible to load projects!");
   if (abilities === null) throw new Error("Impossible to load abilities!");
 
   return (
