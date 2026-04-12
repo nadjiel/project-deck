@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Heading } from "@/components/ui/typography";
-import AbilityButton from "@/components/ability-button";
+import { AbilityButton } from "@/feat/ability";
 import { Xylophone } from "@/feat/xylophone";
 import { createClient } from "@/db/supabase/server";
 import env from "@/config/env";

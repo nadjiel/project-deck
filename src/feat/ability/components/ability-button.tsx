@@ -4,9 +4,9 @@ import * as icons from "react-icons/si";
 import { CodeIcon } from "lucide-react";
 import Link from "next/link";
 import { XylophoneButton } from "@/feat/xylophone";
-import type { Database } from "@/db/supabase/types";
+import type { Tables } from "@/db/supabase/types";
 
-type Ability = Database["public"]["Tables"]["abilities"]["Row"];
+type Ability = Tables<"abilities">;
 
 interface Props {
   position?: number;
@@ -24,5 +24,5 @@ export default function AbilityButton(props: Props) {
         <Icon size={24} />
       </Link>
     </XylophoneButton>
-  )
+  );
 }

@@ -5,6 +5,8 @@ import SearchBox from "@/components/search-box";
 import { ProjectArea } from "@/feat/project";
 import { createClient } from "@/db/supabase/server";
 import { selector, translator } from "@/api/projects";
+import { AbilityFilter } from "@/feat/ability";
+import env from "@/config/env";
 
 export default async function Projects(
   props: PageProps<"/[locale]/projects/[slug]">
@@ -29,15 +31,25 @@ export default async function Projects(
         : null
     );
 
-  if (projects === null) throw new Error("Impossible to load projects!");
+  const { data: abilities } = await supabase
+    .from("abilities")
+    .select(`
+      *,
+      projects:project_abilities!inner(
+        project:project_id!inner()
+      )
+    `)
+    .eq("projects.project.main_category_slug", env.category);
 
-  console.log(projects)
+  if (projects === null) throw new Error("Impossible to load projects!");
+  if (abilities === null) throw new Error("Impossible to load abilities!");
 
   return (
     <div className="flex flex-col flex-1 items-center">
       <div className="flex flex-col items-center gap-4 w-full mb-4">
         <Heading variant="h1" className="text-center">{t("title")}</Heading>
         <SearchBox placeholder={t("search")} className="max-w-sm" />
+        <AbilityFilter abilities={abilities} />
       </div>
       <ProjectArea projects={projects} className="flex-1" />
     </div>
