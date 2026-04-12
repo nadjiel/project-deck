@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -8,8 +9,8 @@ import {
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
 import { PaletteIcon } from "lucide-react";
-import type { Tables } from "@/db/supabase/types";
 import { useFilters } from "@/hooks/use-filters";
+import type { Tables } from "@/db/supabase/types";
 
 type Ability = Tables<"abilities">;
 
@@ -20,12 +21,32 @@ interface Props {
 export default function AbilityFilter(props: Props) {
   const { abilities } = props;
 
-  const { activeFilters, addFilter, getFilter, removeFilter } = useFilters(["abilities"]);
+  const { activeFilters, setFilter } = useFilters(["abilities"]);
+
+  const [internalFilters, setInternalFilters] = useState<string[]>(
+    activeFilters.map(f => f.operator === "has" ? f.values : []).flat()
+  );
+
+  const commitFilters = () => {
+    setFilter("abilities", internalFilters, "has");
+  }
+
+  const onOpenChange = (open: boolean) => {
+    if (!open) commitFilters();
+  }
+
+  const onAbilityCheckedChange = (slug: string) => {
+    if (internalFilters.includes(slug)) {
+      setInternalFilters(internalFilters.filter(s => s !== slug));
+    } else {
+      setInternalFilters([...internalFilters, slug]);
+    }
+  }
 
   return (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
-        <Button>
+        <Button variant="outline">
           <PaletteIcon />
         </Button>
       </DropdownMenuTrigger>
@@ -33,12 +54,9 @@ export default function AbilityFilter(props: Props) {
         { abilities.map(a => (
           <DropdownMenuCheckboxItem
             key={a.slug}
-            checked={activeFilters.some(f => f.operator === "has" && f.values.includes(a.slug))}
-            onClick={() => {
-              getFilter("abilities", "has").includes(a.slug) ?
-                removeFilter("abilities", a.slug, "has") :
-                addFilter("abilities", a.slug, "has")
-            }}
+            checked={internalFilters.includes(a.slug)}
+            onSelect={e => e.preventDefault()}
+            onCheckedChange={() => onAbilityCheckedChange(a.slug)}
           >{a.name}</DropdownMenuCheckboxItem>
         )) }
       </DropdownMenuContent>
