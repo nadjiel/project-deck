@@ -21,7 +21,7 @@ export default function ProjectAbility(props: Props) {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Link href={`/projects?abilities:has=${data.name}`}>
+        <Link href={`/projects?abilities:has=${data.slug}`}>
           <Icon size="24" className="hover:scale-125 transition-all" />
         </Link>
       </HoverCardTrigger>
