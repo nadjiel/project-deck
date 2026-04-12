@@ -8,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { PaletteIcon } from "lucide-react";
+import { FilterIcon } from "lucide-react";
 import { useFilters } from "@/hooks/use-filters";
 import type { Tables } from "@/db/supabase/types";
 
@@ -46,8 +46,8 @@ export default function AbilityFilter(props: Props) {
   return (
     <DropdownMenu onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
-          <PaletteIcon />
+        <Button variant="outline" size="icon">
+          <FilterIcon />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
