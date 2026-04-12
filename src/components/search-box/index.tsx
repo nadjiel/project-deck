@@ -1,7 +1,12 @@
 "use client";
 
-import { SearchIcon } from "lucide-react";
-import { InputGroup, InputGroupInput, InputGroupAddon } from "@/components/ui/input-group";
+import { SearchIcon, XIcon } from "lucide-react";
+import {
+  InputGroup,
+  InputGroupInput,
+  InputGroupAddon,
+  InputGroupButton,
+} from "@/components/ui/input-group";
 import { useSearch } from "@/hooks/use-search";
 import type { ComponentProps } from "react";
 
@@ -15,7 +20,7 @@ export default function SearchBox(props: Props) {
     ...rest
   } = props;
 
-  const { internalSearch, setSearch } = useSearch({ debounce: 300 });
+  const { internalSearch, setSearch, clearSearch } = useSearch({ debounce: 300 });
 
   return (
     <InputGroup className={className}>
@@ -26,6 +31,15 @@ export default function SearchBox(props: Props) {
       />
       <InputGroupAddon>
         <SearchIcon />
+      </InputGroupAddon>
+      <InputGroupAddon align="inline-end">
+        <InputGroupButton
+          size="icon-xs"
+          className="rounded-full"
+          onClick={clearSearch}
+        >
+          <XIcon />
+        </InputGroupButton>
       </InputGroupAddon>
     </InputGroup>
   );
