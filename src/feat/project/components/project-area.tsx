@@ -20,14 +20,18 @@ export default function ProjectArea(props: Props) {
     ...rest
   } = props;
 
-  const { filters } = useFilters(["abilities"]);
+  const { getFilter } = useFilters(["abilities"]);
   const { search } = useSearch();
 
-  const filtered = projects.filter(
-    p => p.abilities.some(
-      a => filters.abilities?.has?.some(f => f === a.ability.slug) ?? true
-    ) && p.name.toLowerCase().includes(search.trim().toLowerCase())
-  );
+  const filtered = projects.filter(p => (
+    (
+      getFilter("abilities", "has").length === 0
+      || p.abilities.some(a => getFilter("abilities", "has").some(f => f === a.ability.slug))
+    )
+    && p.name.toLowerCase().includes(search.trim().toLowerCase())
+  ));
+
+  console.log(getFilter("abilities", "has"))
 
   return (
     <div
