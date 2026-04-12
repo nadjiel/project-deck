@@ -20,29 +20,38 @@ export default async function Projects(
 
   const t = await getTranslations("projects");
 
-  let { data: projects } = await selector(
-    supabase,
-    ["abilities", "category", "files", "logo", "related_projects"],
-    "project_categories!inner()",
-  )
-    .eq("active", true)
-    .eq("project_categories.category_slug", env.category);
+  let [
+    { data: projects },
+    { data: abilities },
+  ] = await Promise.all([
+    selector(
+      supabase,
+      ["abilities", "category", "files", "logo", "related_projects"],
+      "project_categories!inner()",
+    )
+      .eq("active", true)
+      .eq("project_categories.category_slug", env.category),
+    supabase
+      .from("abilities")
+      .select(`
+        *,
+        projects:project_abilities!inner(
+          *,
+          project:projects!inner(
+            *,
+            categories:project_categories!inner(*)
+          )
+        )
+      `)
+      .eq("projects.project.active", true)
+      .eq("projects.project.categories.category_slug", env.category)
+      .order("name"),
+  ]);
   
   if (projects === null) throw new Error("Impossible to load projects!");
-  
-  projects = await Promise.all(projects.map(p => translator(supabase, p, locale)))
-
-  const { data: abilities } = await supabase
-    .from("abilities")
-    .select(`
-      *,
-      projects:project_abilities!inner(
-        project:project_id!inner()
-      )
-    `)
-    .eq("projects.project.main_category_slug", env.category);
-
   if (abilities === null) throw new Error("Impossible to load abilities!");
+  
+  projects = await Promise.all(projects.map(p => translator(supabase, p, locale)));
 
   return (
     <div className="flex flex-col flex-1 items-center">
