@@ -33,10 +33,10 @@ export default function ProjectArea(props: Props) {
     <div
       // ref={dragRef}
       className={cn(
-        "relative flex flex-col flex-1 overflow-x-auto w-dvw",
+        "flex flex-col flex-1 overflow-x-auto w-dvw",
         "[&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary",
-        "before:absolute before:left-0 before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 before:pointer-events-none",
-        "after:absolute after:right-0 after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 after:pointer-events-none",
+        "before:fixed before:left-0 before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 before:pointer-events-none",
+        "after:fixed after:right-0 after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 after:pointer-events-none",
         className,
       )}
       {...rest}
