@@ -26,7 +26,7 @@ export default async function Projects(
     "project_categories!inner()",
   )
     .eq("active", true)
-    .eq("project_categories.category_slug", "backend-development");
+    .eq("project_categories.category_slug", env.category);
   
   if (projects === null) throw new Error("Impossible to load projects!");
   
