@@ -35,14 +35,17 @@ export default async function Abilities(
     .from("abilities")
     .select(`
       *,
-      project_abilities!inner(
+      projects:project_abilities!inner(
+        *,
         project:projects!inner(
-          main_category_slug
+          *,
+          categories:project_categories!inner(*)
         )
       )
     `)
-    .eq("project_abilities.project.active", true)
-    .eq("project_abilities.project.main_category_slug", env.category);
+    .eq("projects.project.active", true)
+    .eq("projects.project.categories.category_slug", env.category)
+    .order("name");
 
   if (abilities === null) throw new Error("Impossible to load abilities");
 
