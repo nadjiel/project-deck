@@ -36,18 +36,62 @@ const joins: Record<ProjectFeature, string> = {
   `,
 }
 
-export function projector(base: string, features: ProjectFeature[]) {
-  return [base, ...features.map(f => joins[f])].join(",\n");
+/**
+ * An utility that constructs a supabase projection string.
+ * This function receives a base string (most of the time "*"),
+ * a features array describing what predefined additions should come
+ * in the result, and an optional query for additional refinment.
+ */
+export function projector(
+  base: string,
+  features: ProjectFeature[],
+  query?: string,
+) {
+  return [base, query, ...features.map(f => joins[f])]
+    .filter(q => typeof q === "string" && q.length > 0)
+    .join(",\n");
 }
 
 export function selector<const Features extends ProjectFeature[]>(
   supabase: ReturnType<typeof createClient>,
   features: Features,
+  query?: string,
 ) {
   return supabase
     .from("projects")
-    .select<string, Project<Features[number]>>(projector("*", features));
+    .select<string, Project<Features[number]>>(
+      projector("*", features, query)
+    );
 }
+
+/*
+web-development
+mobile-development
+game-development
+frontend-development
+backend-development
+fullstack-development
+*/
+
+/*
+im-share
+ifernship
+nunes-sports
+eye-dropper
+locker
+terras-terrarium
+the-ice-moon
+pong-plus
+chessey
+agora
+pokedex
+imagine-engine
+poke-loopis
+dash-delivery
+reciclae-website
+reciclae-api
+tree-of-wisdom
+*/
 
 export async function translator<F extends ProjectFeature, P extends Project<F>>(
   supabase: ReturnType<typeof createClient>,
