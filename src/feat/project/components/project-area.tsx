@@ -31,34 +31,38 @@ export default function ProjectArea(props: Props) {
     && p.name.toLowerCase().includes(search.trim().toLowerCase())
   ));
 
-  console.log(getFilter("abilities", "has"))
-
   return (
     <div
       // ref={dragRef}
       className={cn(
-        "flex flex-col flex-1 overflow-x-auto w-full",
-        "[&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary",
-        "before:absolute before:left-0 before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 before:pointer-events-none",
-        "after:absolute after:right-0 after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 after:pointer-events-none",
+        "relative flex flex-col flex-1 w-full",
+        "before:absolute before:left-0 before:w-32 sm:before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 before:pointer-events-none",
+        "after:absolute after:right-0 after:w-32 sm:after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 after:pointer-events-none",
         className,
       )}
       {...rest}
     >
-      <motion.div
-        // drag="x"
-        // dragConstraints={dragRef}
-        // whileDrag={{ pointerEvents: "none" }}
-        className="flex flex-1 items-center gap-4 w-max px-8"
+      <div
+        className={cn(
+          "flex flex-col flex-1 overflow-x-auto",
+          "[&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary",
+        )}
       >
-        { filtered.map(p => (
-          <ProjectCard
-            key={p.id}
-            data={p}
-            draggable={false}
-          />
-        )) }
-      </motion.div>
+        <motion.div
+          // drag="x"
+          // dragConstraints={dragRef}
+          // whileDrag={{ pointerEvents: "none" }}
+          className="flex flex-1 justify-center items-center gap-4 w-max min-w-full px-8"
+        >
+          { filtered.map(p => (
+            <ProjectCard
+              key={p.id}
+              data={p}
+              draggable={false}
+            />
+          )) }
+        </motion.div>
+      </div>
     </div>
   );
 }
