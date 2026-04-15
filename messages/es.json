@@ -26,5 +26,8 @@
   },
   "locale_button": {
     "content": "Idioma"
+  },
+  "option_drawer": {
+    "title": "Configuraciones"
   }
 }

@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef } from "react";
+// import { useRef } from "react";
 import { motion } from "motion/react";
-import { useRouter } from "next/navigation";
 import { ProjectCard } from "@/feat/project";
 import { cn } from "@/lib/utils";
+import { useFilters } from "@/hooks/use-filters";
+import { useSearch } from "@/hooks/use-search";
 import type { ComponentProps } from "react";
 import type { Project } from "@/api/projects";
 
@@ -18,35 +19,50 @@ export default function ProjectArea(props: Props) {
     className,
     ...rest
   } = props;
-  
-  const dragRef = useRef<HTMLDivElement>(null);
 
-  const router = useRouter();
+  const { getFilter } = useFilters(["abilities"]);
+  const { search } = useSearch();
+
+  const filtered = projects.filter(p => (
+    (
+      getFilter("abilities", "has").length === 0
+      || p.abilities.some(a => getFilter("abilities", "has").some(f => f === a.ability.slug))
+    )
+    && p.name.toLowerCase().includes(search.trim().toLowerCase())
+  ));
 
   return (
     <div
-      ref={dragRef}
+      // ref={dragRef}
       className={cn(
-        "relative flex flex-col flex-1 overflow-hidden w-dvw",
-        "before:absolute before:left-0 before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 before:pointer-events-none",
-        "after:absolute after:right-0 after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 after:pointer-events-none",
+        "relative flex flex-col flex-1 w-full",
+        "before:absolute before:left-0 before:w-32 sm:before:w-64 before:h-full before:bg-linear-to-r before:from-background before:to-transparent before:z-1 before:pointer-events-none",
+        "after:absolute after:right-0 after:w-32 sm:after:w-64 after:h-full after:bg-linear-to-l after:from-background after:to-transparent after:z-1 after:pointer-events-none",
         className,
       )}
       {...rest}
     >
-      <motion.div
-        drag="x"
-        dragConstraints={dragRef}
-        // whileDrag={{ pointerEvents: "none" }}
-        className="flex flex-1 items-center gap-4 w-max px-8 touch-none"
+      <div
+        className={cn(
+          "flex flex-col flex-1 overflow-x-auto",
+          "[&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary",
+        )}
       >
-        { projects.map(p => (
-          <ProjectCard
-            key={p.id}
-            data={p}
-          />
-        )) }
-      </motion.div>
+        <motion.div
+          // drag="x"
+          // dragConstraints={dragRef}
+          // whileDrag={{ pointerEvents: "none" }}
+          className="flex flex-1 justify-center items-center gap-4 w-max min-w-full px-8"
+        >
+          { filtered.map(p => (
+            <ProjectCard
+              key={p.id}
+              data={p}
+              draggable={false}
+            />
+          )) }
+        </motion.div>
+      </div>
     </div>
   );
 }

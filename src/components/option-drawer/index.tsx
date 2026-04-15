@@ -1,4 +1,5 @@
 import { ChevronDownIcon } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import {
   Drawer,
   DrawerContent,
@@ -12,8 +13,10 @@ import { cn } from "@/lib/utils";
 import LocaleButton from "@/components/locale-button";
 import type { ComponentProps } from "react";
 
-export default function OptionDrawer(props: ComponentProps<typeof DrawerTrigger>) {
+export default async function OptionDrawer(props: ComponentProps<typeof DrawerTrigger>) {
   const { className, ...rest } = props;
+  
+  const t = await getTranslations("option_drawer");
 
   return (
     <Drawer direction="top">
@@ -25,7 +28,7 @@ export default function OptionDrawer(props: ComponentProps<typeof DrawerTrigger>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Configurations</DrawerTitle>
+          <DrawerTitle>{t("title")}</DrawerTitle>
           <DrawerDescription className="sr-only">Tweak configurations such as sound volume and theme.</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
