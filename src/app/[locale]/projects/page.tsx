@@ -56,13 +56,13 @@ export default async function Projects(
   return (
     <div className="flex flex-col flex-1 items-center">
       <div className="flex flex-col items-center gap-4 w-full mb-4">
-        <Heading variant="h1" className="text-center">{t("title")}</Heading>
+        <Heading variant="h1" className="text-center cursor-default select-none">{t("title")}</Heading>
         <div className="w-full max-w-sm flex gap-2">
           <SearchBox placeholder={t("search")} />
           <AbilityFilter abilities={abilities} />
         </div>
       </div>
-      <ProjectArea projects={projects} className="flex-1" />
+      <ProjectArea projects={projects} />
     </div>
   );
 }
