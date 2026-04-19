@@ -1,7 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/header";
-import Navbar from "@/components/navbar";
+import { NavbarMenu } from "@/feat/navbar";
 import type { Metadata } from "next";
 import type { PropsWithChildren } from "react";
 import "@/app/globals.css";
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <NextIntlClientProvider>
           <Header />
           <main className="flex flex-col flex-1 px-4 pt-8 pb-32">{children}</main>
-          <Navbar />
+          <NavbarMenu />
           <Toaster position="top-center" />
         </NextIntlClientProvider>
       </body>
