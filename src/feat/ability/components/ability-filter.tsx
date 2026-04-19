@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -21,6 +22,8 @@ interface Props {
 
 export default function AbilityFilter(props: Props) {
   const { abilities } = props;
+
+  const t = useTranslations("ability_filter");
 
   const { activeFilters, setFilter } = useFilters(["abilities"]);
 
@@ -54,7 +57,7 @@ export default function AbilityFilter(props: Props) {
       <DropdownMenuContent>
         <DropdownMenuItem variant="destructive" onClick={() => setInternalFilters([])}>
           <TrashIcon />
-          Clear filters
+          {t("clear_button")}
         </DropdownMenuItem>
         { abilities.map(a => (
           <DropdownMenuCheckboxItem

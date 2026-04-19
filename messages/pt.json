@@ -15,6 +15,9 @@
     "title": "Conheça meu trabalho!",
     "search": "Buscar um projeto..."
   },
+  "ability_filter": {
+    "clear_button": "Apagar filtros"
+  },
   "contact_form": {
     "name_label": "Nome",
     "name_placeholder": "Seu nome...",

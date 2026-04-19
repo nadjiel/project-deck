@@ -15,6 +15,9 @@
     "title": "私の作品をご覧ください！",
     "search": "プロジェクトを検索..."
   },
+  "ability_filter": {
+    "clear_button": "フィルターをクリア"
+  },
   "contact_form": {
     "name_label": "名前",
     "name_placeholder": "あなたの名前...",
