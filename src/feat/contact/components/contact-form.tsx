@@ -5,33 +5,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { email } from "@/config/env";
 import { toast } from "sonner";
+import { email } from "@/config/env";
 import { Input } from "@/components/ui/input";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-
-const ContactSchema = z.object({
-  name: z.string().min(3, "Your name should have at least 3 characters"),
-  email: z.email("Invalid email address"),
-  message: z.string().min(15, "Your message should have at least 15 characters"),
-});
-
-type SchemaInput = z.input<typeof ContactSchema>;
-
-type SchemaOutput = z.output<typeof ContactSchema>;
-
-interface ContactData {
-  name: string;
-  email: string;
-  message: string;
-}
-
-interface EmailResponse {
-  success: string;
-  message: string;
-}
+import { useContactForm } from "@/feat/contact";
+import type { ContactData, EmailResponse } from "@/feat/contact/types";
 
 interface Props {
   defaultValues?: Partial<ContactData>;
@@ -61,14 +42,20 @@ export default function ContactForm(props: Props) {
 
   const [error, setError] = useState("");
 
+  const { Schema } = useContactForm();
+
   const t = useTranslations("contact_form");
+
+  type SchemaInput = z.input<typeof Schema>;
+
+  type SchemaOutput = z.output<typeof Schema>;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<SchemaInput, any, SchemaOutput>({
-    resolver: zodResolver(ContactSchema),
+    resolver: zodResolver(Schema),
     defaultValues,
   });
 
@@ -76,10 +63,10 @@ export default function ContactForm(props: Props) {
     const res = await sendEmail(data);
 
     if (res.success === "false") {
-      setError("There was an unexpected error!");
+      setError(t("error_unexpected"));
     }
     else {
-      toast("Your email was sent successfully!");
+      toast(t("success"));
       setError("");
     };
   }

@@ -22,7 +22,12 @@
     "email_placeholder": "Your email...",
     "message_label": "Message",
     "message_placeholder": "What can I do for you?",
-    "send": "Send"
+    "send": "Send",
+    "name_error_min": "Your name should have at least 3 characters",
+    "email_error": "Invalid email address",
+    "message_error_min": "Your message should have at least 15 characters",
+    "error_unexpected": "There was an unexpected error!",
+    "success": "Your email was sent successfully!"
   },
   "locale_button": {
     "content": "Language"

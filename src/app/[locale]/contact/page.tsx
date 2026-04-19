@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import ContactForm from "@/components/contact-form";
+import { ContactForm } from "@/feat/contact";
 
 export default function Contact() {
   const firstName = faker.person.firstName();
