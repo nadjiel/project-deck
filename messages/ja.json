@@ -18,6 +18,9 @@
   "ability_filter": {
     "clear_button": "フィルターをクリア"
   },
+  "contact": {
+    "placeholder_example": "例："
+  },
   "contact_form": {
     "name_label": "名前",
     "name_placeholder": "あなたの名前...",

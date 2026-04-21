@@ -18,6 +18,9 @@
   "ability_filter": {
     "clear_button": "Clear filters"
   },
+  "contact": {
+    "placeholder_example": "e.g."
+  },
   "contact_form": {
     "name_label": "Name",
     "name_placeholder": "Your name...",
