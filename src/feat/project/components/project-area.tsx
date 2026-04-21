@@ -2,6 +2,8 @@
 
 // import { useRef } from "react";
 import { motion } from "motion/react";
+import { ArrowBigLeftIcon, ArrowBigRightIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/feat/project";
 import { cn } from "@/lib/utils";
 import { useFilters } from "@/hooks/use-filters";
@@ -42,12 +44,10 @@ export default function ProjectArea(props: Props) {
       )}
       {...rest}
     >
-      <div
-        className={cn(
-          "flex flex-col flex-1 overflow-x-auto",
-          "[&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary",
-        )}
-      >
+      <Button variant="secondary" size="icon-lg" className="absolute left-0 top-1/2 -translate-y-1/2 z-2 rounded-full animate-[bounce-x_2000ms_ease-in-out_infinite] [--bounce-x-offset:-10%]">
+        <ArrowBigLeftIcon />
+      </Button>
+      <div className="flex flex-col flex-1 overflow-x-auto [&::-webkit-scrollbar]:h-0">
         <motion.div
           // drag="x"
           // dragConstraints={dragRef}
@@ -63,6 +63,9 @@ export default function ProjectArea(props: Props) {
           )) }
         </motion.div>
       </div>
+      <Button variant="secondary" size="icon-lg" className="absolute right-0 top-1/2 -translate-y-1/2 z-2 rounded-full animate-[bounce-x_2000ms_ease-in-out_infinite] [--bounce-x-offset:10%]">
+        <ArrowBigRightIcon />
+      </Button>
     </div>
   );
 }
