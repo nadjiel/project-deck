@@ -7,6 +7,7 @@ import { Paragraph } from "@/components/ui/typography";
 import { formatUrl } from "@/lib/url";
 import { ProjectLink, ProjectAbility } from "@/feat/project";
 import type { Project } from "@/api/projects";
+import { cn } from "@/lib/utils";
 
 interface Props {
   data: Project<"related_projects" | "abilities" | "files" | "logo" | "category">;
@@ -73,7 +74,12 @@ export default function ProjectView(props: Props) {
       </aside>
       <div className="flex flex-col gap-4 sm:px-8">
         <Paragraph className="max-w-sm self-center">{data.description}</Paragraph>
-        <div className="flex gap-4 overflow-x-auto max-h-96 py-2 mx-auto">
+        <div
+          className={cn(
+            "flex gap-4 overflow-x-auto max-h-96 py-2 mx-auto",
+            "[&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-black/25 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb]:rounded-full",
+          )}
+        >
           { fileUrls.map(f => (
             <Image
               key={f.publicUrl}
