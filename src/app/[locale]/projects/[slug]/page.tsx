@@ -24,7 +24,7 @@ export default async function Project(props: PageProps<"/[locale]/projects/[slug
   if (project === null) throw new Error("Impossible to load project");
 
   return (
-    <div className="flex flex-col flex-1 gap-8">
+    <div className="flex flex-col items-center flex-1 gap-8">
       <Heading variant="h1" className="text-center">{project.name}</Heading>
       <ProjectView data={project} />
     </div>
