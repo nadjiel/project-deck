@@ -6,8 +6,8 @@ import { createClient } from "@/db/supabase/client";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { formatUrl } from "@/lib/url";
 import { ProjectLink, ProjectAbility } from "@/feat/project";
-import type { Project } from "@/api/projects";
 import { cn } from "@/lib/utils";
+import type { Project } from "@/api/projects";
 
 interface Props {
   data: Project<"related_projects" | "abilities" | "files" | "logo" | "category">;
@@ -45,7 +45,7 @@ export default function ProjectView(props: Props) {
   ));
 
   return (
-    <section className="max-w-4xl">
+    <section className="w-full max-w-4xl">
       <div className="flex justify-between mb-2">
         <span>{data.category?.name}</span>
         <div className="flex gap-1">
