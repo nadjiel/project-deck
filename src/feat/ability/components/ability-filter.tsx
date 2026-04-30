@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 import { FilterIcon, TrashIcon } from "lucide-react";
 import { useFilters } from "@/hooks/use-filters";
 import type { Tables } from "@/db/supabase/types";
@@ -22,7 +24,9 @@ interface Props {
 export default function AbilityFilter(props: Props) {
   const { abilities } = props;
 
-  const { activeFilters, setFilter } = useFilters(["abilities"]);
+  const t = useTranslations("ability_filter");
+
+  const { activeFilters, setFilter, getFilter } = useFilters(["abilities"]);
 
   const [internalFilters, setInternalFilters] = useState<string[]>(
     activeFilters.map(f => f.operator === "has" ? f.values : []).flat()
@@ -46,15 +50,18 @@ export default function AbilityFilter(props: Props) {
 
   return (
     <DropdownMenu onOpenChange={onOpenChange}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <FilterIcon />
-        </Button>
-      </DropdownMenuTrigger>
+      <div className="relative">
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="icon">
+            <FilterIcon />
+          </Button>
+        </DropdownMenuTrigger>
+        { getFilter("abilities", "has").length > 0 && <Badge className="absolute top-0 right-0 -translate-y-1/3 translate-x-1/3 cursor-default pointer-events-none p-0 size-3"/> }
+      </div>
       <DropdownMenuContent>
         <DropdownMenuItem variant="destructive" onClick={() => setInternalFilters([])}>
           <TrashIcon />
-          Clear filters
+          {t("clear_button")}
         </DropdownMenuItem>
         { abilities.map(a => (
           <DropdownMenuCheckboxItem

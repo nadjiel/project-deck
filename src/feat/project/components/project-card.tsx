@@ -3,11 +3,12 @@
 import { useState, type ComponentProps } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import * as icons from "react-icons/si";
 import { CodeIcon } from "lucide-react";
 import { createClient } from "@/db/supabase/client";
 import { Heading } from "@/components/ui/typography";
-import { cn } from "@/lib/utils";
+import { cn, joinif } from "@/lib/utils";
 import logo from "@/assets/logo.svg";
 import type { Project } from "@/api/projects";
 
@@ -39,10 +40,15 @@ export default function ProjectCard(props: Props) {
 
   const [icon, setIcon] = useState(logoUrl?.publicUrl || logo.src);
 
+  const searchParams = useSearchParams();
+
   const AbilityIcon = icons[abilities[0]?.ability.icon as keyof typeof icons] ?? CodeIcon;
 
   return (
-    <Link href={href ?? `/projects/${data.slug}`} {...rest}>
+    <Link
+      href={href ?? joinif(`/projects/${data.slug}`, "?", searchParams.toString())}
+      {...rest}
+    >
       <article
         className={cn(
           "relative flex flex-col justify-center items-center border-16 rounded-lg bg-background aspect-3/4",

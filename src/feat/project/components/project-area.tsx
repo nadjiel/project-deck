@@ -2,11 +2,13 @@
 
 // import { useRef } from "react";
 import { motion } from "motion/react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/feat/project";
 import { cn } from "@/lib/utils";
 import { useFilters } from "@/hooks/use-filters";
 import { useSearch } from "@/hooks/use-search";
-import type { ComponentProps } from "react";
+import { useRef, type ComponentProps } from "react";
 import type { Project } from "@/api/projects";
 
 interface Props extends ComponentProps<"div"> {
@@ -19,6 +21,8 @@ export default function ProjectArea(props: Props) {
     className,
     ...rest
   } = props;
+
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { getFilter } = useFilters(["abilities"]);
   const { search } = useSearch();
@@ -42,11 +46,17 @@ export default function ProjectArea(props: Props) {
       )}
       {...rest}
     >
+      <Button
+        variant="secondary"
+        size="icon-lg"
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-2 rounded-full animate-[bounce-x_2000ms_ease-in-out_infinite] [--bounce-x-offset:-10%]"
+        onClick={() => containerRef.current?.scrollBy({ left: -288, behavior: "smooth" })}
+      >
+        <ChevronLeftIcon />
+      </Button>
       <div
-        className={cn(
-          "flex flex-col flex-1 overflow-x-auto",
-          "[&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-accent [&::-webkit-scrollbar-thumb]:bg-primary",
-        )}
+        ref={containerRef}
+        className="flex flex-col flex-1 overflow-x-auto [&::-webkit-scrollbar]:h-0"
       >
         <motion.div
           // drag="x"
@@ -63,6 +73,14 @@ export default function ProjectArea(props: Props) {
           )) }
         </motion.div>
       </div>
+      <Button
+        variant="secondary"
+        size="icon-lg"
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-2 rounded-full animate-[bounce-x_2000ms_ease-in-out_infinite] [--bounce-x-offset:10%]"
+        onClick={() => containerRef.current?.scrollBy({ left: 288, behavior: "smooth" })}
+      >
+        <ChevronRightIcon />
+      </Button>
     </div>
   );
 }

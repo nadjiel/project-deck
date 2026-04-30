@@ -15,6 +15,12 @@
     "title": "Conheça meu trabalho!",
     "search": "Buscar um projeto..."
   },
+  "ability_filter": {
+    "clear_button": "Apagar filtros"
+  },
+  "contact": {
+    "placeholder_example": "ex.:"
+  },
   "contact_form": {
     "name_label": "Nome",
     "name_placeholder": "Seu nome...",
@@ -22,7 +28,12 @@
     "email_placeholder": "Seu e-mail...",
     "message_label": "Mensagem",
     "message_placeholder": "O que posso fazer por você?",
-    "send": "Enviar"
+    "send": "Enviar",
+    "name_error_min": "Seu nome deve ter pelo menos 3 caracteres",
+    "email_error": "Endereço de e-mail inválido",
+    "message_error_min": "Sua mensagem deve ter pelo menos 15 caracteres",
+    "error_unexpected": "Ocorreu um erro inesperado!",
+    "success": "Seu e-mail foi enviado com sucesso!"
   },
   "locale_button": {
     "content": "Idioma"

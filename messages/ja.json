@@ -15,6 +15,12 @@
     "title": "私の作品をご覧ください！",
     "search": "プロジェクトを検索..."
   },
+  "ability_filter": {
+    "clear_button": "フィルターをクリア"
+  },
+  "contact": {
+    "placeholder_example": "例："
+  },
   "contact_form": {
     "name_label": "名前",
     "name_placeholder": "あなたの名前...",
@@ -22,7 +28,12 @@
     "email_placeholder": "あなたのメールアドレス...",
     "message_label": "メッセージ",
     "message_placeholder": "どのようにお手伝いできますか？",
-    "send": "送信"
+    "send": "送信",
+    "name_error_min": "名前は少なくとも3文字以上である必要があります",
+    "email_error": "無効なメールアドレスです",
+    "message_error_min": "メッセージは少なくとも15文字以上である必要があります",
+    "error_unexpected": "予期しないエラーが発生しました！",
+    "success": "メールは正常に送信されました！"
   },
   "locale_button": {
     "content": "言語"

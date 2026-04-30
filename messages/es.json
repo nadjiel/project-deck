@@ -15,6 +15,12 @@
     "title": "¡Conoce mi trabajo!",
     "search": "Buscar un proyecto..."
   },
+  "ability_filter": {
+    "clear_button": "Borrar filtros"
+  },
+  "contact": {
+    "placeholder_example": "p. ej."
+  },
   "contact_form": {
     "name_label": "Nombre",
     "name_placeholder": "Tu nombre...",
@@ -22,7 +28,12 @@
     "email_placeholder": "Tu correo electrónico...",
     "message_label": "Mensaje",
     "message_placeholder": "¿Qué puedo hacer por ti?",
-    "send": "Enviar"
+    "send": "Enviar",
+    "name_error_min": "Tu nombre debe tener al menos 3 caracteres",
+    "email_error": "Dirección de correo electrónico inválida",
+    "message_error_min": "Tu mensaje debe tener al menos 15 caracteres",
+    "error_unexpected": "¡Hubo un error inesperado!",
+    "success": "¡Tu correo electrónico fue enviado con éxito!"
   },
   "locale_button": {
     "content": "Idioma"

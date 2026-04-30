@@ -15,6 +15,12 @@
     "title": "Découvrez mon travail !",
     "search": "Rechercher un projet..."
   },
+  "ability_filter": {
+    "clear_button": "Effacer les filtres"
+  },
+  "contact": {
+    "placeholder_example": "p. ex."
+  },
   "contact_form": {
     "name_label": "Nom",
     "name_placeholder": "Votre nom...",
@@ -22,7 +28,12 @@
     "email_placeholder": "Votre e-mail...",
     "message_label": "Message",
     "message_placeholder": "Que puis-je faire pour vous ?",
-    "send": "Envoyer"
+    "send": "Envoyer",
+    "name_error_min": "Votre nom doit comporter au moins 3 caractères",
+    "email_error": "Adresse e-mail invalide",
+    "message_error_min": "Votre message doit comporter au moins 15 caractères",
+    "error_unexpected": "Une erreur inattendue s'est produite !",
+    "success": "Votre e-mail a été envoyé avec succès !"
   },
   "locale_button": {
     "content": "Langue"

@@ -4,8 +4,9 @@ import { EarthIcon } from "lucide-react";
 import { useLocale } from "next-intl";
 import { cva, type VariantProps } from "class-variance-authority";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "@/i18n/routing";
-import { cn } from "@/lib/utils";
+import { cn, joinif } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -46,10 +47,11 @@ export default function LocaleButton(props: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
+  const searchParams = useSearchParams();
   const t = useTranslations("locale_button");
 
   const setLocale = (locale: string) => {
-    router.replace(pathname, { locale });
+    router.replace(joinif(pathname, "?", searchParams.toString()), { locale });
   }
 
   return (
