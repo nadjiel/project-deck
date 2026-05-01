@@ -6,6 +6,7 @@ import { ProjectArea } from "@/feat/project";
 import { createClient } from "@/db/supabase/server";
 import { selector, translator } from "@/api/projects";
 import { AbilityFilter } from "@/feat/ability";
+import { CategoryFilter } from "@/feat/category";
 import env from "@/config/env";
 
 export default async function Projects(
@@ -23,6 +24,7 @@ export default async function Projects(
   let [
     { data: projects },
     { data: abilities },
+    { data: categories },
   ] = await Promise.all([
     selector(
       supabase,
@@ -46,10 +48,22 @@ export default async function Projects(
       .eq("projects.project.active", true)
       .eq("projects.project.categories.category_slug", env.category)
       .order("name"),
+    supabase
+      .from("categories")
+      .select(`
+        *,
+        projects:project_categories!inner(
+          project:projects!inner(
+            categories:project_categories!inner()
+          )
+        )
+      `)
+      .eq("projects.project.categories.category_slug", env.category)
   ]);
   
   if (projects === null) throw new Error("Impossible to load projects!");
   if (abilities === null) throw new Error("Impossible to load abilities!");
+  if (categories === null) throw new Error("Impossible to load categories!");
   
   projects = await Promise.all(projects.map(p => translator(supabase, p, locale)));
 
@@ -58,7 +72,8 @@ export default async function Projects(
       <div className="flex flex-col items-center gap-4 w-full mb-4">
         <Heading variant="h1" className="text-center cursor-default select-none">{t("title")}</Heading>
         <div className="w-full max-w-sm flex gap-2">
-          <SearchBox placeholder={t("search")} />
+          {/* <SearchBox placeholder={t("search")} /> */}
+          <CategoryFilter categories={categories} />
           <AbilityFilter abilities={abilities} />
         </div>
       </div>
