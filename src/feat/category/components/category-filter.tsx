@@ -39,22 +39,18 @@ export default function CategoryFilter(props: Props) {
       defaultValue={[values[0]]}
     >
       <ComboboxChips ref={anchor} className={cn(
-        "relative w-full max-w-xs max-h-9 flex-nowrap overflow-x-auto",
+        "relative w-full max-w-xs max-h-9 flex-nowrap gap-0 overflow-x-auto p-0",
         "[&::-webkit-scrollbar]:h-0",
       )}>
         <ComboboxValue>
-          {(values) => (
-            <>
-              {values.map((value: string) => (
-                <ComboboxChip key={value}>{value}</ComboboxChip>
-              ))}
-              <ComboboxChipsInput
-                placeholder="Categories..."
-                className="sticky -right-2 py-2 px-1 bg-background min-w-1/3 w-full"
-              />
-            </>
-          )}
+          {(values) => values.map((value: string) => (
+            <ComboboxChip key={value} className="ml-1.5 last-of-type:mr-1.5 text-background">{value}</ComboboxChip>
+          ))}
         </ComboboxValue>
+        <ComboboxChipsInput
+          placeholder="Categories..."
+          className="sticky right-0 px-2 w-full h-full min-w-1/3 bg-red-400"
+        />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
         <ComboboxEmpty>No categories to filter.</ComboboxEmpty>
