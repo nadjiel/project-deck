@@ -6,7 +6,7 @@ import type { ComponentProps } from "react";
 import type { Project } from "@/api/projects";
 
 interface Props extends ComponentProps<"div"> {
-  projects: Project<"abilities" | "related_projects" | "category" | "files" | "logo">[];
+  projects: Project<"abilities" | "categories" | "related_projects" | "category" | "files" | "logo">[];
   project?: Project<"abilities" | "related_projects" | "category" | "files" | "logo">;
 }
 
