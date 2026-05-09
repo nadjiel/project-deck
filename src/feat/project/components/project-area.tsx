@@ -12,7 +12,7 @@ import { useRef, type ComponentProps } from "react";
 import type { Project } from "@/api/projects";
 
 interface Props extends ComponentProps<"div"> {
-  projects: Project<"abilities" | "related_projects" | "logo" | "category">[];
+  projects: Project<"abilities" | "categories" | "related_projects" | "logo" | "category">[];
 }
 
 export default function ProjectArea(props: Props) {
@@ -24,13 +24,17 @@ export default function ProjectArea(props: Props) {
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const { getFilter } = useFilters(["abilities"]);
+  const { getFilter } = useFilters(["abilities", "categories"]);
   const { search } = useSearch();
 
   const filtered = projects.filter(p => (
     (
       getFilter("abilities", "has").length === 0
       || p.abilities.some(a => getFilter("abilities", "has").some(f => f === a.ability.slug))
+    )
+    && (
+      getFilter("categories", "has").length === 0
+      || p.categories.some(c => getFilter("categories", "has").some(f => f === c.category.slug))
     )
     && p.name.toLowerCase().includes(search.trim().toLowerCase())
   ));

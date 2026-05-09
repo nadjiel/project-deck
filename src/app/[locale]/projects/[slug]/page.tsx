@@ -14,7 +14,7 @@ export default async function Project(props: PageProps<"/[locale]/projects/[slug
 
   const project = await selector(
       supabase,
-      ["abilities", "related_projects", "files", "logo", "category"]
+      ["abilities", "categories", "related_projects", "files", "logo", "category"]
     )
     .eq("slug", slug)
     .limit(1)

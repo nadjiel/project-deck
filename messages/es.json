@@ -15,9 +15,6 @@
     "title": "¡Conoce mi trabajo!",
     "search": "Buscar un proyecto..."
   },
-  "ability_filter": {
-    "clear_button": "Borrar filtros"
-  },
   "contact": {
     "placeholder_example": "p. ej."
   },
@@ -40,5 +37,16 @@
   },
   "option_drawer": {
     "title": "Configuraciones"
+  },
+  "category_filter": {
+    "placeholder": "Filtrar categorías...",
+    "no_items": "¡No hay categorías para filtrar!"
+  },
+  "ability_filter": {
+    "placeholder": "Filtrar habilidades...",
+    "no_items": "¡No hay habilidades para filtrar!"
+  },
+  "ability_filter_button": {
+    "clear_button": "Borrar filtros"
   }
 }

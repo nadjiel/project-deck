@@ -15,9 +15,6 @@
     "title": "私の作品をご覧ください！",
     "search": "プロジェクトを検索..."
   },
-  "ability_filter": {
-    "clear_button": "フィルターをクリア"
-  },
   "contact": {
     "placeholder_example": "例："
   },
@@ -40,5 +37,16 @@
   },
   "option_drawer": {
     "title": "設定"
+  },
+  "category_filter": {
+    "placeholder": "カテゴリーを絞り込む...",
+    "no_items": "フィルターできるカテゴリーがありません！"
+  },
+  "ability_filter": {
+    "placeholder": "能力を絞り込む...",
+    "no_items": "フィルターできる能力がありません！"
+  },
+  "ability_filter_button": {
+    "clear_button": "フィルターをクリア"
   }
 }

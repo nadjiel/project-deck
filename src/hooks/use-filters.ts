@@ -149,6 +149,9 @@ export function useFilters<Keys extends string>(
 
   // ── Parse current filter state from URL ────────────────────────────────────
 
+  // filters is an unstable reference because allowedKeySet and
+  // allowedOperatorSet derive from arrays most likely defined as literals
+  // at the hook calls, which would equal to new arrays every render.
   const filters = useMemo<FilterMap<Keys>>(() => {
     const map: FilterMap<Keys> = {};
 
@@ -169,6 +172,8 @@ export function useFilters<Keys extends string>(
     return map;
   }, [searchParams, allowedKeySet, allowedOperatorSet]);
 
+  // activeFilters is a stable reference, given its dependency on
+  // the searchParams string.
   const activeFilters = useMemo<FilterEntry[]>(() => {
     const entries: FilterEntry[] = [];
     for (const [key, operatorMap] of Object.entries(filters) as [
@@ -187,7 +192,7 @@ export function useFilters<Keys extends string>(
       }
     }
     return entries;
-  }, [filters]);
+  }, [searchParams.toString()]);
 
   const hasActiveFilters = useMemo(
     () => activeFilters.length > 0,

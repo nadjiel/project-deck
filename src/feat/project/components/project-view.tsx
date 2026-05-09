@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import dayjs from "dayjs";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
 import { createClient } from "@/db/supabase/client";
 import { Heading, Paragraph } from "@/components/ui/typography";
 import { formatUrl } from "@/lib/url";
@@ -44,6 +46,8 @@ export default function ProjectView(props: Props) {
     [startDate, endDate].filter(d => d !== null)
   ));
 
+  const description = DOMPurify.sanitize(marked.parse(data.description ?? "", { async: false }));
+
   return (
     <section className="w-full max-w-4xl">
       <div className="flex justify-between mb-2">
@@ -67,7 +71,10 @@ export default function ProjectView(props: Props) {
               className="w-full max-w-md mx-auto my-4"
             />
           ) }
-          <Paragraph>{data.description}</Paragraph>
+          <div
+            dangerouslySetInnerHTML={{ __html: description }}
+            className="*:mb-2"
+          ></div>
           { data.related_projects.length > 0 && (
             <div>
               <Heading level={2} className="mb-2">Related Projects</Heading>

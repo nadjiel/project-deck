@@ -1,43 +1,43 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import {
   Combobox,
-  ComboboxChip,
   ComboboxChips,
+  ComboboxChip,
   ComboboxChipsInput,
+  ComboboxValue,
   ComboboxContent,
   ComboboxEmpty,
-  ComboboxItem,
   ComboboxList,
-  ComboboxValue,
-  useComboboxAnchor
+  ComboboxItem,
+  useComboboxAnchor,
 } from "@/components/ui/combobox";
 import { useFilters } from "@/hooks/use-filters";
-import { cn } from "@/lib/utils";
 import type { Tables } from "@/db/supabase/types";
+import { cn } from "@/lib/utils";
 
-type Ability = Tables<"abilities">;
+type Category = Tables<"categories">;
 
 interface Props {
-  abilities: Ability[];
+  categories: Category[];
 }
 
-export default function AbilityFilter(props: Props) {
-  const { abilities } = props;
+export default function CategoryFilter(props: Props) {
+  const { categories } = props;
 
-  const t = useTranslations("ability_filter");
+  const t = useTranslations("category_filter");
   
   const anchor = useComboboxAnchor();
   
-  const { activeFilters, setFilter } = useFilters(["abilities"]);
+  const { activeFilters, setFilter } = useFilters(["categories"]);
 
   const value = activeFilters
     .filter(f => f.operator === "has")
     .flatMap(f => f.values)
-    .map(slug => abilities.find(a => a.slug === slug))
-    .filter((a): a is Ability => a !== undefined);
+    .map(slug => categories.find(c => c.slug === slug))
+    .filter((c): c is Category => c !== undefined);
 
   const [internalValue, setInternalValue] = useState(value);
 
@@ -45,17 +45,17 @@ export default function AbilityFilter(props: Props) {
     setInternalValue(value);
   }, [activeFilters]);
 
-  function handleValueChange(value: (Ability | undefined)[]) {
-    const next = value.filter((v): v is Ability => typeof v === "object" && v !== undefined);
+  function handleValueChange(value: (Category | undefined)[]) {
+    const next = value.filter((v): v is Category => typeof v === "object" && v !== undefined);
     setInternalValue(next); // optimistic — instant
-    setFilter("abilities", next.map(v => v.slug), "has"); // async sync
+    setFilter("categories", next.map(v => v.slug), "has"); // async sync
   }
   
   return (
     <Combobox
       multiple
       autoHighlight
-      items={abilities}
+      items={categories}
       value={internalValue}
       onValueChange={handleValueChange}
     >
@@ -64,7 +64,7 @@ export default function AbilityFilter(props: Props) {
         "[&::-webkit-scrollbar]:h-0",
       )}>
         <ComboboxValue>
-          {(values: Ability[]) => values.map((value) => (
+          {(values: Category[]) => values.map((value) => (
             <ComboboxChip key={value.slug} className="ml-1.5 last-of-type:mr-1.5 text-background">{value.name}</ComboboxChip>
           ))}
         </ComboboxValue>
