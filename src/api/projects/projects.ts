@@ -10,6 +10,13 @@ const joins: Record<ProjectFeature, string> = {
       )
     )
   `,
+  categories: `
+    categories:project_categories (
+      category:categories (
+        *
+      )
+    )
+  `,
   related_projects: `
     related_projects:project_relations!relater_project_id (
       project:projects!related_project_id (

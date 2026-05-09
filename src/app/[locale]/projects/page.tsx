@@ -28,7 +28,7 @@ export default async function Projects(
   ] = await Promise.all([
     selector(
       supabase,
-      ["abilities", "category", "files", "logo", "related_projects"],
+      ["abilities", "categories", "category", "files", "logo", "related_projects"],
       "project_categories!inner()",
     )
       .eq("active", true)
@@ -61,6 +61,8 @@ export default async function Projects(
       .eq("projects.project.categories.category_slug", env.category)
   ]);
   
+  console.log(projects)
+
   if (projects === null) throw new Error("Impossible to load projects!");
   if (abilities === null) throw new Error("Impossible to load abilities!");
   if (categories === null) throw new Error("Impossible to load categories!");
