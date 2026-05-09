@@ -15,9 +15,6 @@
     "title": "Know my Work!",
     "search": "Search a project..."
   },
-  "ability_filter": {
-    "clear_button": "Clear filters"
-  },
   "contact": {
     "placeholder_example": "e.g."
   },
@@ -43,6 +40,13 @@
   },
   "category_filter": {
     "placeholder": "Filter categories...",
-    "no_categories": "No categories to filter!"
+    "no_items": "No categories to filter!"
+  },
+  "ability_filter": {
+    "placeholder": "Filter abilities...",
+    "no_items": "No abilities to filter!"
+  },
+  "ability_filter_button": {
+    "clear_button": "Clear filters"
   }
 }

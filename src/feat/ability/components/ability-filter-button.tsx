@@ -1,0 +1,85 @@
+"use client";
+
+import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
+import { FilterIcon, TrashIcon } from "lucide-react";
+import { useFilters } from "@/hooks/use-filters";
+import type { Tables } from "@/db/supabase/types";
+
+type Ability = Tables<"abilities">;
+
+interface Props {
+  abilities: Ability[];
+}
+
+/**
+ * `AbilityFilterButton` renders a compact button that opens a dropdown menu
+ * for selecting abilities to filter.
+ * 
+ * The abilities available should be passed via the `abilities` prop.
+ * 
+ * @author Nadjiel <https://github.com/nadjiel>
+ */
+export default function AbilityFilterButton(props: Props) {
+  const { abilities } = props;
+
+  const t = useTranslations("ability_filter");
+
+  const { activeFilters, setFilter, getFilter } = useFilters(["abilities"]);
+
+  const [internalFilters, setInternalFilters] = useState<string[]>(
+    activeFilters.map(f => f.operator === "has" ? f.values : []).flat()
+  );
+
+  const commitFilters = () => {
+    setFilter("abilities", internalFilters, "has");
+  }
+
+  const onOpenChange = (open: boolean) => {
+    if (!open) commitFilters();
+  }
+
+  const onAbilityCheckedChange = (slug: string) => {
+    if (internalFilters.includes(slug)) {
+      setInternalFilters(internalFilters.filter(s => s !== slug));
+    } else {
+      setInternalFilters([...internalFilters, slug]);
+    }
+  }
+
+  return (
+    <DropdownMenu onOpenChange={onOpenChange}>
+      <div className="relative">
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="icon">
+            <FilterIcon />
+          </Button>
+        </DropdownMenuTrigger>
+        { getFilter("abilities", "has").length > 0 && <Badge className="absolute top-0 right-0 -translate-y-1/3 translate-x-1/3 cursor-default pointer-events-none p-0 size-3"/> }
+      </div>
+      <DropdownMenuContent>
+        <DropdownMenuItem variant="destructive" onClick={() => setInternalFilters([])}>
+          <TrashIcon />
+          {t("clear_button")}
+        </DropdownMenuItem>
+        { abilities.map(a => (
+          <DropdownMenuCheckboxItem
+            key={a.slug}
+            checked={internalFilters.includes(a.slug)}
+            onSelect={e => e.preventDefault()}
+            onCheckedChange={() => onAbilityCheckedChange(a.slug)}
+          >{a.name}</DropdownMenuCheckboxItem>
+        )) }
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}

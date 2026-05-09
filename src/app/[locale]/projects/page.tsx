@@ -60,8 +60,6 @@ export default async function Projects(
       `)
       .eq("projects.project.categories.category_slug", env.category)
   ]);
-  
-  console.log(projects)
 
   if (projects === null) throw new Error("Impossible to load projects!");
   if (abilities === null) throw new Error("Impossible to load abilities!");

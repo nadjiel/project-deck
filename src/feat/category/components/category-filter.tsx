@@ -74,7 +74,7 @@ export default function CategoryFilter(props: Props) {
         />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
-        <ComboboxEmpty>{t("no_categories")}</ComboboxEmpty>
+        <ComboboxEmpty>{t("no_items")}</ComboboxEmpty>
         <ComboboxList>
           {(item) => (
             <ComboboxItem key={item.slug} value={item}>
