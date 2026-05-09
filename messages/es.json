@@ -40,5 +40,9 @@
   },
   "option_drawer": {
     "title": "Configuraciones"
+  },
+  "category_filter": {
+    "placeholder": "Filtrar categorías...",
+    "no_categories": "¡No hay categorías para filtrar!"
   }
 }

@@ -40,5 +40,9 @@
   },
   "option_drawer": {
     "title": "設定"
+  },
+  "category_filter": {
+    "placeholder": "カテゴリーを絞り込む...",
+    "no_categories": "フィルターできるカテゴリーがありません！"
   }
 }

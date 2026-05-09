@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import {
   Combobox,
   ComboboxChips,
@@ -25,6 +26,8 @@ interface Props {
 
 export default function CategoryFilter(props: Props) {
   const { categories } = props;
+
+  const t = useTranslations("category_filter");
   
   const anchor = useComboboxAnchor();
   
@@ -66,12 +69,12 @@ export default function CategoryFilter(props: Props) {
           ))}
         </ComboboxValue>
         <ComboboxChipsInput
-          placeholder="Categories..."
+          placeholder={t("placeholder")}
           className="sticky right-0 px-2 w-full h-full min-w-1/3 bg-background"
         />
       </ComboboxChips>
       <ComboboxContent anchor={anchor}>
-        <ComboboxEmpty>No categories to filter.</ComboboxEmpty>
+        <ComboboxEmpty>{t("no_categories")}</ComboboxEmpty>
         <ComboboxList>
           {(item) => (
             <ComboboxItem key={item.slug} value={item}>
